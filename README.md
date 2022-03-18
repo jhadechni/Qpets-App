@@ -15,3 +15,9 @@ For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 # Qpets-App
+
+## Guidelines
+
+### Semantic commit
+
+Follow the guidelines of this page: [Commit guidelines](https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716)
