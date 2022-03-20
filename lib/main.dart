@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:qpets_app/pages/page_Home.dart';
 import 'package:qpets_app/pages/page_calendar.dart';
 import 'package:qpets_app/pages/page_maps.dart';
@@ -8,7 +9,13 @@ import 'package:qpets_app/pages/page_store.dart';
 
 
 void main() => runApp(
-  MaterialApp(home: BottomNavBar(),debugShowCheckedModeBanner: false,)
+  MaterialApp(
+    
+    home: BottomNavBar(),
+    debugShowCheckedModeBanner: false,
+     theme: ThemeData(
+        textTheme: GoogleFonts.robotoTextTheme(),)
+    )
   
   );
 
@@ -49,6 +56,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   @override
   Widget build(BuildContext context) {
+   
     return Scaffold(
         bottomNavigationBar: CurvedNavigationBar(
           key: _bottomNavigationKey,
