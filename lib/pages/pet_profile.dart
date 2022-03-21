@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:timeline_tile/timeline_tile.dart';
 
 class ProfileField extends StatelessWidget {
   final String field;
@@ -155,6 +156,55 @@ class _CarouselState extends State<Carousel> {
   }
 }
 
+class PetTimeLine extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemExtent: 100,
+        itemCount: 5,
+        itemBuilder: (context, index) => index % 2 == 0
+            ? getBottomTile(index, "Jaime")
+            : getUpperTile(index, "Jaime"));
+  }
+
+  Widget getUpperTile(int index, String text) {
+    return TimelineTile(
+        axis: TimelineAxis.horizontal,
+        alignment: TimelineAlign.center,
+        beforeLineStyle: LineStyle(thickness: 6, color: Color(0xff7F77C6)),
+        afterLineStyle: LineStyle(thickness: 6, color: Color(0xff7F77C6)),
+        indicatorStyle: IndicatorStyle(
+          height: 30,
+          color: Color(0xffF6A641),
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          drawGap: false,
+          iconStyle: IconStyle(
+              color: Colors.black, iconData: Icons.pets, fontSize: 22.0),
+        ),
+        startChild: Text(text));
+  }
+
+  Widget getBottomTile(int index, String text) {
+    return TimelineTile(
+      axis: TimelineAxis.horizontal,
+      alignment: TimelineAlign.center,
+      beforeLineStyle: LineStyle(thickness: 6, color: Color(0xff7F77C6)),
+      afterLineStyle: LineStyle(thickness: 6, color: Color(0xff7F77C6)),
+      indicatorStyle: IndicatorStyle(
+        height: 30,
+        color: Color(0xffF6A641),
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        drawGap: false,
+        iconStyle: IconStyle(
+            color: Colors.black, iconData: Icons.pets, fontSize: 22.0),
+      ),
+      endChild: Text(text),
+    );
+  }
+}
+
 class PetProfile extends StatelessWidget {
   const PetProfile({Key? key}) : super(key: key);
   @override
@@ -162,19 +212,7 @@ class PetProfile extends StatelessWidget {
     // TODO: implement build
     return Column(
       children: <Widget>[
-        Stack(
-          alignment: Alignment.topLeft,
-          children: [
-            FittedBox(
-              fit: BoxFit.fill,
-              child: Image.network(
-                "https://ggsc.s3.amazonaws.com/images/uploads/The_Science-Backed_Benefits_of_Being_a_Dog_Owner.jpg",
-              ),
-            ),
-            const Padding(
-                padding: EdgeInsets.only(top: 32.0), child: BackButton()),
-          ],
-        ),
+        getProfile(),
         Expanded(
             // use ListView to handle scroll
             child: ListView(
@@ -195,8 +233,42 @@ class PetProfile extends StatelessWidget {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: const Color(0xffE2E2EC)),
-                  child: Carousel([PetProfileWindow(), PetProfileWindow()]))
+                  child: Carousel([PetProfileWindow(), Text("Hi")])),
+              Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 10.0,
+                  ),
+                  child: Text("Timeline",
+                      style: TextStyle(
+                          fontSize: 24.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black))),
+              Container(
+                  height: 100,
+                  constraints: BoxConstraints(maxHeight: 100),
+                  padding: const EdgeInsets.only(
+                      top: 16.0, left: 16.0, right: 16.0, bottom: 10.0),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: const Color(0xffE2E2EC)),
+                  child: PetTimeLine()),
+              Padding(padding: EdgeInsets.only(bottom: 16.0))
             ])),
+      ],
+    );
+  }
+
+  Widget getProfile() {
+    return Stack(
+      alignment: Alignment.topLeft,
+      children: [
+        FittedBox(
+          fit: BoxFit.fill,
+          child: Image.network(
+            "https://ggsc.s3.amazonaws.com/images/uploads/The_Science-Backed_Benefits_of_Being_a_Dog_Owner.jpg",
+          ),
+        ),
+        const Padding(padding: EdgeInsets.only(top: 32.0), child: BackButton()),
       ],
     );
   }

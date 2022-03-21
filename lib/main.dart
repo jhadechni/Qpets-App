@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qpets_app/screens/pet_profile.dart';
+import 'package:qpets_app/pages/pet_profile.dart';
 
 void main() {
   runApp(const MyApp());
