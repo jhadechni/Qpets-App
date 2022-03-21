@@ -30,7 +30,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   final page_Home home = page_Home();
   final page_maps maps =  page_maps();
   final page_profile profile =  page_profile();
-  final page_store store =  page_store();
+  final PageStore store =  PageStore();
 
   Widget _ShowPage =  page_Home();
 
