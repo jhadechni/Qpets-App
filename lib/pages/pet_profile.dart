@@ -165,7 +165,6 @@ class PetTimeLine extends StatelessWidget {
       children: [
         ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemExtent: 74,
             itemCount: 4,
             itemBuilder: (context, index) => index % 2 == 0
                 ? getBottomTile(index, "Jaime")
@@ -173,7 +172,10 @@ class PetTimeLine extends StatelessWidget {
         IconButton(
             constraints: BoxConstraints(maxHeight: 24, maxWidth: 24),
             onPressed: null,
-            icon: Icon(Icons.more_horiz),
+            icon: Icon(
+              Icons.more_horiz,
+              color: Colors.black,
+            ),
             padding: EdgeInsets.zero),
       ],
     );

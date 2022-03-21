@@ -18,6 +18,6 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: Scaffold(body: TimeLine(key: Key("pet-profile"))));
+        home: Scaffold(body: PetProfile(key: Key("pet-profile"))));
   }
 }
