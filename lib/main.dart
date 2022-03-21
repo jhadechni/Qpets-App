@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qpets_app/pages/pet_profile.dart';
+import 'package:qpets_app/pages/timeline.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,6 +18,6 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: Scaffold(body: PetProfile(key: Key("pet-profile"))));
+        home: Scaffold(body: TimeLine(key: Key("pet-profile"))));
   }
 }
