@@ -248,7 +248,8 @@ class PetProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Column(
+    return SafeArea(
+        child: Column(
       children: <Widget>[
         getProfile(),
         Expanded(
@@ -293,18 +294,15 @@ class PetProfile extends StatelessWidget {
               Padding(padding: EdgeInsets.only(bottom: 16.0))
             ])),
       ],
-    );
+    ));
   }
 
   Widget getProfile() {
     return Stack(
       alignment: Alignment.topLeft,
       children: [
-        FittedBox(
-          fit: BoxFit.fill,
-          child: Image.network(
-            "https://ggsc.s3.amazonaws.com/images/uploads/The_Science-Backed_Benefits_of_Being_a_Dog_Owner.jpg",
-          ),
+        Image.network(
+          "https://ggsc.s3.amazonaws.com/images/uploads/The_Science-Backed_Benefits_of_Being_a_Dog_Owner.jpg",
         ),
         const Padding(padding: EdgeInsets.only(top: 32.0), child: BackButton()),
       ],
