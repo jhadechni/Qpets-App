@@ -49,9 +49,9 @@ class PageStoreState extends State<PageStore> {
           Align(
             alignment: Alignment.topLeft,
             child: Padding(
-              padding: const EdgeInsets.only(left: 20, top: 20),
-              child: _tittleText("Pet Categories")),
-            ),
+                padding: const EdgeInsets.only(left: 20, top: 20),
+                child: _tittleText("Pet Categories")),
+          ),
           Container(
             padding: const EdgeInsets.all(20),
             child: Row(
@@ -59,7 +59,7 @@ class PageStoreState extends State<PageStore> {
               children: [
                 _filterCard("Dog", FontAwesomeIcons.dog,
                     const Color.fromRGBO(64, 142, 234, 1)),
-                _filterCard("Cat",FontAwesomeIcons.cat,
+                _filterCard("Cat", FontAwesomeIcons.cat,
                     const Color.fromRGBO(140, 2, 248, 1)),
                 _filterCard("Bird", FontAwesomeIcons.crow,
                     const Color.fromRGBO(246, 166, 65, 1)),
@@ -68,12 +68,12 @@ class PageStoreState extends State<PageStore> {
               ],
             ),
           ),
-            Align(
+          Align(
             alignment: Alignment.topLeft,
             child: Padding(
-              padding: const EdgeInsets.only(left: 20, top: 20, bottom: 20),
-              child: _tittleText("Our Products")),
-            ),
+                padding: const EdgeInsets.only(left: 20, top: 20, bottom: 20),
+                child: _tittleText("Our Products")),
+          ),
           Expanded(
               child: ListView.builder(
                   padding: const EdgeInsets.only(left: 25, right: 25),
@@ -88,10 +88,10 @@ class PageStoreState extends State<PageStore> {
 
   Widget _tittleText(text) {
     return Text(
-      text, 
+      text,
       style: const TextStyle(
         color: Color.fromRGBO(0, 0, 0, 1),
-        fontSize: 30,
+        fontSize: 27,
         fontWeight: FontWeight.bold,
       ),
     );
@@ -102,32 +102,52 @@ class PageStoreState extends State<PageStore> {
       width: 81,
       height: 100,
       padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(23), color: color),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(23),
+          color: color,
+          boxShadow: [
+            BoxShadow(
+              color: color.withAlpha(100),
+              blurRadius: 3,
+              spreadRadius: 3,
+              offset: const Offset(
+                0,
+                2,
+              ),
+            ),
+          ]),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
             width: 50,
             height: 50,
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.elliptical(46, 43)), 
-            boxShadow: [
-           const BoxShadow(
-            color: Colors.black26,
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.elliptical(46, 43)),
+              boxShadow: [
+                const BoxShadow(
+                  color: Colors.black26,
+                ),
+                BoxShadow(
+                  color: color,
+                  spreadRadius: -20,
+                  blurRadius: 10,
+                ),
+              ],
+            ),
+            child: Icon(
+              icon,
+              color: Colors.white,
+            ),
           ),
-           BoxShadow(
-            color: color,
-            spreadRadius: -20,
-            blurRadius: 10,
-          ),
-        ],),
-          child: Icon(icon, color: Colors.white,),
-          ),
-          Text(text, style: const TextStyle(
-        color: Color.fromRGBO(255, 255, 255, 1),
-        fontSize: 22,
-        fontWeight: FontWeight.bold,
-      ),)
+          Text(
+            text,
+            style: const TextStyle(
+              color: Color.fromRGBO(255, 255, 255, 1),
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+            ),
+          )
         ],
       ),
     );
