@@ -160,13 +160,23 @@ class PetTimeLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemExtent: 100,
-        itemCount: 5,
-        itemBuilder: (context, index) => index % 2 == 0
-            ? getBottomTile(index, "Jaime")
-            : getUpperTile(index, "Jaime"));
+    return Stack(
+      alignment: Alignment.bottomRight,
+      children: [
+        ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemExtent: 74,
+            itemCount: 4,
+            itemBuilder: (context, index) => index % 2 == 0
+                ? getBottomTile(index, "Jaime")
+                : getUpperTile(index, "Jaime")),
+        IconButton(
+            constraints: BoxConstraints(maxHeight: 24, maxWidth: 24),
+            onPressed: null,
+            icon: Icon(Icons.more_horiz),
+            padding: EdgeInsets.zero),
+      ],
+    );
   }
 
   Widget getUpperTile(int index, String text) {
@@ -178,12 +188,25 @@ class PetTimeLine extends StatelessWidget {
         indicatorStyle: IndicatorStyle(
           height: 30,
           color: Color(0xffF6A641),
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
           drawGap: false,
           iconStyle: IconStyle(
               color: Colors.black, iconData: Icons.pets, fontSize: 22.0),
         ),
-        startChild: Text(text));
+        startChild: Container(
+            child: Column(
+          children: <Widget>[
+            Text("Feb 20",
+                style: TextStyle(
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black)),
+            Text(text,
+                style: TextStyle(
+                    fontSize: 8.0,
+                    fontWeight: FontWeight.w200,
+                    color: Colors.black))
+          ],
+        )));
   }
 
   Widget getBottomTile(int index, String text) {
@@ -195,12 +218,25 @@ class PetTimeLine extends StatelessWidget {
       indicatorStyle: IndicatorStyle(
         height: 30,
         color: Color(0xffF6A641),
-        padding: const EdgeInsets.symmetric(vertical: 8.0),
         drawGap: false,
         iconStyle: IconStyle(
             color: Colors.black, iconData: Icons.pets, fontSize: 22.0),
       ),
-      endChild: Text(text),
+      endChild: Container(
+          child: Column(
+        children: <Widget>[
+          Text("Feb 20",
+              style: TextStyle(
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black)),
+          Text(text,
+              style: TextStyle(
+                  fontSize: 8.0,
+                  fontWeight: FontWeight.w200,
+                  color: Colors.black))
+        ],
+      )),
     );
   }
 }
@@ -244,8 +280,8 @@ class PetProfile extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                           color: Colors.black))),
               Container(
-                  height: 100,
-                  constraints: BoxConstraints(maxHeight: 100),
+                  height: 120,
+                  constraints: BoxConstraints(maxHeight: 120),
                   padding: const EdgeInsets.only(
                       top: 16.0, left: 16.0, right: 16.0, bottom: 10.0),
                   decoration: BoxDecoration(
