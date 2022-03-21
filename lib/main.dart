@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:qpets_app/pages/page_Home.dart';
 import 'package:qpets_app/pages/page_calendar.dart';
@@ -8,8 +9,8 @@ import 'package:qpets_app/pages/page_maps.dart';
 import 'package:qpets_app/pages/page_profile.dart';
 import 'package:qpets_app/pages/page_store.dart';
 
-void main() => runApp(MaterialApp(
-    home: BottomNavBar(),
+void main() => runApp(GetMaterialApp(
+    home: const BottomNavBar(),
     debugShowCheckedModeBanner: false,
     theme: ThemeData(
       textTheme: GoogleFonts.robotoTextTheme(),
