@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:qpets_app/pages/calendar/event.dart';
-import 'package:qpets_app/pages/calendar/provider/event_provider.dart';
-import 'package:qpets_app/utils.dart';
+import 'package:qpets_app/domain/event.dart';
+
+import 'package:qpets_app/utils/utils.dart';
 import 'package:provider/provider.dart';
+
+import '../../provider/event_provider.dart';
 class EventEditingPage extends StatefulWidget {
   final Event? event;
   const EventEditingPage({

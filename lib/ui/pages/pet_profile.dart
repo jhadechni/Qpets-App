@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:qpets_app/pages/timeline.dart';
+import 'package:qpets_app/ui/pages/timeline.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 
 class ProfileField extends StatelessWidget {

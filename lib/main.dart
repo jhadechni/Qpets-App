@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:qpets_app/pages/calendar/provider/event_provider.dart';
-import 'package:qpets_app/pages/timeline.dart';
+import 'package:qpets_app/ui/provider/event_provider.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:qpets_app/pages/page_Home.dart';
-import 'package:qpets_app/pages/page_calendar.dart';
-import 'package:qpets_app/pages/page_maps.dart';
-import 'package:qpets_app/pages/page_profile.dart';
-import 'package:qpets_app/pages/page_store.dart';
+import 'package:qpets_app/ui/pages/page_Home.dart';
+import 'package:qpets_app/ui/pages/page_calendar.dart';
+import 'package:qpets_app/ui/pages/page_maps.dart';
+import 'package:qpets_app/ui/pages/page_profile.dart';
+import 'package:qpets_app/ui/pages/page_store.dart';
 import 'package:provider/provider.dart';
 void main() => runApp(GetMaterialApp(
     home: const BottomNavBar(),
     debugShowCheckedModeBanner: false,
+    
     theme: ThemeData(
       textTheme: GoogleFonts.robotoTextTheme(),
+      primarySwatch: Colors.purple
     )));
 
 class BottomNavBar extends StatefulWidget {
@@ -28,13 +29,13 @@ class BottomNavBar extends StatefulWidget {
 class _BottomNavBarState extends State<BottomNavBar> {
   int pageIndex = 0;
 
-  final PageHome home = PageHome();
-  final page_calendar calendar = page_calendar();
-  final page_maps maps = page_maps();
-  final PageProfile profile = PageProfile();
+  final PageHome home = const PageHome();
+  final CalendarPage calendar = CalendarPage();
+  final MapsPage maps = const MapsPage();
+  final PageProfile profile = const PageProfile();
   final PageStore store = const PageStore();
 
-  Widget _showPage = page_Home();
+  Widget _showPage = const PageHome();
 
   Widget _pageChooser(int page) {
     switch (page) {

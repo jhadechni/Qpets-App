@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:qpets_app/pages/produc_detail.dart';
-import '../domain/product.dart';
+import 'package:qpets_app/ui/pages/produc_detail.dart';
+import '../../domain/product.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../shared/search_bar.dart';
+import '../../shared/search_bar.dart';
 
 class PageStore extends StatefulWidget {
   const PageStore({Key? key}) : super(key: key);

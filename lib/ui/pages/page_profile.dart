@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:qpets_app/pages/pet_profile.dart';
+import 'package:qpets_app/ui/pages/pet_profile.dart';
 
-import '../domain/product.dart';
+import '../../domain/product.dart';
 
 class PageProfile extends StatefulWidget {
   const PageProfile({Key? key}) : super(key: key);

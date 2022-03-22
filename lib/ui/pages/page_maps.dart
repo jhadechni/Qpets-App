@@ -6,17 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:qpets_app/shared/search_bar.dart';
 
-// import '../domain/place.dart';
 
-// ignore: camel_case_types
-class page_maps extends StatefulWidget {
-  const page_maps({Key? key}) : super(key: key);
+class MapsPage extends StatefulWidget {
+  const MapsPage({Key? key}) : super(key: key);
 
   @override
-  State<page_maps> createState() => MapPageState();
+  State<MapsPage> createState() => MapPageState();
 }
 
-class MapPageState extends State<page_maps> {
+class MapPageState extends State<MapsPage> {
   final Map<String, Marker> _markers = {};
   Future<void> _onMapCreated(GoogleMapController controller) async {
     setState(() {

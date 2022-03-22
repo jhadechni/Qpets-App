@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:qpets_app/pages/calendar/event.dart';
-import 'package:qpets_app/utils.dart';
+import 'package:qpets_app/domain/event.dart';
+import 'package:qpets_app/utils/utils.dart';
 
 class EventProvider extends ChangeNotifier {
   final List<Event> _events = [];
