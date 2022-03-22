@@ -26,7 +26,7 @@ class TimeLine extends StatelessWidget {
             constraints: BoxConstraints(),
             padding: EdgeInsets.symmetric(vertical: 8),
           ),
-          Text("Bolt's Timeline",
+          Text("Polar's Timeline",
               style: TextStyle(
                   fontSize: 24.0,
                   fontWeight: FontWeight.bold,
@@ -43,8 +43,8 @@ class TimeLine extends StatelessWidget {
                     itemExtent: 60,
                     itemCount: 10,
                     itemBuilder: (context, index) => index % 2 == 0
-                        ? getRightTile(index, "Jaime")
-                        : getLeftTile(index, "Jaime"))),
+                        ? getRightTile(index, "Event 1")
+                        : getLeftTile(index, "Event 2"))),
             Padding(
                 padding: EdgeInsets.all(8),
                 child: ElevatedButton(
