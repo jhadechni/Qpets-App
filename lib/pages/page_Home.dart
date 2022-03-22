@@ -99,7 +99,7 @@ class Pagehomestate extends State<PageHome> {
                     children: [
                       _cardImage2(
                           'https://media.discordapp.net/attachments/955549239801446473/955561331161976922/unsplash_OA9103M2gSs.png'),
-                      _carddescripcioneventos(
+                      _titulo(
                           'Don’t forget to walk with your pets.'),
                       _carddescripcion(
                           'Dog owners enjoy numerous health and social benefits by walking their dog a few times a week. Benefits include improved cardiovascular fitness, lower blood pressure more...')
@@ -193,10 +193,15 @@ class Pagehomestate extends State<PageHome> {
       textAlign: TextAlign.right,
     );
   }
-
-  Widget _texto(String text) {
-    return Column(
-      children: [_carddescripcion('Agenda'), _carddescripcioneventos(text)],
+ Widget _titulo(String descripcion) {
+    return Text(
+      '$descripcion',
+      style: const TextStyle(
+        color: Color.fromRGBO(0, 0, 0, 1),
+        fontSize: 34,
+        fontWeight: FontWeight.normal,
+      ),
+      textAlign: TextAlign.right,
     );
   }
 }
