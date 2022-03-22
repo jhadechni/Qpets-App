@@ -26,12 +26,12 @@ class BottomNavBar extends StatefulWidget {
 class _BottomNavBarState extends State<BottomNavBar> {
   int pageIndex = 0;
   final page_calendar calendar = page_calendar();
-  final page_Home home = page_Home();
+  final PageHome home = PageHome();
   final page_maps maps = page_maps();
   final page_profile profile = page_profile();
   final PageStore store = const PageStore();
 
-  Widget _showPage = page_Home();
+  Widget _showPage = PageHome();
 
   Widget _pageChooser(int page) {
     switch (page) {
@@ -86,5 +86,5 @@ class _BottomNavBarState extends State<BottomNavBar> {
             child: _showPage,
           ),
         ));
+  } 
   }
-}
