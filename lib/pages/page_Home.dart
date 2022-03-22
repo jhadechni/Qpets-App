@@ -87,8 +87,8 @@ class Pagehomestate extends State<PageHome> {
                   ),
                 )),
             Container(
-              width: 50,
-              height: 50,
+              width: 70,
+              height: 70,
             ),
             Expanded(
                 flex: 5,
@@ -143,7 +143,7 @@ class Pagehomestate extends State<PageHome> {
       hora,
       style: const TextStyle(
         color: Color.fromRGBO(246, 166, 65, 1),
-        fontSize: 16,
+        fontSize: 24,
         fontWeight: FontWeight.normal,
       ),
       textAlign: TextAlign.left,
@@ -155,7 +155,7 @@ class Pagehomestate extends State<PageHome> {
       descripcion,
       style: const TextStyle(
         color: Color.fromRGBO(0, 0, 0, 1),
-        fontSize: 16,
+        fontSize: 12,
         fontWeight: FontWeight.normal,
       ),
       textAlign: TextAlign.center,
@@ -174,7 +174,7 @@ class Pagehomestate extends State<PageHome> {
     Widget _cardImage2(String link) {
     return Container(
         width: 400,
-        height: 100,
+        height: 80,
         decoration: BoxDecoration(
             image: DecorationImage(
                 image: NetworkImage(link), fit: BoxFit.fitWidth),
@@ -187,7 +187,7 @@ class Pagehomestate extends State<PageHome> {
       '$descripcion events',
       style: const TextStyle(
         color: Color.fromRGBO(0, 0, 0, 1),
-        fontSize: 34,
+        fontSize: 24,
         fontWeight: FontWeight.normal,
       ),
       textAlign: TextAlign.right,
@@ -201,7 +201,7 @@ class Pagehomestate extends State<PageHome> {
         fontSize: 34,
         fontWeight: FontWeight.normal,
       ),
-      textAlign: TextAlign.right,
+      textAlign: TextAlign.center,
     );
   }
 }
