@@ -4,6 +4,8 @@ import 'package:qpets_app/pages/produc_detail.dart';
 import '../domain/product.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../shared/search_bar.dart';
+
 class PageStore extends StatefulWidget {
   const PageStore({Key? key}) : super(key: key);
 
@@ -47,6 +49,10 @@ class PageStoreState extends State<PageStore> {
     return SafeArea(
       child: Column(
         children: [
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: SearchBar((function) => {},"Search for a Product"),
+          ),
           Align(
             alignment: Alignment.topLeft,
             child: Padding(
