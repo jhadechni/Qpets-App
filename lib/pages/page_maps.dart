@@ -128,7 +128,6 @@ class MapPageState extends State<page_maps> {
     );
   }
 
-  void _callback(String s) {}
 }
 
 class _CategoryButtonBar extends StatelessWidget {
