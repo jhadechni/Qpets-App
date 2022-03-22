@@ -25,21 +25,29 @@ class Pagehomestate extends State<PageHome> {
       body: SafeArea(
         child: Column(
           children: [
-            const Text(
-              "Hello, Pedro!",
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                color: Color.fromRGBO(30, 23, 33, 1),
-                fontSize: 30,
-                fontFamily: 'Roboto',
-                fontWeight: FontWeight.w700,
-              ),
+            Align(
+              alignment: Alignment.topLeft,
+              child: Padding(
+                  padding: const EdgeInsets.only(left: 20, top: 20),
+                  child: _titulo2("Hello , Pedro!")),
             ),
             Expanded(
                 flex: 5,
                 child: Container(
-                  decoration: BoxDecoration(color: const Color(0xffE2E2EC)),
+                  width:double.infinity,
+                  height: 70,
+                  decoration: BoxDecoration(
+                    color: const Color(0xffE2E2EC),
+                    borderRadius: BorderRadius.circular(21),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: Offset(0, 3), // changes position of shadow
+                      ),
+                    ],
+                  ),
                   child: Column(
                     children: [
                       Row(
@@ -56,58 +64,87 @@ class Pagehomestate extends State<PageHome> {
                         ],
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           _cardhora('12:30'),
-                          _carddescripcion('Vacinee 1')
+                          _carddescripcion('  Vacinee 1')
                         ],
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           _cardhora('16:30'),
-                          _carddescripcion('Training section')
+                          _carddescripcion(' Training section')
                         ],
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           _cardhora('17:20'),
-                          _carddescripcion('Spa day')
+                          _carddescripcion(' Spa day')
                         ],
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           _cardhora('18:00'),
-                          _carddescripcion('Walk with Antonella')
+                          _carddescripcion(' Walk with Antonella')
                         ],
                       ),
                     ],
                   ),
                 )),
             Container(
-              width: 70,
-              height: 70,
+              width: 50,
+              height: 30,
             ),
             Expanded(
                 flex: 5,
                 child: Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(color: const Color(0xffE2E2EC)),
+                  width:double.infinity,
+                  height: 70,
+                  decoration: BoxDecoration(
+                    color: const Color(0xffE2E2EC),
+                    borderRadius: BorderRadius.circular(21),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: Offset(0, 3), // changes position of shadow
+                      ),
+                    ],
+                  ),
                   child: Column(
                     children: [
                       _cardImage2(
                           'https://media.discordapp.net/attachments/955549239801446473/955561331161976922/unsplash_OA9103M2gSs.png'),
-                      _titulo(
-                          'Don’t forget to walk with your pets.'),
+                      _titulo('Don’t forget to walk with your pets.'),
                       _carddescripcion(
                           'Dog owners enjoy numerous health and social benefits by walking their dog a few times a week. Benefits include improved cardiovascular fitness, lower blood pressure more...')
                     ],
                   ),
-                ))
+                )),
+            Container(
+              width: 20,
+              height: 20,
+            )
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _titulo2(String text) {
+    return   Text(
+      text,
+      overflow: TextOverflow.ellipsis,
+      textAlign: TextAlign.left,
+      style: const TextStyle(
+        color: Color.fromRGBO(30, 23, 33, 1),
+        fontSize: 45,
+        fontFamily: 'Roboto',
+        fontWeight: FontWeight.w700,
       ),
     );
   }
@@ -115,12 +152,12 @@ class Pagehomestate extends State<PageHome> {
   Widget _card(agenda agenda) {
     return Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(21),
             color: const Color(0xffE2E2EC)),
         padding: const EdgeInsets.only(bottom: 20),
         child: Container(
           width: 20,
-          height: 100,
+          height: 80,
           padding:
               const EdgeInsets.only(top: 20, left: 10, right: 10, bottom: 10),
           child: Row(
@@ -155,7 +192,7 @@ class Pagehomestate extends State<PageHome> {
       descripcion,
       style: const TextStyle(
         color: Color.fromRGBO(0, 0, 0, 1),
-        fontSize: 12,
+        fontSize: 16,
         fontWeight: FontWeight.normal,
       ),
       textAlign: TextAlign.center,
@@ -171,9 +208,10 @@ class Pagehomestate extends State<PageHome> {
                 image: NetworkImage(link), fit: BoxFit.fitWidth),
             borderRadius: BorderRadius.circular(10)));
   }
-    Widget _cardImage2(String link) {
+
+  Widget _cardImage2(String link) {
     return Container(
-        width: 400,
+        width: 470,
         height: 80,
         decoration: BoxDecoration(
             image: DecorationImage(
@@ -181,25 +219,25 @@ class Pagehomestate extends State<PageHome> {
             borderRadius: BorderRadius.circular(10)));
   }
 
-
   Widget _carddescripcioneventos(String descripcion) {
     return Text(
       '$descripcion events',
       style: const TextStyle(
         color: Color.fromRGBO(0, 0, 0, 1),
-        fontSize: 24,
+        fontSize: 16,
         fontWeight: FontWeight.normal,
       ),
       textAlign: TextAlign.right,
     );
   }
- Widget _titulo(String descripcion) {
+
+  Widget _titulo(String descripcion) {
     return Text(
       '$descripcion',
       style: const TextStyle(
         color: Color.fromRGBO(0, 0, 0, 1),
         fontSize: 34,
-        fontWeight: FontWeight.normal,
+        fontWeight: FontWeight.bold,
       ),
       textAlign: TextAlign.center,
     );
