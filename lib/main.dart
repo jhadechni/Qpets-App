@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:qpets_app/pages/pet_profile.dart';
+import 'package:qpets_app/pages/timeline.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -25,13 +27,15 @@ class BottomNavBar extends StatefulWidget {
 
 class _BottomNavBarState extends State<BottomNavBar> {
   int pageIndex = 0;
-  final page_calendar calendar = page_calendar();
-  final page_Home home = page_Home();
+ 
+ 
+  final PageHome home = PageHome();
+  final PetProfile calendar = PetProfile();
   final page_maps maps = page_maps();
   final page_profile profile = page_profile();
   final PageStore store = const PageStore();
 
-  Widget _showPage = page_Home();
+  Widget _showPage = PageHome();
 
   Widget _pageChooser(int page) {
     switch (page) {
@@ -42,7 +46,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
       case 2:
         return maps;
       case 3:
-        return page_calendar();
+        return calendar;
       case 4:
         return page_profile();
       default:
@@ -86,5 +90,5 @@ class _BottomNavBarState extends State<BottomNavBar> {
             child: _showPage,
           ),
         ));
+  } 
   }
-}

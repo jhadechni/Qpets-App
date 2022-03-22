@@ -1,9 +1,10 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, avoid_types_as_parameter_names
 
 import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:qpets_app/shared/search_bar.dart';
 
 // import '../domain/place.dart';
 
@@ -91,6 +92,8 @@ class MapPageState extends State<page_maps> {
     return new Scaffold(
       body: Stack(
         children: [
+          // ignore: non_constant_identifier_names, avoid_print
+
           GoogleMap(
             mapType: MapType.normal,
             initialCameraPosition: _kGooglePlex,
@@ -98,7 +101,16 @@ class MapPageState extends State<page_maps> {
             onMapCreated: _onMapCreated,
             markers: _markers.values.toSet(),
           ),
-          _CategoryButtonBar()
+
+          Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.fromLTRB(8.0,8.0,8.0,0.0),
+                child: SearchBar((s) => {print(s)}, "Find a place!"),
+              ),
+              _CategoryButtonBar(),
+            ],
+          )
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -115,6 +127,8 @@ class MapPageState extends State<page_maps> {
       ),
     );
   }
+
+  void _callback(String s) {}
 }
 
 class _CategoryButtonBar extends StatelessWidget {

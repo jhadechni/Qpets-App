@@ -44,47 +44,45 @@ class PageStoreState extends State<PageStore> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            Align(
-              alignment: Alignment.topLeft,
-              child: Padding(
-                  padding: const EdgeInsets.only(left: 20, top: 20),
-                  child: _tittleText("Pet Categories")),
+    return SafeArea(
+      child: Column(
+        children: [
+          Align(
+            alignment: Alignment.topLeft,
+            child: Padding(
+                padding: const EdgeInsets.only(left: 20, top: 20),
+                child: _tittleText("Pet Categories")),
+          ),
+          Container(
+            padding: const EdgeInsets.all(20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _filterCard("Dog", FontAwesomeIcons.dog,
+                    const Color.fromRGBO(64, 142, 234, 1)),
+                _filterCard("Cat", FontAwesomeIcons.cat,
+                    const Color.fromRGBO(140, 2, 248, 1)),
+                _filterCard("Bird", FontAwesomeIcons.crow,
+                    const Color.fromRGBO(246, 166, 65, 1)),
+                _filterCard("Fish", FontAwesomeIcons.fish,
+                    const Color.fromRGBO(251, 68, 68, 1)),
+              ],
             ),
-            Container(
-              padding: const EdgeInsets.all(20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _filterCard("Dog", FontAwesomeIcons.dog,
-                      const Color.fromRGBO(64, 142, 234, 1)),
-                  _filterCard("Cat", FontAwesomeIcons.cat,
-                      const Color.fromRGBO(140, 2, 248, 1)),
-                  _filterCard("Bird", FontAwesomeIcons.crow,
-                      const Color.fromRGBO(246, 166, 65, 1)),
-                  _filterCard("Fish", FontAwesomeIcons.fish,
-                      const Color.fromRGBO(251, 68, 68, 1)),
-                ],
-              ),
-            ),
-            Align(
-              alignment: Alignment.topLeft,
-              child: Padding(
-                  padding: const EdgeInsets.only(left: 20, top: 20, bottom: 20),
-                  child: _tittleText("Our Products")),
-            ),
-            Expanded(
-                child: ListView.builder(
-                    padding: const EdgeInsets.only(left: 25, right: 25),
-                    itemCount: entries.length,
-                    itemBuilder: (context, index) {
-                      return _cardProduct(entries[index]);
-                    })),
-          ],
-        ),
+          ),
+          Align(
+            alignment: Alignment.topLeft,
+            child: Padding(
+                padding: const EdgeInsets.only(left: 20, top: 20, bottom: 20),
+                child: _tittleText("Our Products")),
+          ),
+          Expanded(
+              child: ListView.builder(
+                  padding: const EdgeInsets.only(left: 25, right: 25),
+                  itemCount: entries.length,
+                  itemBuilder: (context, index) {
+                    return _cardProduct(entries[index]);
+                  })),
+        ],
       ),
     );
   }
@@ -162,7 +160,7 @@ class PageStoreState extends State<PageStore> {
             () => ProductDetail(
                 product.image, product.name, product.storeName, product.price),
             transition: Transition.cupertinoDialog,
-            duration: const Duration(seconds: 1)),
+            duration: const Duration(milliseconds: 250)),
         child: Container(
             padding: const EdgeInsets.only(bottom: 20),
             child: Container(
