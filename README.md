@@ -24,7 +24,7 @@ Follow the guidelines of this page: [Commit guidelines](https://gist.github.com/
 
 [App](https://youtu.be/uQ8ZnTUcQmU)
 
-##Contributors:
+## Contributors:
 
 - [jhadechni](https://github.com/jhadechni)
 - [fabrixiop26](https://github.com/fabrixiop26)
