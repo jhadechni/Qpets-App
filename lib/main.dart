@@ -28,10 +28,10 @@ class BottomNavBar extends StatefulWidget {
 class _BottomNavBarState extends State<BottomNavBar> {
   int pageIndex = 0;
 
-  final page_Home home = page_Home();
+  final PageHome home = PageHome();
   final page_calendar calendar = page_calendar();
   final page_maps maps = page_maps();
-  final page_profile profile = page_profile();
+  final PageProfile profile = PageProfile();
   final PageStore store = const PageStore();
 
   Widget _showPage = page_Home();
@@ -43,11 +43,11 @@ class _BottomNavBarState extends State<BottomNavBar> {
       case 1:
         return store;
       case 2:
-        return maps;
+        return SafeArea(child: maps);
       case 3:
         return calendar;
       case 4:
-        return page_profile();
+        return profile;
       default:
         return const Center(
           child: Text("No ha seleccionado ninguna pagina"),
@@ -91,4 +91,5 @@ class _BottomNavBarState extends State<BottomNavBar> {
               ),
             )),
       );
+
 }

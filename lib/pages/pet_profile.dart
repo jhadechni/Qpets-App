@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:qpets_app/pages/timeline.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 
 class ProfileField extends StatelessWidget {
@@ -90,17 +91,6 @@ class PetProfileWindow extends StatelessWidget {
   }
 }
 
-class CardExample extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return const Card(
-      child: Center(
-        child: Text("ABC"),
-      ),
-    );
-  }
-}
 
 class Carousel extends StatefulWidget {
   @override
@@ -141,7 +131,8 @@ class _CarouselState extends State<Carousel> {
             child: Container(
               width: 4.0,
               height: 4.0,
-              margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 2.0),
+              margin:
+                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 2.0),
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: (Theme.of(context).brightness == Brightness.dark
@@ -169,9 +160,13 @@ class PetTimeLine extends StatelessWidget {
             itemBuilder: (context, index) => index % 2 == 0
                 ? getBottomTile(index, "Event 1")
                 : getUpperTile(index, "Event 1")),
-        const IconButton(
+        IconButton(
             constraints: BoxConstraints(maxHeight: 24, maxWidth: 24),
-            onPressed: null,
+            onPressed: () {
+              Get.to(() => TimeLine(),
+                  duration: const Duration(milliseconds: 250),
+                  transition: Transition.cupertino);
+            },
             icon: const Icon(
               Icons.more_horiz,
               color: Colors.black,
@@ -185,7 +180,8 @@ class PetTimeLine extends StatelessWidget {
     return TimelineTile(
         axis: TimelineAxis.horizontal,
         alignment: TimelineAlign.center,
-        beforeLineStyle: const LineStyle(thickness: 6, color: Color(0xff7F77C6)),
+        beforeLineStyle:
+            const LineStyle(thickness: 6, color: Color(0xff7F77C6)),
         afterLineStyle: const LineStyle(thickness: 6, color: Color(0xff7F77C6)),
         indicatorStyle: IndicatorStyle(
           height: 30,
@@ -248,63 +244,72 @@ class PetProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return SafeArea(
-        child: Column(
-      children: <Widget>[
-        getProfile(),
-        Expanded(
-            // use ListView to handle scroll
-            child: ListView(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                children: <Widget>[
-              Row(children: const [
-                Text("Polar",
-                    style: TextStyle(
-                        fontSize: 24.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black)),
-                IconButton(icon: Icon(Icons.edit), onPressed: null)
-              ]),
-              Container(
-                  height: 250,
-                  padding: const EdgeInsets.only(
-                      top: 16.0, left: 16.0, right: 16.0, bottom: 10.0),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: const Color(0xffE2E2EC)),
-                  child: Carousel([PetProfileWindow(), const Text("Hi")])),
-              const Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 10.0,
-                  ),
-                  child: Text("Timeline",
+    return Scaffold(
+      body: SafeArea(
+          child: Column(
+        children: <Widget>[
+          getProfile(),
+          Expanded(
+              // use ListView to handle scroll
+              child: ListView(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  children: <Widget>[
+                Row(children: const [
+                  Text("Polar",
                       style: TextStyle(
                           fontSize: 24.0,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black))),
-              Container(
-                  height: 120,
-                  constraints: const BoxConstraints(maxHeight: 120),
-                  padding: const EdgeInsets.only(
-                      top: 16.0, left: 16.0, right: 16.0, bottom: 10.0),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: const Color(0xffE2E2EC)),
-                  child: PetTimeLine()),
-              const Padding(padding: EdgeInsets.only(bottom: 16.0))
-            ])),
-      ],
-    ));
+                          color: Colors.black)),
+                  IconButton(icon: Icon(Icons.edit), onPressed: null)
+                ]),
+                Container(
+                    height: 250,
+                    padding: const EdgeInsets.only(
+                        top: 16.0, left: 16.0, right: 16.0, bottom: 10.0),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: const Color(0xffE2E2EC)),
+                    child: Carousel([PetProfileWindow(), const Text("Hi")])),
+                const Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: 10.0,
+                    ),
+                    child: Text("Timeline",
+                        style: TextStyle(
+                            fontSize: 24.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black))),
+                Container(
+                    height: 120,
+                    constraints: const BoxConstraints(maxHeight: 120),
+                    padding: const EdgeInsets.only(
+                        top: 16.0, left: 16.0, right: 16.0, bottom: 10.0),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: const Color(0xffE2E2EC)),
+                    child: PetTimeLine()),
+                const Padding(padding: EdgeInsets.only(bottom: 16.0))
+              ])),
+        ],
+      )),
+    );
   }
 
   Widget getProfile() {
     return Stack(
       alignment: Alignment.topLeft,
       children: [
-        Image.network(
-          "https://i.imgur.com/BpG6vSU.jpg",
-        ),
-        const Padding(padding: EdgeInsets.only(top: 32.0), child: BackButton()),
+        Container(
+            height: 200,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: NetworkImage("https://i.imgur.com/BpG6vSU.jpg"),
+                    fit: BoxFit.fitWidth))),
+        Padding(
+            padding: EdgeInsets.only(top: 32.0),
+            child: BackButton(onPressed: () {
+              Get.back();
+            })),
       ],
     );
   }
