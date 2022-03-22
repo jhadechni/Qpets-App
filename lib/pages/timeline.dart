@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 
 class TimeLine extends StatelessWidget {
@@ -11,61 +12,66 @@ class TimeLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Padding(
-      padding: EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          IconButton(
-            icon: Icon(
-              Icons.arrow_back,
-              color: Colors.black,
-              size: 28,
+    return Scaffold(
+      body: SafeArea(
+          child: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            IconButton(
+              icon: Icon(
+                Icons.arrow_back,
+                color: Colors.black,
+                size: 28,
+              ),
+              onPressed: () {
+                Get.back();
+              },
+              constraints: BoxConstraints(),
+              padding: EdgeInsets.symmetric(vertical: 8),
             ),
-            onPressed: null,
-            constraints: BoxConstraints(),
-            padding: EdgeInsets.symmetric(vertical: 8),
-          ),
-          Text("Polar's Timeline",
-              style: TextStyle(
-                  fontSize: 24.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black)),
-          Expanded(
-              child:
-                  Stack(alignment: AlignmentDirectional.bottomEnd, children: [
-            Container(
-                padding: const EdgeInsets.all(16.0),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: const Color(0xffE2E2EC)),
-                child: ListView.builder(
-                    itemExtent: 60,
-                    itemCount: 10,
-                    itemBuilder: (context, index) => index % 2 == 0
-                        ? getRightTile(index, "Event 1")
-                        : getLeftTile(index, "Event 2"))),
-            Padding(
-                padding: EdgeInsets.all(8),
-                child: ElevatedButton(
-                    onPressed: () {
-                      showModalBottomSheet(
-                          barrierColor: Colors.black.withOpacity(0.1),
-                          backgroundColor: Colors.transparent,
-                          context: context,
-                          builder: (context) => getDialog(context));
-                    },
-                    child: Icon(
-                      Icons.add,
-                      color: Color(0xff383558),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                        primary: Color(0xffC4C4C4),
-                        fixedSize: const Size(24, 24),
-                        shape: const CircleBorder())))
-          ])),
-        ],
-      ),
+            Text("Polar's Timeline",
+                style: TextStyle(
+                    fontSize: 24.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black)),
+            Expanded(
+                child:
+                    Stack(alignment: AlignmentDirectional.bottomEnd, children: [
+              Container(
+                  padding: const EdgeInsets.all(16.0),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: const Color(0xffE2E2EC)),
+                  child: ListView.builder(
+                      itemExtent: 60,
+                      itemCount: 10,
+                      itemBuilder: (context, index) => index % 2 == 0
+                          ? getRightTile(index, "Event 1")
+                          : getLeftTile(index, "Event 2"))),
+              Padding(
+                  padding: EdgeInsets.all(8),
+                  child: ElevatedButton(
+                      onPressed: () {
+                        showModalBottomSheet(
+                            barrierColor: Colors.black.withOpacity(0.1),
+                            backgroundColor: Colors.transparent,
+                            context: context,
+                            builder: (context) => getDialog(context));
+                      },
+                      child: Icon(
+                        Icons.add,
+                        color: Color(0xff383558),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                          primary: Color(0xffC4C4C4),
+                          fixedSize: const Size(24, 24),
+                          shape: const CircleBorder())))
+            ])),
+          ],
+        ),
+      )),
     );
   }
 
