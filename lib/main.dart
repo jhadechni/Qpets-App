@@ -27,8 +27,10 @@ class BottomNavBar extends StatefulWidget {
 
 class _BottomNavBarState extends State<BottomNavBar> {
   int pageIndex = 0;
-  final page_calendar calendar = page_calendar();
+ 
+ 
   final PageHome home = PageHome();
+  final PetProfile calendar = PetProfile();
   final page_maps maps = page_maps();
   final page_profile profile = page_profile();
   final PageStore store = const PageStore();
@@ -44,7 +46,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
       case 2:
         return maps;
       case 3:
-        return page_calendar();
+        return calendar;
       case 4:
         return page_profile();
       default:

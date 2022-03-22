@@ -15,10 +15,10 @@ class ProfileField extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Container(
-      padding: EdgeInsets.only(bottom: 10.0),
+      padding: const EdgeInsets.only(bottom: 10.0),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(field, style: fieldStyle),
-        Padding(padding: EdgeInsets.symmetric(vertical: 5.0)),
+        const Padding(padding: EdgeInsets.symmetric(vertical: 5.0)),
         Text(value, style: fieldValueStyle)
       ]),
     );
@@ -40,7 +40,7 @@ class PetProfileWindow extends StatelessWidget {
                 Expanded(
                     child: ProfileField(
                   field: "Current Age",
-                  value: "9 months",
+                  value: "1 year",
                 )),
                 Expanded(
                     child: ProfileField(
@@ -53,7 +53,7 @@ class PetProfileWindow extends StatelessWidget {
               Expanded(
                   child: ProfileField(
                 field: "Breed",
-                value: "Labrador",
+                value: "Siberian Husky",
               )),
               Expanded(
                   child: ProfileField(
@@ -94,7 +94,7 @@ class CardExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Card(
+    return const Card(
       child: Center(
         child: Text("ABC"),
       ),
@@ -141,7 +141,7 @@ class _CarouselState extends State<Carousel> {
             child: Container(
               width: 4.0,
               height: 4.0,
-              margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 2.0),
+              margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 2.0),
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: (Theme.of(context).brightness == Brightness.dark
@@ -167,12 +167,12 @@ class PetTimeLine extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             itemCount: 4,
             itemBuilder: (context, index) => index % 2 == 0
-                ? getBottomTile(index, "Jaime")
-                : getUpperTile(index, "Jaime")),
-        IconButton(
+                ? getBottomTile(index, "Event 1")
+                : getUpperTile(index, "Event 1")),
+        const IconButton(
             constraints: BoxConstraints(maxHeight: 24, maxWidth: 24),
             onPressed: null,
-            icon: Icon(
+            icon: const Icon(
               Icons.more_horiz,
               color: Colors.black,
             ),
@@ -185,11 +185,11 @@ class PetTimeLine extends StatelessWidget {
     return TimelineTile(
         axis: TimelineAxis.horizontal,
         alignment: TimelineAlign.center,
-        beforeLineStyle: LineStyle(thickness: 6, color: Color(0xff7F77C6)),
-        afterLineStyle: LineStyle(thickness: 6, color: Color(0xff7F77C6)),
+        beforeLineStyle: const LineStyle(thickness: 6, color: Color(0xff7F77C6)),
+        afterLineStyle: const LineStyle(thickness: 6, color: Color(0xff7F77C6)),
         indicatorStyle: IndicatorStyle(
           height: 30,
-          color: Color(0xffF6A641),
+          color: const Color(0xffF6A641),
           drawGap: false,
           iconStyle: IconStyle(
               color: Colors.black, iconData: Icons.pets, fontSize: 22.0),
@@ -197,13 +197,13 @@ class PetTimeLine extends StatelessWidget {
         startChild: Container(
             child: Column(
           children: <Widget>[
-            Text("Feb 20",
+            const Text("Feb 20",
                 style: TextStyle(
                     fontSize: 14.0,
                     fontWeight: FontWeight.bold,
                     color: Colors.black)),
             Text(text,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 8.0,
                     fontWeight: FontWeight.w200,
                     color: Colors.black))
@@ -215,11 +215,11 @@ class PetTimeLine extends StatelessWidget {
     return TimelineTile(
       axis: TimelineAxis.horizontal,
       alignment: TimelineAlign.center,
-      beforeLineStyle: LineStyle(thickness: 6, color: Color(0xff7F77C6)),
-      afterLineStyle: LineStyle(thickness: 6, color: Color(0xff7F77C6)),
+      beforeLineStyle: const LineStyle(thickness: 6, color: Color(0xff7F77C6)),
+      afterLineStyle: const LineStyle(thickness: 6, color: Color(0xff7F77C6)),
       indicatorStyle: IndicatorStyle(
         height: 30,
-        color: Color(0xffF6A641),
+        color: const Color(0xffF6A641),
         drawGap: false,
         iconStyle: IconStyle(
             color: Colors.black, iconData: Icons.pets, fontSize: 22.0),
@@ -227,13 +227,13 @@ class PetTimeLine extends StatelessWidget {
       endChild: Container(
           child: Column(
         children: <Widget>[
-          Text("Feb 20",
+          const Text("Feb 20",
               style: TextStyle(
                   fontSize: 14.0,
                   fontWeight: FontWeight.bold,
                   color: Colors.black)),
           Text(text,
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 8.0,
                   fontWeight: FontWeight.w200,
                   color: Colors.black))
@@ -258,7 +258,7 @@ class PetProfile extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 children: <Widget>[
               Row(children: const [
-                Text("Bolt",
+                Text("Polar",
                     style: TextStyle(
                         fontSize: 24.0,
                         fontWeight: FontWeight.bold,
@@ -272,8 +272,8 @@ class PetProfile extends StatelessWidget {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: const Color(0xffE2E2EC)),
-                  child: Carousel([PetProfileWindow(), Text("Hi")])),
-              Padding(
+                  child: Carousel([PetProfileWindow(), const Text("Hi")])),
+              const Padding(
                   padding: EdgeInsets.symmetric(
                     vertical: 10.0,
                   ),
@@ -284,14 +284,14 @@ class PetProfile extends StatelessWidget {
                           color: Colors.black))),
               Container(
                   height: 120,
-                  constraints: BoxConstraints(maxHeight: 120),
+                  constraints: const BoxConstraints(maxHeight: 120),
                   padding: const EdgeInsets.only(
                       top: 16.0, left: 16.0, right: 16.0, bottom: 10.0),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: const Color(0xffE2E2EC)),
                   child: PetTimeLine()),
-              Padding(padding: EdgeInsets.only(bottom: 16.0))
+              const Padding(padding: EdgeInsets.only(bottom: 16.0))
             ])),
       ],
     ));
@@ -302,7 +302,7 @@ class PetProfile extends StatelessWidget {
       alignment: Alignment.topLeft,
       children: [
         Image.network(
-          "https://ggsc.s3.amazonaws.com/images/uploads/The_Science-Backed_Benefits_of_Being_a_Dog_Owner.jpg",
+          "https://i.imgur.com/BpG6vSU.jpg",
         ),
         const Padding(padding: EdgeInsets.only(top: 32.0), child: BackButton()),
       ],
