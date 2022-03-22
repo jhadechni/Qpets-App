@@ -19,7 +19,6 @@ class Pagehomestate extends State<PageHome> {
     super.initState();
   }
 
-class page_Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,8 +99,7 @@ class page_Home extends StatelessWidget {
                     children: [
                       _cardImage2(
                           'https://media.discordapp.net/attachments/955549239801446473/955561331161976922/unsplash_OA9103M2gSs.png'),
-                      _titulo(
-                          'Don’t forget to walk with your pets.'),
+                      _titulo('Don’t forget to walk with your pets.'),
                       _carddescripcion(
                           'Dog owners enjoy numerous health and social benefits by walking their dog a few times a week. Benefits include improved cardiovascular fitness, lower blood pressure more...')
                     ],
@@ -172,7 +170,8 @@ class page_Home extends StatelessWidget {
                 image: NetworkImage(link), fit: BoxFit.fitWidth),
             borderRadius: BorderRadius.circular(10)));
   }
-    Widget _cardImage2(String link) {
+
+  Widget _cardImage2(String link) {
     return Container(
         width: 400,
         height: 80,
@@ -181,7 +180,6 @@ class page_Home extends StatelessWidget {
                 image: NetworkImage(link), fit: BoxFit.fitWidth),
             borderRadius: BorderRadius.circular(10)));
   }
-
 
   Widget _carddescripcioneventos(String descripcion) {
     return Text(
@@ -194,7 +192,8 @@ class page_Home extends StatelessWidget {
       textAlign: TextAlign.right,
     );
   }
- Widget _titulo(String descripcion) {
+
+  Widget _titulo(String descripcion) {
     return Text(
       '$descripcion',
       style: const TextStyle(
