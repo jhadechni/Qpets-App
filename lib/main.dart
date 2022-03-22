@@ -27,12 +27,11 @@ class BottomNavBar extends StatefulWidget {
 
 class _BottomNavBarState extends State<BottomNavBar> {
   int pageIndex = 0;
- 
 
   final PageHome home = PageHome();
   final page_calendar calendar = page_calendar();
   final page_maps maps = page_maps();
-  final page_profile profile = page_profile();
+  final PageProfile profile = PageProfile();
   final PageStore store = const PageStore();
 
   Widget _showPage = PageHome();
