@@ -19,6 +19,7 @@ class Pagehomestate extends State<PageHome> {
     super.initState();
   }
 
+class page_Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
