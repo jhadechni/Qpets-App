@@ -171,7 +171,7 @@ class PageProfileState extends State<PageProfile> {
   Widget _petProfileCard(String name, String age, String breed, String link) {
     return GestureDetector(
         onTap: (() => Get.to(
-              () => PetProfileWindow(),
+              () => const PetProfile(),
               transition: Transition.cupertinoDialog,
               duration: const Duration(milliseconds: 250),
             )),
