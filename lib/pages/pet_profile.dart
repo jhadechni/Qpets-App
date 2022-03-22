@@ -141,7 +141,8 @@ class _CarouselState extends State<Carousel> {
             child: Container(
               width: 4.0,
               height: 4.0,
-              margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 2.0),
+              margin:
+                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 2.0),
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: (Theme.of(context).brightness == Brightness.dark
@@ -185,7 +186,8 @@ class PetTimeLine extends StatelessWidget {
     return TimelineTile(
         axis: TimelineAxis.horizontal,
         alignment: TimelineAlign.center,
-        beforeLineStyle: const LineStyle(thickness: 6, color: Color(0xff7F77C6)),
+        beforeLineStyle:
+            const LineStyle(thickness: 6, color: Color(0xff7F77C6)),
         afterLineStyle: const LineStyle(thickness: 6, color: Color(0xff7F77C6)),
         indicatorStyle: IndicatorStyle(
           height: 30,
@@ -301,9 +303,12 @@ class PetProfile extends StatelessWidget {
     return Stack(
       alignment: Alignment.topLeft,
       children: [
-        Image.network(
-          "https://i.imgur.com/BpG6vSU.jpg",
-        ),
+        Container(
+            height: 200,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: NetworkImage("https://i.imgur.com/BpG6vSU.jpg"),
+                    fit: BoxFit.fitWidth))),
         const Padding(padding: EdgeInsets.only(top: 32.0), child: BackButton()),
       ],
     );

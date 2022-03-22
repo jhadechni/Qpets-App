@@ -27,8 +27,7 @@ class BottomNavBar extends StatefulWidget {
 
 class _BottomNavBarState extends State<BottomNavBar> {
   int pageIndex = 0;
- 
- 
+
   final PageHome home = PageHome();
   final PetProfile calendar = PetProfile();
   final page_maps maps = page_maps();
@@ -90,5 +89,5 @@ class _BottomNavBarState extends State<BottomNavBar> {
             child: _showPage,
           ),
         ));
-  } 
   }
+}
