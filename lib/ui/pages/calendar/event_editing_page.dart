@@ -5,6 +5,7 @@ import 'package:qpets_app/utils/utils.dart';
 import 'package:provider/provider.dart';
 
 import '../../provider/event_provider.dart';
+
 class EventEditingPage extends StatefulWidget {
   final Event? event;
   const EventEditingPage({
@@ -30,6 +31,12 @@ class _EventEditingPageState extends State<EventEditingPage> {
   }
 
   @override
+  void dispose() {
+    titleController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           leading: CloseButton(),
@@ -46,7 +53,6 @@ class _EventEditingPageState extends State<EventEditingPage> {
                 buildTitle(),
                 SizedBox(height: 12),
                 buildDateTimePickers(),
-                
               ],
             ), // Column
           ), // Form
@@ -56,8 +62,8 @@ class _EventEditingPageState extends State<EventEditingPage> {
   List<Widget> buildEditingActions() => [
         ElevatedButton.icon(
           style: ElevatedButton.styleFrom(
-            primary: Colors.transparent,
-            shadowColor: Colors.transparent,
+            primary: const Color(0xFF8E6FD8),
+            shadowColor: const Color(0xFF8E6FD8),
           ),
           onPressed: saveForm,
           icon: Icon(Icons.done),
@@ -71,133 +77,137 @@ class _EventEditingPageState extends State<EventEditingPage> {
           border: UnderlineInputBorder(),
           hintText: "Add Title",
         ),
-        onFieldSubmitted:(_)=> saveForm,
-        validator: (title)=>
-        title != null && title.isEmpty? "Title Cannotbe Empty" :null,
+        onFieldSubmitted: (_) => saveForm(),
+        validator: (title) =>
+            title != null && title.isEmpty ? "Title Cannotbe Empty" : null,
         controller: titleController,
       );
-  Widget buildDateTimePickers () =>Column(
-    children: [
-      buildFrom(),
-      buildTo()
-    ],
-  );
-  Widget buildFrom()=>buildHeader(
-    header:"FROM",
-    child: Row(
-      children: [
-        Expanded(
-          flex:2,
-          child: buildDropdownField(
-          text:Utils.toDate(fromDate),
-          onClicked:()=>pickFromDateTime(pickDate:true),
-        ),),
-        Expanded(
-          child: buildDropdownField(
-          text:Utils.toTime(fromDate),
-          onClicked:()=>pickFromDateTime(pickDate:false),
-        ),),
-      ],
-    ),
-  );
-  
-  Widget buildTo()=>buildHeader(
-    header:"TO",
-    child: Row(
-      children: [
-        Expanded(
-          flex:2,
-          child: buildDropdownField(
-          text:Utils.toDate(toDate),
-          onClicked:()=>pickToDateTime(pickDate:true),
-        ),),
-        Expanded(
-          child: buildDropdownField(
-          text:Utils.toTime(toDate),
-          onClicked:()=>pickToDateTime(pickDate:false),
-        ),),
-      ],
-    ),
-  );
+  Widget buildDateTimePickers() => Column(
+        children: [buildFrom(), buildTo()],
+      );
+  Widget buildFrom() => buildHeader(
+        header: "FROM",
+        child: Row(
+          children: [
+            Expanded(
+              flex: 2,
+              child: buildDropdownField(
+                text: Utils.toDate(fromDate),
+                onClicked: () => pickFromDateTime(pickDate: true),
+              ),
+            ),
+            Expanded(
+              child: buildDropdownField(
+                text: Utils.toTime(fromDate),
+                onClicked: () => pickFromDateTime(pickDate: false),
+              ),
+            ),
+          ],
+        ),
+      );
+
+  Widget buildTo() => buildHeader(
+        header: "TO",
+        child: Row(
+          children: [
+            Expanded(
+              flex: 2,
+              child: buildDropdownField(
+                text: Utils.toDate(toDate),
+                onClicked: () => pickToDateTime(pickDate: true),
+              ),
+            ),
+            Expanded(
+              child: buildDropdownField(
+                text: Utils.toTime(toDate),
+                onClicked: () => pickToDateTime(pickDate: false),
+              ),
+            ),
+          ],
+        ),
+      );
   Future pickFromDateTime({required bool pickDate}) async {
-  final date = await pickDateTime(fromDate,pickDate:pickDate);
-  if (date == null) return;
-  if(date.isAfter(toDate)){
-    toDate = DateTime (date.year,date.month ,date.day,toDate.hour,toDate.minute);
+    final date = await pickDateTime(fromDate, pickDate: pickDate);
+    if (date == null) return;
+    if (date.isAfter(toDate)) {
+      toDate =
+          DateTime(date.year, date.month, date.day, toDate.hour, toDate.minute);
+    }
+    setState(() => fromDate = date);
   }
-  setState(() =>fromDate =date); 
-}
+
   Future pickToDateTime({required bool pickDate}) async {
-  final date = await pickDateTime(toDate,pickDate:pickDate,firstDate: pickDate?fromDate:null);
-  if (date == null) return;
- 
-  setState(() =>toDate =date); 
-}
-  Future<DateTime?> pickDateTime(
- DateTime initialDate, {
-  required bool pickDate,
- DateTime? firstDate,
-}) async {
-  if (pickDate){
-    final date = await showDatePicker(
-      context: context,
-    initialDate: initialDate,
-    firstDate: firstDate?? DateTime(2015,8),
-    lastDate: DateTime(2101),
-    );
-    if (date==null)return null;
-    final time = Duration(hours: initialDate.hour,minutes:initialDate.minute);
-    return date.add(time);
-    
-  }else{
-    final timeOfDay = await showTimePicker(
-  context: context,
-  initialTime: TimeOfDay.fromDateTime(initialDate),);
-    if ( timeOfDay ==null)return null;
-    final date = DateTime(initialDate.year,initialDate.month, initialDate.day);
-    final time = Duration (hours: timeOfDay.hour, minutes: timeOfDay.minute);
-    return date.add(time);
+    final date = await pickDateTime(toDate,
+        pickDate: pickDate, firstDate: pickDate ? fromDate : null);
+    if (date == null) return;
+
+    setState(() => toDate = date);
   }
-}
+
+  Future<DateTime?> pickDateTime(
+    DateTime initialDate, {
+    required bool pickDate,
+    DateTime? firstDate,
+  }) async {
+    if (pickDate) {
+      final date = await showDatePicker(
+        context: context,
+        initialDate: initialDate,
+        firstDate: firstDate ?? DateTime(2015, 8),
+        lastDate: DateTime(2101),
+      );
+      if (date == null) return null;
+      final time =
+          Duration(hours: initialDate.hour, minutes: initialDate.minute);
+      return date.add(time);
+    } else {
+      final timeOfDay = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.fromDateTime(initialDate),
+      );
+      if (timeOfDay == null) return null;
+      final date =
+          DateTime(initialDate.year, initialDate.month, initialDate.day);
+      final time = Duration(hours: timeOfDay.hour, minutes: timeOfDay.minute);
+      return date.add(time);
+    }
+  }
 
   Widget buildDropdownField({
-  required String text,
-  required VoidCallback onClicked,
-}) =>
-    ListTile(
-      title: Text(text),
-      trailing: Icon(Icons.arrow_drop_down),
-      onTap: onClicked,
+    required String text,
+    required VoidCallback onClicked,
+  }) =>
+      ListTile(
+        title: Text(text),
+        trailing: Icon(Icons.arrow_drop_down),
+        onTap: onClicked,
+      );
 
-   ); 
-
-   Widget buildHeader ({
-  required String header,
-  required Widget child,
-}) =>
-    Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(header,style:TextStyle(fontWeight: FontWeight.bold)),
-        child,
-      ],
-    );
-    Future saveForm() async {
-      final isValid = _formKey.currentState!.validate();
-      if (isValid) {
-        final event = Event (
+  Widget buildHeader({
+    required String header,
+    required Widget child,
+  }) =>
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(header, style: TextStyle(fontWeight: FontWeight.bold)),
+          child,
+        ],
+      );
+  Future saveForm() async {
+    final isValid = _formKey.currentState!.validate();
+    if (isValid) {
+      final event = Event(
           title: titleController.text,
           description: 'Description',
           from: fromDate,
           to: toDate,
-          isAllDay: false
-      );
-  
-          final provider = Provider.of<EventProvider>(context,listen:true);
-          provider.addEvent(event);
-          Navigator.of(context).pop();
-      }
+          isAllDay: false);
+
+      
+      final provider = Provider.of<EventProvider>(context, listen: false);
+      provider.addEvent(event);
+      Navigator.of(context).pop();
     }
-
-
+  }
 }

@@ -10,14 +10,31 @@ import 'package:qpets_app/ui/pages/page_maps.dart';
 import 'package:qpets_app/ui/pages/page_profile.dart';
 import 'package:qpets_app/ui/pages/page_store.dart';
 import 'package:provider/provider.dart';
+
+class Palette {
+  static const MaterialColor ourPurple = MaterialColor(
+    0xFF8E6FD8, // 0% comes in here, this will be color picked if no shade is selected when defining a Color property which doesn’t require a swatch.
+    <int, Color>{
+      50: Color(0x8064c2), //10%
+      100: Color(0x7259ad), //20%
+      200: Color(0x634e97), //30%
+      300: Color(0x554382), //40%
+      400: Color(0x47386c), //50%
+      500: Color(0x392c56), //60%
+      600: Color(0x2b2141), //70%
+      700: Color(0x1c162b), //80%
+      800: Color(0x0e0b16), //90%
+      900: Color(0x000000), //100%
+    },
+  );
+}
+
 void main() => runApp(GetMaterialApp(
     home: const BottomNavBar(),
     debugShowCheckedModeBanner: false,
-    
     theme: ThemeData(
-      textTheme: GoogleFonts.robotoTextTheme(),
-      primarySwatch: Colors.purple
-    )));
+        textTheme: GoogleFonts.robotoTextTheme(),
+        primarySwatch: Palette.ourPurple)));
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({Key? key}) : super(key: key);
@@ -59,38 +76,34 @@ class _BottomNavBarState extends State<BottomNavBar> {
   final GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
 
   @override
-  Widget build(BuildContext context) => ChangeNotifierProvider(
-        create: (context) => EventProvider(),
-        child: Scaffold(
-            bottomNavigationBar: CurvedNavigationBar(
-              key: _bottomNavigationKey,
-              index: pageIndex,
-              height: 75,
-              items: const <Widget>[
-                Icon(FontAwesomeIcons.house, size: 30),
-                Icon(FontAwesomeIcons.bagShopping, size: 30),
-                Icon(FontAwesomeIcons.mapLocation, size: 30),
-                Icon(FontAwesomeIcons.calendarCheck, size: 30),
-                Icon(FontAwesomeIcons.userLarge, size: 30),
-              ],
-              color: const Color(0xFF8E6FD8),
-              buttonBackgroundColor: const Color(0xFFF6A641),
-              backgroundColor: Colors.transparent,
-              animationCurve: Curves.easeInOut,
-              animationDuration: const Duration(milliseconds: 170),
-              onTap: (int tappedIndex) {
-                setState(() {
-                  _showPage = _pageChooser(tappedIndex);
-                });
-              },
-              letIndexChange: (index) => true,
-            ),
-            body: Container(
-              color: Colors.transparent,
-              child: Center(
-                child: _showPage,
-              ),
-            )),
-      );
-
+  Widget build(BuildContext context) => Scaffold(
+      bottomNavigationBar: CurvedNavigationBar(
+        key: _bottomNavigationKey,
+        index: pageIndex,
+        height: 75,
+        items: const <Widget>[
+          Icon(FontAwesomeIcons.house, size: 30),
+          Icon(FontAwesomeIcons.bagShopping, size: 30),
+          Icon(FontAwesomeIcons.mapLocation, size: 30),
+          Icon(FontAwesomeIcons.calendarCheck, size: 30),
+          Icon(FontAwesomeIcons.userLarge, size: 30),
+        ],
+        color: const Color(0xFF8E6FD8),
+        buttonBackgroundColor: const Color(0xFFF6A641),
+        backgroundColor: Colors.transparent,
+        animationCurve: Curves.easeInOut,
+        animationDuration: const Duration(milliseconds: 170),
+        onTap: (int tappedIndex) {
+          setState(() {
+            _showPage = _pageChooser(tappedIndex);
+          });
+        },
+        letIndexChange: (index) => true,
+      ),
+      body: Container(
+        color: Colors.transparent,
+        child: Center(
+          child: _showPage,
+        ),
+      ));
 }

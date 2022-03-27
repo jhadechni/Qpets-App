@@ -6,6 +6,8 @@ class calendar_widget extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
+    final events Provider.of<EventProvider>(context).events; 
+
     return SfCalendar(
       view: CalendarView.month,
       initialSelectedDate: DateTime.now(),
