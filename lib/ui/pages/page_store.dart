@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:qpets_app/controllers/products_controller.dart';
 import 'package:qpets_app/ui/pages/produc_detail.dart';
 import '../../domain/product.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -14,33 +15,9 @@ class PageStore extends StatefulWidget {
 }
 
 class PageStoreState extends State<PageStore> {
-  List<Product> entries = <Product>[];
+  final ProductController _productController = Get.find();
   @override
   void initState() {
-    entries.add(Product(
-        0,
-        "https://cdn.discordapp.com/attachments/833897513349021706/955338658792243220/unsplash_Sm7ebvMgi-E_1.png",
-        "Product name",
-        "Store name",
-        "200"));
-    entries.add(Product(
-        1,
-        "https://cdn.discordapp.com/attachments/833897513349021706/955338900002455642/unsplash_2hpiy9XuXC4.png",
-        "Product name",
-        "Store name",
-        "200"));
-    entries.add(Product(
-        2,
-        "https://cdn.discordapp.com/attachments/833897513349021706/955339290785742858/unsplash_FiQNJA-CND4.png",
-        "Product name",
-        "Store name",
-        "200"));
-    entries.add(Product(
-        3,
-        "https://cdn.discordapp.com/attachments/833897513349021706/955338658792243220/unsplash_Sm7ebvMgi-E_1.png",
-        "Product name",
-        "Store name",
-        "200"));
     super.initState();
   }
 
@@ -51,7 +28,8 @@ class PageStoreState extends State<PageStore> {
         children: [
           Padding(
             padding: const EdgeInsets.all(20),
-            child: SearchBar((function) => {},"Search for a Product"),
+            child: SearchBar(
+                (function) => {print(function)}, "Search for a Product"),
           ),
           Align(
             alignment: Alignment.topLeft,
@@ -82,12 +60,12 @@ class PageStoreState extends State<PageStore> {
                 child: _tittleText("Our Products")),
           ),
           Expanded(
-              child: ListView.builder(
+              child: Obx(() => ListView.builder(
                   padding: const EdgeInsets.only(left: 25, right: 25),
-                  itemCount: entries.length,
+                  itemCount: _productController.filteredList.length,
                   itemBuilder: (context, index) {
-                    return _cardProduct(entries[index]);
-                  })),
+                    return _cardProduct(_productController.filteredList[index]);
+                  }))),
         ],
       ),
     );
@@ -105,57 +83,63 @@ class PageStoreState extends State<PageStore> {
   }
 
   Widget _filterCard(String text, IconData icon, Color color) {
-    return Container(
-      width: 81,
-      height: 100,
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(23),
-          color: color,
-          boxShadow: [
-            BoxShadow(
-              color: color.withAlpha(100),
-              blurRadius: 3,
-              spreadRadius: 3,
-              offset: const Offset(
-                0,
-                2,
+    return GestureDetector(
+      onTap: () {
+        _productController.changeFilter(text);
+        _productController.filterCategory(text);
+      },
+      child: Container(
+        width: 81,
+        height: 100,
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(23),
+            color: color,
+            boxShadow: [
+              BoxShadow(
+                color: color.withAlpha(100),
+                blurRadius: 3,
+                spreadRadius: 3,
+                offset: const Offset(
+                  0,
+                  2,
+                ),
+              ),
+            ]),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              width: 50,
+              height: 50,
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.elliptical(46, 43)),
+                boxShadow: [
+                  const BoxShadow(
+                    color: Colors.black26,
+                  ),
+                  BoxShadow(
+                    color: color,
+                    spreadRadius: -20,
+                    blurRadius: 10,
+                  ),
+                ],
+              ),
+              child: Icon(
+                icon,
+                color: Colors.white,
               ),
             ),
-          ]),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-            width: 50,
-            height: 50,
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(Radius.elliptical(46, 43)),
-              boxShadow: [
-                const BoxShadow(
-                  color: Colors.black26,
-                ),
-                BoxShadow(
-                  color: color,
-                  spreadRadius: -20,
-                  blurRadius: 10,
-                ),
-              ],
-            ),
-            child: Icon(
-              icon,
-              color: Colors.white,
-            ),
-          ),
-          Text(
-            text,
-            style: const TextStyle(
-              color: Color.fromRGBO(255, 255, 255, 1),
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-            ),
-          )
-        ],
+            Text(
+              text,
+              style: const TextStyle(
+                color: Color.fromRGBO(255, 255, 255, 1),
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
