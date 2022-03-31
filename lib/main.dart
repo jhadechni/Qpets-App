@@ -29,12 +29,14 @@ class Palette {
   );
 }
 
-void main() => runApp(GetMaterialApp(
-    home: const BottomNavBar(),
-    debugShowCheckedModeBanner: false,
-    theme: ThemeData(
-        textTheme: GoogleFonts.robotoTextTheme(),
-        primarySwatch: Palette.ourPurple)));
+void main() => runApp(ChangeNotifierProvider(
+    create: (context) => EventProvider(),
+    child: GetMaterialApp(
+        home: const BottomNavBar(),
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+            textTheme: GoogleFonts.robotoTextTheme(),
+            primarySwatch: Palette.ourPurple))));
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({Key? key}) : super(key: key);

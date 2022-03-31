@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qpets_app/domain/event.dart';
+import 'package:qpets_app/domain/calendar/event.dart';
 
 import 'package:qpets_app/utils/utils.dart';
 import 'package:provider/provider.dart';
@@ -38,26 +38,26 @@ class _EventEditingPageState extends State<EventEditingPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          leading: CloseButton(),
-          actions: buildEditingActions(),
-          backgroundColor: const Color(0xFF8E6FD8),
-        ),
-        body: SingleChildScrollView(
-          padding: EdgeInsets.all(12),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                buildTitle(),
-                SizedBox(height: 12),
-                buildDateTimePickers(),
-              ],
-            ), // Column
-          ), // Form
-        ), // SingleChildScrollView
-      );
+          appBar: AppBar(
+            leading: CloseButton(),
+            actions: buildEditingActions(),
+            backgroundColor: const Color(0xFF8E6FD8),
+          ),
+          body: SingleChildScrollView(
+            padding: EdgeInsets.all(12),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  buildTitle(),
+                  SizedBox(height: 12),
+                  buildDateTimePickers(),
+                ],
+              ), // Column
+            ), // Form
+          ), // SingleChildScrollView
+        );
 
   List<Widget> buildEditingActions() => [
         ElevatedButton.icon(
@@ -204,7 +204,6 @@ class _EventEditingPageState extends State<EventEditingPage> {
           to: toDate,
           isAllDay: false);
 
-      
       final provider = Provider.of<EventProvider>(context, listen: false);
       provider.addEvent(event);
       Navigator.of(context).pop();
