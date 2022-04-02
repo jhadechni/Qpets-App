@@ -7,7 +7,7 @@ typedef SearchBarTextChangeCallback = void Function(String s);
 
 class SearchBar extends StatelessWidget {
   final SearchBarTextChangeCallback? onTextChangeCallback;
-  final SearchBarTextChangeCallback? onSearchPressed;
+  final VoidCallback? onSearchPressed;
   final String placeholder;
   final TextEditingController _controller = TextEditingController();
   SearchBar(
@@ -17,7 +17,7 @@ class SearchBar extends StatelessWidget {
       String initialSearch = ""}) {
     _controller.text = initialSearch;
     if (initialSearch.isNotEmpty) {
-      onSearchPressed?.call(_controller.text);
+      onSearchPressed?.call();
     }
   }
   @override
@@ -60,7 +60,7 @@ class SearchBar extends StatelessWidget {
             ]),
         child: Center(
             child: GestureDetector(
-          onTap: () => onSearchPressed?.call(_controller.text),
+          onTap: () => onSearchPressed?.call(),
           child: Icon(
             Icons.search,
             color: Colors.white,
