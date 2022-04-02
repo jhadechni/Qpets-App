@@ -79,7 +79,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
               ],
               color: const Color(0xFF8E6FD8),
               buttonBackgroundColor: const Color(0xFFF6A641),
-              backgroundColor: Colors.transparent,
+              backgroundColor: Colors.transparent.withOpacity(0),
               animationCurve: Curves.easeInOut,
               animationDuration: const Duration(milliseconds: 170),
               onTap: (int tappedIndex) {

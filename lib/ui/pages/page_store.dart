@@ -4,7 +4,6 @@ import 'package:qpets_app/controllers/products_controller.dart';
 import 'package:qpets_app/ui/pages/produc_detail.dart';
 import '../../domain/product.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 import '../../shared/search_bar.dart';
 
 class PageStore extends StatefulWidget {
@@ -28,8 +27,7 @@ class PageStoreState extends State<PageStore> {
         children: [
           Padding(
             padding: const EdgeInsets.all(20),
-            child: SearchBar(
-                (function) => {print(function)}, "Search for a Product"),
+            child: SearchBar((s) => {print(s)}, "Search for a Product"),
           ),
           Align(
             alignment: Alignment.topLeft,
@@ -39,18 +37,20 @@ class PageStoreState extends State<PageStore> {
           ),
           Container(
             padding: const EdgeInsets.all(20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _filterCard("Dog", FontAwesomeIcons.dog,
-                    const Color.fromRGBO(64, 142, 234, 1)),
-                _filterCard("Cat", FontAwesomeIcons.cat,
-                    const Color.fromRGBO(140, 2, 248, 1)),
-                _filterCard("Bird", FontAwesomeIcons.crow,
-                    const Color.fromRGBO(246, 166, 65, 1)),
-                _filterCard("Fish", FontAwesomeIcons.fish,
-                    const Color.fromRGBO(251, 68, 68, 1)),
-              ],
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  _filterCard("Dog", FontAwesomeIcons.dog,
+                      const Color.fromRGBO(64, 142, 234, 1)),
+                  _filterCard("Cat", FontAwesomeIcons.cat,
+                      const Color.fromRGBO(140, 2, 248, 1)),
+                  _filterCard("Bird", FontAwesomeIcons.crow,
+                      const Color.fromRGBO(246, 166, 65, 1)),
+                  _filterCard("Fish", FontAwesomeIcons.fish,
+                      const Color.fromRGBO(251, 68, 68, 1)),
+                ],
+              ),
             ),
           ),
           Align(
@@ -60,12 +60,15 @@ class PageStoreState extends State<PageStore> {
                 child: _tittleText("Our Products")),
           ),
           Expanded(
-              child: Obx(() => ListView.builder(
-                  padding: const EdgeInsets.only(left: 25, right: 25),
-                  itemCount: _productController.filteredList.length,
-                  itemBuilder: (context, index) {
-                    return _cardProduct(_productController.filteredList[index]);
-                  }))),
+              child: Obx(() => ListView(
+                    children: _productController.filteredList
+                        .map((product) => Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 25, right: 25),
+                              child: _cardProduct(product),
+                            ))
+                        .toList(),
+                  ))),
         ],
       ),
     );
@@ -170,6 +173,7 @@ class PageStoreState extends State<PageStore> {
                     children: [
                       _cardTitleText(product.name),
                       _cardSubtitleText(product.storeName),
+                      _cardSubtitleText("for: ${product.type}"),
                       _cardPriceText(product.price)
                     ],
                   )

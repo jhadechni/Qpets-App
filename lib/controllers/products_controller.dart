@@ -1,8 +1,12 @@
 import 'package:get/get.dart';
-
 import '../domain/product.dart';
 
 class ProductController extends GetxController {
+
+  ProductController() {
+    filterCategory("");
+  }
+
   RxList<Product> products = [
     Product(
         0,
@@ -40,7 +44,8 @@ class ProductController extends GetxController {
         "200",
         "Bird")
   ].obs;
-  List<Product> filteredList = [Product(0, "", "", "", "", "")].obs;
+
+  RxList<Product> filteredList = <Product>[].obs;
   final filter = "".obs;
 
   String get getFilter {
@@ -49,12 +54,16 @@ class ProductController extends GetxController {
 
   void changeFilter(String newfilter) {
     filter.value = newfilter;
-    print(filter.value);
   }
 
   void filterCategory(String newFilter) {
-    List<Product> a = products.where((p0) => p0.type == newFilter).toList();
-    filteredList = a;
-    print(filteredList[0].type);
+    List<Product> copyOfProducts = List<Product>.from(products);
+    
+    if (newFilter.isEmpty) {
+      filteredList.value = copyOfProducts;
+    } else {
+      filteredList.value = copyOfProducts.where((p0) => p0.type == newFilter).toList();
+    }
+    filteredList.refresh();
   }
 }

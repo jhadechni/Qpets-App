@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../controllers/products_controller.dart';
 
 typedef SearchBarCallBack = void Function(String s);
 
 class SearchBar extends StatelessWidget {
+  final ProductController _productController = Get.find();
   final SearchBarCallBack _callback;
   final String _placeholder;
   final TextEditingController _controller = TextEditingController();
@@ -45,12 +49,15 @@ class SearchBar extends StatelessWidget {
                 offset: const Offset(0, 0), // changes position of shadow
               ),
             ]),
-        child: const Center(
-            child: Icon(
-          Icons.search,
-          color: Colors.white,
-          size: 46.0,
-        )),
+        child:  Center(
+            child: GestureDetector(
+              onTap: () => _productController.filterCategory("Dog"),
+              child: Icon(
+                      Icons.search,
+                      color: Colors.white,
+                      size: 46.0,
+                    ),
+            )),
       )
     ]);
   }
