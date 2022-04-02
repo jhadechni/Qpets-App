@@ -58,8 +58,8 @@ class ProductController extends GetxController {
 
   void filterCategory(String newFilter) {
     List<Product> copyOfProducts = List<Product>.from(products);
-    
-    if (newFilter.isEmpty) {
+
+    if (newFilter.isEmpty || newFilter == "All") {
       filteredList.value = copyOfProducts;
     } else {
       filteredList.value = copyOfProducts.where((p0) => p0.type == newFilter).toList();

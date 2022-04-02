@@ -27,7 +27,9 @@ class PageStoreState extends State<PageStore> {
         children: [
           Padding(
             padding: const EdgeInsets.all(20),
-            child: SearchBar(placeholder: "Search for a Product"),
+            child: SearchBar(
+              placeholder: "Search for a Product",
+              onTextChangeCallback:(s) => _productController.filterCategory(s)),
           ),
           Align(
             alignment: Alignment.topLeft,
@@ -35,22 +37,24 @@ class PageStoreState extends State<PageStore> {
                 padding: const EdgeInsets.only(left: 20, top: 20),
                 child: _tittleText("Pet Categories")),
           ),
-          Container(
+          SingleChildScrollView(
             padding: const EdgeInsets.all(20),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  _filterCard("Dog", FontAwesomeIcons.dog,
-                      const Color.fromRGBO(64, 142, 234, 1)),
-                  _filterCard("Cat", FontAwesomeIcons.cat,
-                      const Color.fromRGBO(140, 2, 248, 1)),
-                  _filterCard("Bird", FontAwesomeIcons.crow,
-                      const Color.fromRGBO(246, 166, 65, 1)),
-                  _filterCard("Fish", FontAwesomeIcons.fish,
-                      const Color.fromRGBO(251, 68, 68, 1)),
-                ],
-              ),
+            scrollDirection: Axis.horizontal,
+            child: Wrap(
+              alignment: WrapAlignment.spaceBetween,
+              spacing: 10,
+              children: [
+                _filterCard("All", FontAwesomeIcons.angellist,
+                    Colors.grey),
+                _filterCard("Dog", FontAwesomeIcons.dog,
+                    const Color.fromRGBO(64, 142, 234, 1)),
+                _filterCard("Cat", FontAwesomeIcons.cat,
+                    const Color.fromRGBO(140, 2, 248, 1)),
+                _filterCard("Bird", FontAwesomeIcons.dove,
+                    const Color.fromRGBO(246, 166, 65, 1)),
+                _filterCard("Fish", FontAwesomeIcons.fish,
+                    const Color.fromRGBO(251, 68, 68, 1)),
+              ],
             ),
           ),
           Align(
@@ -150,8 +154,7 @@ class PageStoreState extends State<PageStore> {
   Widget _cardProduct(Product product) {
     return GestureDetector(
         onTap: () => Get.to(
-            () => ProductDetail(
-                product.image, product.name, product.storeName, product.price),
+            () => ProductDetail(product),
             transition: Transition.cupertinoDialog,
             duration: const Duration(milliseconds: 250)),
         child: Container(
