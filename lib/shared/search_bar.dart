@@ -5,15 +5,18 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 typedef SearchBarTextChangeCallback = void Function(String s);
 
 class SearchBar extends StatelessWidget {
-  final SearchBarTextChangeCallback _textCallback;
-  final SearchBarTextChangeCallback _pressCallback;
-  final String _placeholder;
+  final SearchBarTextChangeCallback? onTextChangeCallback;
+  final SearchBarTextChangeCallback? onSearchPressed;
+  final String placeholder;
   final TextEditingController _controller = TextEditingController();
-  SearchBar(this._textCallback, this._placeholder, this._pressCallback,
-      {String initialSearch = ""}) {
+  SearchBar(
+      {this.onTextChangeCallback,
+      required this.placeholder,
+      this.onSearchPressed,
+      String initialSearch = ""}) {
     _controller.text = initialSearch;
     if (initialSearch.isNotEmpty) {
-      _pressCallback(_controller.text);
+      onSearchPressed?.call(_controller.text);
     }
   }
   @override
@@ -22,7 +25,7 @@ class SearchBar extends StatelessWidget {
     return Stack(alignment: AlignmentDirectional.centerEnd, children: [
       TextField(
           style: TextStyle(fontSize: 18),
-          onChanged: ((value) => _textCallback(value)),
+          onChanged: (value) => {onTextChangeCallback?.call(value)},
           autofocus: false,
           controller: _controller,
           textAlignVertical: TextAlignVertical.center,
@@ -38,7 +41,7 @@ class SearchBar extends StatelessWidget {
               contentPadding: const EdgeInsets.symmetric(horizontal: 25.0),
               filled: true,
               fillColor: Color(0xffE7E6EC),
-              hintText: _placeholder)),
+              hintText: placeholder)),
       Container(
         width: 63,
         height: 63,
@@ -55,7 +58,7 @@ class SearchBar extends StatelessWidget {
             ]),
         child: Center(
             child: GestureDetector(
-          onTap: () => _pressCallback(_controller.text),
+          onTap: () => onSearchPressed?.call(_controller.text),
           child: Icon(
             Icons.search,
             color: Colors.white,

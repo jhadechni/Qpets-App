@@ -51,8 +51,7 @@ class PageStoreState extends State<PageStore> {
         children: [
           Padding(
             padding: const EdgeInsets.all(20),
-            child:
-                SearchBar((function) => {}, "Search for a Product", (s) => {}),
+            child: SearchBar(placeholder: "Search for a Product"),
           ),
           Align(
             alignment: Alignment.topLeft,

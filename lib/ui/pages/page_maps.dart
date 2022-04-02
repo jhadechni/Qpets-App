@@ -103,7 +103,7 @@ class MapPageState extends State<MapsPage> {
             children: [
               Padding(
                 padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
-                child: SearchBar((s) => {print(s)}, "Find a place!", (s) => {}),
+                child: SearchBar(placeholder: "Find a place!"),
               ),
               _CategoryButtonBar(),
             ],
