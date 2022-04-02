@@ -1,18 +1,15 @@
 /// CurrentAge: auto-generated
-
-enum Gender { M, F }
-enum Type { dog, cat, bird, hamster }
-
-class PetProfile {
-  Gender gender;
-  Type type;
+class PetProfileFields {
+  String gender;
+  String type;
   String breed;
   bool vaccineCheck;
   double weight;
   bool chipCheck;
   bool neutered;
   String imgUrl;
-  PetProfile(
+  DateTime dob;
+  PetProfileFields(
       {required this.gender,
       required this.type,
       required this.breed,
@@ -20,5 +17,6 @@ class PetProfile {
       required this.weight,
       this.chipCheck = false,
       this.neutered = false,
+      required this.dob,
       required this.imgUrl});
 }

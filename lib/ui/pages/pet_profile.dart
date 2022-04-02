@@ -42,53 +42,56 @@ class _PetProfileWindow extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Row(
-              children: const [
+              children: [
                 Expanded(
                     child: _ProfileField(
                   field: "Current Age",
-                  value: "1 year",
+                  value: DateTime.now()
+                      .difference(controller.profileField.value.dob)
+                      .inDays
+                      .toString(),
                 )),
                 Expanded(
                     child: _ProfileField(
                   field: "Gender",
-                  value: "Male",
+                  value: controller.profileField.value.gender,
                 ))
               ],
             ),
-            Row(children: const [
+            Row(children: [
               Expanded(
                   child: _ProfileField(
                 field: "Breed",
-                value: "Siberian Husky",
+                value: controller.profileField.value.breed,
               )),
               Expanded(
                   child: _ProfileField(
-                field: "Vaccine Check",
-                value: "Yes",
-              ))
+                      field: "Vaccine Check",
+                      value: controller.profileField.value.vaccineCheck
+                          .toString()))
             ]),
-            Row(children: const [
+            Row(children: [
               Expanded(
                   child: _ProfileField(
                 field: "Type",
-                value: "Dog",
+                value: controller.profileField.value.type,
               )),
               Expanded(
                   child: _ProfileField(
                 field: "Weight",
-                value: "20 pounds",
+                value: controller.profileField.value.weight.toString(),
               ))
             ]),
-            Row(children: const [
+            Row(children: [
               Expanded(
                   child: _ProfileField(
                 field: "Chip Check",
-                value: "Yes",
+                value: controller.profileField.value.chipCheck.toString(),
               )),
               Expanded(
                   child: _ProfileField(
                 field: "Spayed and Neutered",
-                value: "Yes",
+                value: controller.profileField.value.neutered.toString(),
               ))
             ]),
           ],
