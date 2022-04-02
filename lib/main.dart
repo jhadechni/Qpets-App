@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qpets_app/controllers/place_controller.dart';
 import 'package:qpets_app/ui/provider/event_provider.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -10,14 +11,19 @@ import 'package:qpets_app/ui/pages/page_maps.dart';
 import 'package:qpets_app/ui/pages/page_profile.dart';
 import 'package:qpets_app/ui/pages/page_store.dart';
 import 'package:provider/provider.dart';
-void main() => runApp(GetMaterialApp(
-    home: const BottomNavBar(),
-    debugShowCheckedModeBanner: false,
-    
-    theme: ThemeData(
-      textTheme: GoogleFonts.robotoTextTheme(),
-      primarySwatch: Colors.purple
-    )));
+
+// import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+void main() {
+  // await dotenv.load(fileName: ".env");
+  Get.put(PlaceController());
+  runApp(GetMaterialApp(
+      home: const BottomNavBar(),
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+          textTheme: GoogleFonts.robotoTextTheme(),
+          primarySwatch: Colors.purple)));
+}
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({Key? key}) : super(key: key);
@@ -92,5 +98,4 @@ class _BottomNavBarState extends State<BottomNavBar> {
               ),
             )),
       );
-
 }

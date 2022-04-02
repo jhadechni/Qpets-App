@@ -16,7 +16,7 @@ class SearchBar extends StatelessWidget {
       TextField(
           style: TextStyle(fontSize: 18),
           onChanged: ((value) => _callback(value)),
-          autofocus: false,
+          // autofocus: false,
           controller: _controller,
           textAlignVertical: TextAlignVertical.center,
           decoration: InputDecoration(

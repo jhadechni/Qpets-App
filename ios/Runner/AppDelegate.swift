@@ -8,7 +8,7 @@ import GoogleMaps
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
-    GMSServices.provideAPIKey("AIzaSyASQM0cQy35Lp-0CWhCXg-18M1PDfFl4OQ")
+    GMSServices.provideAPIKey("AIzaSyASQM0cQy35Lp-0CWhCXg-18M1PDfFl4OQ")AndroidGoogleMapsFlutter
     GeneratedPluginRegistrant.register(with: self)
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
