@@ -2,20 +2,27 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-typedef SearchBarCallBack = void Function(String s);
+typedef SearchBarTextChangeCallback = void Function(String s);
 
 class SearchBar extends StatelessWidget {
-  final SearchBarCallBack _callback;
+  final SearchBarTextChangeCallback _textCallback;
+  final SearchBarTextChangeCallback _pressCallback;
   final String _placeholder;
-  final TextEditingController _controller = new TextEditingController();
-  SearchBar(this._callback, this._placeholder);
+  final TextEditingController _controller = TextEditingController();
+  SearchBar(this._textCallback, this._placeholder, this._pressCallback,
+      {String initialSearch = ""}) {
+    _controller.text = initialSearch;
+    if (initialSearch.isNotEmpty) {
+      _pressCallback(_controller.text);
+    }
+  }
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Stack(alignment: AlignmentDirectional.centerEnd, children: [
       TextField(
           style: TextStyle(fontSize: 18),
-          onChanged: ((value) => _callback(value)),
+          onChanged: ((value) => _textCallback(value)),
           autofocus: false,
           controller: _controller,
           textAlignVertical: TextAlignVertical.center,
@@ -47,10 +54,13 @@ class SearchBar extends StatelessWidget {
               ),
             ]),
         child: Center(
-            child: Icon(
-          Icons.search,
-          color: Colors.white,
-          size: 46.0,
+            child: GestureDetector(
+          onTap: () => _pressCallback(_controller.text),
+          child: Icon(
+            Icons.search,
+            color: Colors.white,
+            size: 46.0,
+          ),
         )),
       )
     ]);
