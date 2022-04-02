@@ -264,7 +264,7 @@ class PageProfileState extends State<PageProfile> {
                   _cardImage(product.image),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       _cardTitleText(product.name),
                       _cardSubtitleText(product.storeName),
@@ -281,8 +281,8 @@ class PageProfileState extends State<PageProfile> {
         width: 80,
         height: 160,
         decoration: BoxDecoration(
-            image: DecorationImage(
-                image: NetworkImage(link), fit: BoxFit.cover),
+            image:
+                DecorationImage(image: NetworkImage(link), fit: BoxFit.cover),
             borderRadius: BorderRadius.circular(10)));
   }
 
@@ -291,7 +291,7 @@ class PageProfileState extends State<PageProfile> {
       text,
       style: const TextStyle(
         color: Color.fromRGBO(127, 119, 198, 1),
-        fontSize:20,
+        fontSize: 20,
         fontWeight: FontWeight.normal,
       ),
       textAlign: TextAlign.left,

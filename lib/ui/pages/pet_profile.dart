@@ -1,13 +1,17 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:qpets_app/domain/controllers/pet_profile_controller.dart';
+import 'package:qpets_app/domain/controllers/timeline_controller.dart';
+import 'package:qpets_app/domain/timeline_event.dart';
 import 'package:qpets_app/ui/pages/timeline.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 
-class ProfileField extends StatelessWidget {
+class _ProfileField extends StatelessWidget {
   final String field;
   final String value;
-  const ProfileField({required this.field, required this.value});
+  const _ProfileField({required this.field, required this.value});
   final fieldStyle = const TextStyle(
       fontWeight: FontWeight.w400, fontSize: 12.0, color: Color(0xff383558));
   final fieldValueStyle = const TextStyle(
@@ -26,7 +30,8 @@ class ProfileField extends StatelessWidget {
   }
 }
 
-class PetProfileWindow extends StatelessWidget {
+class _PetProfileWindow extends StatelessWidget {
+  final PetProfileController controller = Get.find<PetProfileController>();
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -39,12 +44,12 @@ class PetProfileWindow extends StatelessWidget {
             Row(
               children: const [
                 Expanded(
-                    child: ProfileField(
+                    child: _ProfileField(
                   field: "Current Age",
                   value: "1 year",
                 )),
                 Expanded(
-                    child: ProfileField(
+                    child: _ProfileField(
                   field: "Gender",
                   value: "Male",
                 ))
@@ -52,36 +57,36 @@ class PetProfileWindow extends StatelessWidget {
             ),
             Row(children: const [
               Expanded(
-                  child: ProfileField(
+                  child: _ProfileField(
                 field: "Breed",
                 value: "Siberian Husky",
               )),
               Expanded(
-                  child: ProfileField(
+                  child: _ProfileField(
                 field: "Vaccine Check",
                 value: "Yes",
               ))
             ]),
             Row(children: const [
               Expanded(
-                  child: ProfileField(
+                  child: _ProfileField(
                 field: "Type",
                 value: "Dog",
               )),
               Expanded(
-                  child: ProfileField(
+                  child: _ProfileField(
                 field: "Weight",
                 value: "20 pounds",
               ))
             ]),
             Row(children: const [
               Expanded(
-                  child: ProfileField(
+                  child: _ProfileField(
                 field: "Chip Check",
                 value: "Yes",
               )),
               Expanded(
-                  child: ProfileField(
+                  child: _ProfileField(
                 field: "Spayed and Neutered",
                 value: "Yes",
               ))
@@ -91,23 +96,22 @@ class PetProfileWindow extends StatelessWidget {
   }
 }
 
-
-class Carousel extends StatefulWidget {
+class _Carousel extends StatefulWidget {
   @override
   final List<Widget> widgets;
-  Carousel(this.widgets);
+  _Carousel(this.widgets);
   State<StatefulWidget> createState() {
     // TODO: implement createState
     return _CarouselState(widgets);
   }
 }
 
-class _CarouselState extends State<Carousel> {
-  @override
+class _CarouselState extends State<_Carousel> {
   int _current = 0;
   final List<Widget> children;
   _CarouselState(this.children);
   final CarouselController _controller = CarouselController();
+  @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Column(children: [
@@ -147,19 +151,20 @@ class _CarouselState extends State<Carousel> {
   }
 }
 
-class PetTimeLine extends StatelessWidget {
+class _PetTimeLine extends StatelessWidget {
+  final TimelineController controller = Get.find<TimelineController>();
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Stack(
       alignment: Alignment.bottomRight,
       children: [
-        ListView.builder(
+        Obx(() => ListView(
             scrollDirection: Axis.horizontal,
-            itemCount: 4,
-            itemBuilder: (context, index) => index % 2 == 0
-                ? getBottomTile(index, "Event 1")
-                : getUpperTile(index, "Event 1")),
+            children: controller
+                .getLastEvents()
+                .map((e) => e.id % 2 == 0 ? getBottomTile(e) : getUpperTile(e))
+                .toList())),
         IconButton(
             constraints: BoxConstraints(maxHeight: 24, maxWidth: 24),
             onPressed: () {
@@ -176,7 +181,7 @@ class PetTimeLine extends StatelessWidget {
     );
   }
 
-  Widget getUpperTile(int index, String text) {
+  Widget getUpperTile(TimelineEvent e) {
     return TimelineTile(
         axis: TimelineAxis.horizontal,
         alignment: TimelineAlign.center,
@@ -193,12 +198,12 @@ class PetTimeLine extends StatelessWidget {
         startChild: Container(
             child: Column(
           children: <Widget>[
-            const Text("Feb 20",
+            Text("${DateFormat("MMMd").format(e.date)}",
                 style: TextStyle(
                     fontSize: 14.0,
                     fontWeight: FontWeight.bold,
                     color: Colors.black)),
-            Text(text,
+            Text(e.name,
                 style: const TextStyle(
                     fontSize: 8.0,
                     fontWeight: FontWeight.w200,
@@ -207,7 +212,7 @@ class PetTimeLine extends StatelessWidget {
         )));
   }
 
-  Widget getBottomTile(int index, String text) {
+  Widget getBottomTile(TimelineEvent e) {
     return TimelineTile(
       axis: TimelineAxis.horizontal,
       alignment: TimelineAlign.center,
@@ -223,12 +228,12 @@ class PetTimeLine extends StatelessWidget {
       endChild: Container(
           child: Column(
         children: <Widget>[
-          const Text("Feb 20",
+          Text("${DateFormat("MMMd").format(e.date)}",
               style: TextStyle(
                   fontSize: 14.0,
                   fontWeight: FontWeight.bold,
                   color: Colors.black)),
-          Text(text,
+          Text(e.name,
               style: const TextStyle(
                   fontSize: 8.0,
                   fontWeight: FontWeight.w200,
@@ -269,7 +274,7 @@ class PetProfile extends StatelessWidget {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: const Color(0xffE2E2EC)),
-                    child: Carousel([PetProfileWindow(), const Text("Hi")])),
+                    child: _Carousel([_PetProfileWindow()])),
                 const Padding(
                     padding: EdgeInsets.symmetric(
                       vertical: 10.0,
@@ -287,7 +292,7 @@ class PetProfile extends StatelessWidget {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: const Color(0xffE2E2EC)),
-                    child: PetTimeLine()),
+                    child: _PetTimeLine()),
                 const Padding(padding: EdgeInsets.only(bottom: 16.0))
               ])),
         ],
