@@ -3,22 +3,31 @@ import 'package:get/get.dart';
 
 import '../controllers/products_controller.dart';
 
-typedef SearchBarCallBack = void Function(String s);
+typedef SearchBarTextChangeCallback = void Function(String s);
 
 class SearchBar extends StatelessWidget {
-  final ProductController _productController = Get.find();
-  final SearchBarCallBack _callback;
-  final String _placeholder;
+  final SearchBarTextChangeCallback? onTextChangeCallback;
+  final SearchBarTextChangeCallback? onSearchPressed;
+  final String placeholder;
   final TextEditingController _controller = TextEditingController();
-  SearchBar(this._callback, this._placeholder, {Key? key}) : super(key: key);
+  SearchBar(
+      {this.onTextChangeCallback,
+      required this.placeholder,
+      this.onSearchPressed,
+      String initialSearch = ""}) {
+    _controller.text = initialSearch;
+    if (initialSearch.isNotEmpty) {
+      onSearchPressed?.call(_controller.text);
+    }
+  }
   @override
   Widget build(BuildContext context) {
     // ignore: todo
     // TODO: implement build
     return Stack(alignment: AlignmentDirectional.centerEnd, children: [
       TextField(
-          style: const TextStyle(fontSize: 18),
-          onChanged: ((value) => _callback(value)),
+          style: TextStyle(fontSize: 18),
+          onChanged: (value) => {onTextChangeCallback?.call(value)},
           autofocus: false,
           controller: _controller,
           textAlignVertical: TextAlignVertical.center,
@@ -33,8 +42,8 @@ class SearchBar extends StatelessWidget {
                   borderSide: const BorderSide(color: Color(0xff7F77C6))),
               contentPadding: const EdgeInsets.symmetric(horizontal: 25.0),
               filled: true,
-              fillColor: const Color(0xffE7E6EC),
-              hintText: _placeholder)),
+              fillColor: Color(0xffE7E6EC),
+              hintText: placeholder)),
       Container(
         width: 63,
         height: 63,
@@ -49,15 +58,15 @@ class SearchBar extends StatelessWidget {
                 offset: const Offset(0, 0), // changes position of shadow
               ),
             ]),
-        child:  Center(
+        child: Center(
             child: GestureDetector(
-              onTap: () => _productController.filterCategory("Dog"),
-              child: Icon(
-                      Icons.search,
-                      color: Colors.white,
-                      size: 46.0,
-                    ),
-            )),
+          onTap: () => onSearchPressed?.call(_controller.text),
+          child: Icon(
+            Icons.search,
+            color: Colors.white,
+            size: 46.0,
+          ),
+        )),
       )
     ]);
   }
