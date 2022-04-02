@@ -11,6 +11,39 @@ class PageProfile extends StatefulWidget {
 }
 
 class PageProfileState extends State<PageProfile> {
+  late final List<List> _pets = [];
+
+  @override
+  void initState() {
+    setState(() {
+      _pets.add([
+        'Firulais',
+        '2 years',
+        'dog',
+        'https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80'
+      ]);
+      _pets.add([
+        'Diomedes',
+        '3 months',
+        'brid',
+        'https://images.unsplash.com/photo-1444464666168-49d633b86797?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80'
+      ]);
+      _pets.add([
+        'Pólar',
+        '1 year',
+        'dog',
+        'https://images.unsplash.com/photo-1547407139-3c921a66005c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80'
+      ]);
+      _pets.add([
+        'Bolt',
+        '9 months',
+        'dog',
+        'https://images.unsplash.com/photo-1590419690008-905895e8fe0d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=736&q=80'
+      ]);
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -22,7 +55,8 @@ class PageProfileState extends State<PageProfile> {
             children: [
               Padding(
                   padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
-                  child: profileImage()),
+                  child: profileImage(
+                      'https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80')),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
@@ -232,13 +266,12 @@ class PageProfileState extends State<PageProfile> {
             )));
   }
 
-  Widget profileImage() {
+  Widget profileImage(String image) {
     return Stack(
       alignment: Alignment.bottomCenter,
-      children: const [
+      children: [
         CircleAvatar(
-          backgroundImage: NetworkImage(
-              "https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80"),
+          backgroundImage: NetworkImage(image),
           radius: 60.0,
         )
       ],
@@ -264,7 +297,7 @@ class PageProfileState extends State<PageProfile> {
                   _cardImage(product.image),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       _cardTitleText(product.name),
                       _cardSubtitleText(product.storeName),
@@ -281,8 +314,8 @@ class PageProfileState extends State<PageProfile> {
         width: 80,
         height: 160,
         decoration: BoxDecoration(
-            image: DecorationImage(
-                image: NetworkImage(link), fit: BoxFit.cover),
+            image:
+                DecorationImage(image: NetworkImage(link), fit: BoxFit.cover),
             borderRadius: BorderRadius.circular(10)));
   }
 
@@ -291,7 +324,7 @@ class PageProfileState extends State<PageProfile> {
       text,
       style: const TextStyle(
         color: Color.fromRGBO(127, 119, 198, 1),
-        fontSize:20,
+        fontSize: 20,
         fontWeight: FontWeight.normal,
       ),
       textAlign: TextAlign.left,

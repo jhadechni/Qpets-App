@@ -8,11 +8,13 @@ import 'package:google_place/google_place.dart';
 import '../domain/place.dart';
 
 class PlaceController extends GetxController {
-  RxList places = [].obs;
+  RxList _places = [].obs;
+  RxList _predictions = [].obs;
 
   var googlePlace = GooglePlace(
       'AIzaSyBMHyZvPvNTYMgY5V81Ge10aGxuj0Pu_TE'); // DotEnv().env['PLACE_API_KEY']!
-  List get getPlaces => places;
+  List get getPlaces => _places;
+  List get getPredictions => _predictions;
 
   @override
   // ignore: unnecessary_overrides
@@ -39,13 +41,13 @@ class PlaceController extends GetxController {
         type: "pet_store", keyword: "pet");
     var datastr = resultStore?.results;
     data?.addAll(datastr!);
-    places.clear();
+    _places.clear();
     for (var placeR in data!) {
       double? lat = placeR.geometry!.location!.lat;
       double? lng = placeR.geometry!.location!.lng;
       //find the photo size 400x400
       // var resPhoto = await googlePlace.photos.get(placeR.photos![0].photoReference,400,400);
-      places.add(Place(
+      _places.add(Place(
           id: placeR.placeId!,
           latLng: LatLng(lat!, lng!),
           name: placeR.name!,
@@ -60,8 +62,24 @@ class PlaceController extends GetxController {
   }
 
   addPlace(Place place) {
-    places.add(place);
+    _places.add(place);
   }
+
+  void findPlace(String value) async {
+    if (value.isNotEmpty) {
+      Position position = await _determinePosition();
+      var result = await googlePlace.autocomplete.get(value,
+          location: LatLon(position.latitude, position.longitude),
+          radius: 3000);
+      if (result != null && result.predictions != null) {
+        _predictions = result.predictions! as RxList;
+      }
+    } else {
+      _predictions.clear();
+    }
+  }
+
+
 
   // Types> veterinary_care | park | pet_store
 

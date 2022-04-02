@@ -20,29 +20,25 @@ class MapsPage extends StatefulWidget {
 }
 
 class MapPageState extends State<MapsPage> {
+
   final Set<Marker> _markers = {};
-  List _places = [];
-  bool _veterinariesPlaces = false;
+  bool _veterinariesPlaces = true;
   bool _parksPlaces = false;
   bool _storesPlaces = false;
   late GoogleMapController googleMapController;
 
   var googlePlace = GooglePlace('AIzaSyBMHyZvPvNTYMgY5V81Ge10aGxuj0Pu_TE');
-  List<AutocompletePrediction> _predictions = [];
 
   @override
   void initState() {
-    //consumer from the streams of places
-    PlaceController placeController = Get.find();
-    placeController.findPlaces();
-    _places = placeController.getPlaces;
     setMarkers();
     super.initState();
   }
 
   void setMarkers() {
+    PlaceController placeController = Get.find();
     List filterPlaces = [];
-    for (var p in _places) {
+    for (var p in placeController.getPlaces) {
       if (p.placeCategory == PlaceCategory.veterinaries &&
           _veterinariesPlaces == true) {
         filterPlaces.add(p);
@@ -71,12 +67,19 @@ class MapPageState extends State<MapsPage> {
   }
 
   void findPlace(String value) async {
-    Position position = await _determinePosition();
-    var result = await googlePlace.autocomplete.get(value,
-        location: LatLon(position.latitude, position.longitude), radius: 3000);
-    if (result != null && result.predictions != null && mounted) {
+    if (value.isNotEmpty) {
+      Position position = await _determinePosition();
+      var result = await googlePlace.autocomplete.get(value,
+          location: LatLon(position.latitude, position.longitude),
+          radius: 3000);
+      if (result != null && result.predictions != null && mounted) {
+        setState(() {
+          _predictions = result.predictions!;
+        });
+      }
+    } else {
       setState(() {
-        _predictions = result.predictions!;
+        _predictions = [];
       });
     }
   }
@@ -100,7 +103,7 @@ class MapPageState extends State<MapsPage> {
                   : PlaceCategory.stores,
           openNow: data.openingHours?.openNow!.toString(),
           address: data.vicinity!);
-      final placesExists = _places
+      final placesExists = placeController.getPlaces
           .singleWhere((element) => element.id == newPlace.getId, orElse: (() {
         return null;
       }));
@@ -129,7 +132,6 @@ class MapPageState extends State<MapsPage> {
     target: LatLng(11.010245, -74.815318),
     zoom: 15,
   );
-
   PlaceController placeController = Get.find();
   @override
   Widget build(BuildContext context) {
@@ -164,18 +166,7 @@ class MapPageState extends State<MapsPage> {
                   Padding(
                     padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
                     // ignore: avoid_print
-                    child: SearchBar(
-                        (value) => {
-                              if (value.isNotEmpty)
-                                {findPlace(value)}
-                              else
-                                {
-                                  setState(() {
-                                    _predictions = [];
-                                  })
-                                }
-                            },
-                        "Find a place!"),
+                    child: SearchBar((value) => findPlace(value), "Find a place!"),
                   ),
                   _categoryButtonBar(),
                 ],
@@ -251,7 +242,6 @@ class MapPageState extends State<MapsPage> {
           setState(() {});
           //insert findPlaces around new location
           placeController.findPlaces();
-          _places = placeController.getPlaces;
           setMarkers();
         },
       ),
