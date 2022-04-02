@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:qpets_app/shared/search_bar.dart';
 
-
 class MapsPage extends StatefulWidget {
   const MapsPage({Key? key}) : super(key: key);
 
@@ -103,8 +102,8 @@ class MapPageState extends State<MapsPage> {
           Column(
             children: [
               Padding(
-                padding: EdgeInsets.fromLTRB(8.0,8.0,8.0,0.0),
-                child: SearchBar((s) => {print(s)}, "Find a place!"),
+                padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
+                child: SearchBar(placeholder: "Find a place!"),
               ),
               _CategoryButtonBar(),
             ],
@@ -125,7 +124,6 @@ class MapPageState extends State<MapsPage> {
       ),
     );
   }
-
 }
 
 class _CategoryButtonBar extends StatelessWidget {

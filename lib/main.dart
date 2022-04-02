@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qpets_app/controllers/products_controller.dart';
 import 'package:qpets_app/ui/provider/event_provider.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -10,7 +11,9 @@ import 'package:qpets_app/ui/pages/page_maps.dart';
 import 'package:qpets_app/ui/pages/page_profile.dart';
 import 'package:qpets_app/ui/pages/page_store.dart';
 import 'package:provider/provider.dart';
-void main() => runApp(GetMaterialApp(
+void main() {
+  final productController = Get.put(ProductController());
+  runApp(GetMaterialApp(
     home: const BottomNavBar(),
     debugShowCheckedModeBanner: false,
     
@@ -18,6 +21,7 @@ void main() => runApp(GetMaterialApp(
       textTheme: GoogleFonts.robotoTextTheme(),
       primarySwatch: Colors.purple
     )));
+}
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({Key? key}) : super(key: key);
@@ -75,7 +79,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
               ],
               color: const Color(0xFF8E6FD8),
               buttonBackgroundColor: const Color(0xFFF6A641),
-              backgroundColor: Colors.transparent,
+              backgroundColor: Colors.transparent.withOpacity(0),
               animationCurve: Curves.easeInOut,
               animationDuration: const Duration(milliseconds: 170),
               onTap: (int tappedIndex) {
