@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:qpets_app/controllers/user_controller.dart';
 import 'package:qpets_app/ui/pages/pet_profile.dart';
 
 import '../../domain/product.dart';
@@ -11,168 +12,179 @@ class PageProfile extends StatefulWidget {
 }
 
 class PageProfileState extends State<PageProfile> {
-
   @override
   void initState() {
     super.initState();
   }
 
+  UserController userController = Get.find();
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: SingleChildScrollView(
-      child: Stack(
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+    return Obx(() => SafeArea(
+            child: SingleChildScrollView(
+          child: Stack(
             children: [
-              Padding(
-                  padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
-                  child: profileImage(
-                      'https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80')),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Text('Perdo Pérez',
-                      style:
-                          TextStyle(fontWeight: FontWeight.w700, fontSize: 30)),
-                  Icon(
-                    Icons.create_outlined,
-                    color: Color(
-                      0xFF8E6FD8,
-                    ),
-                    size: 25.0,
-                  )
-                ],
-              ),
-              const Text('20 years',
-                  style: TextStyle(fontWeight: FontWeight.w200, fontSize: 15)),
-              Padding(
-                padding: const EdgeInsets.all(14.0),
-                child: SizedBox(
-                  height: 150,
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    color: const Color.fromARGB(255, 226, 226, 236),
-                    elevation: 0,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Row(
-                            children: const [
-                              Expanded(
-                                  child: ProfileField(
-                                field: "Email",
-                                value: "pperez@qpets.com",
-                              )),
-                              Expanded(
-                                  child: ProfileField(
-                                field: "Gender",
-                                value: "Male",
-                              ))
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                      padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
+                      child:
+                          profileImage(userController.userProfile.value.pic)),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(userController.userProfile.value.name,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w700, fontSize: 30)),
+                      const Icon(
+                        Icons.create_outlined,
+                        color: Color(
+                          0xFF8E6FD8,
+                        ),
+                        size: 25.0,
+                      )
+                    ],
+                  ),
+                  Text('${userController.userProfile.value.age} years',
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w200, fontSize: 15)),
+                  Padding(
+                    padding: const EdgeInsets.all(14.0),
+                    child: SizedBox(
+                      height: 150,
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        color: const Color.fromARGB(255, 226, 226, 236),
+                        elevation: 0,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Row(
+                                children: [
+                                  Expanded(
+                                      child: ProfileField(
+                                    field: "Email",
+                                    value:
+                                        userController.userProfile.value.email,
+                                  )),
+                                  Expanded(
+                                      child: ProfileField(
+                                    field: "Gender",
+                                    value:
+                                        userController.userProfile.value.gender,
+                                  ))
+                                ],
+                              ),
+                              Row(children: [
+                                Expanded(
+                                    child: ProfileField(
+                                  field: "Phone",
+                                  value: userController.userProfile.value.phone,
+                                )),
+                                Expanded(
+                                    child: ProfileField(
+                                  field: "Address",
+                                  value:
+                                      userController.userProfile.value.address,
+                                ))
+                              ]),
                             ],
                           ),
-                          Row(children: const [
-                            Expanded(
-                                child: ProfileField(
-                              field: "Phone",
-                              value: "300-526-878",
-                            )),
-                            Expanded(
-                                child: ProfileField(
-                              field: "Address",
-                              value: "Cra 67 #69-08",
-                            ))
-                          ]),
-                        ],
+                        ),
                       ),
                     ),
                   ),
-                ),
+                  Padding(
+                      padding: const EdgeInsets.all(14.0),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: const [
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text('Your Pets',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 30)),
+                              ),
+                              Icon(
+                                Icons.add_circle_outline_outlined,
+                                color: Color(
+                                  0xFF8E6FD8,
+                                ),
+                                size: 25.0,
+                              )
+                            ],
+                          ),
+                          // Expanded(
+                          //     child: ListView(
+                          //   children: userController.pets
+                          //       .map((pet) => Padding(
+                          //             padding: const EdgeInsets.all(4.0),
+                          //             child: _petProfileCard(pet.name,
+                          //                 '2 years', pet.breed, pet.imgUrl),
+                          //           ))
+                          //       .toList(),
+                          // ))
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              _petProfileCard('Firulais', '2 years', 'dog',
+                                  'https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80'),
+                              _petProfileCard('Diomedes', '3 months', 'brid',
+                                  'https://images.unsplash.com/photo-1444464666168-49d633b86797?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80'),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              _petProfileCard('Pólar', '1 year', 'dog',
+                                  'https://images.unsplash.com/photo-1547407139-3c921a66005c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80'),
+                              _petProfileCard('Bolt', '9 months', 'dog',
+                                  'https://images.unsplash.com/photo-1590419690008-905895e8fe0d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=736&q=80'),
+                            ],
+                          ),
+                        ],
+                      )),
+                  Padding(
+                      padding: const EdgeInsets.all(14.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: const [
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text('My Products',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 30)),
+                              ),
+                              Icon(
+                                Icons.arrow_circle_right_outlined,
+                                color: Color(
+                                  0xFF8E6FD8,
+                                ),
+                                size: 25.0,
+                              )
+                            ],
+                          ),
+                          _cardProduct(userController.productsSale.first)
+                        ],
+                      )),
+                ],
               ),
-              Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: const [
-                          Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text('Your Pets',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w700, fontSize: 30)),
-                          ),
-                          Icon(
-                            Icons.add_circle_outline_outlined,
-                            color: Color(
-                              0xFF8E6FD8,
-                            ),
-                            size: 25.0,
-                          )
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          _petProfileCard('Firulais', '2 years', 'dog',
-                              'https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80'),
-                          _petProfileCard('Diomedes', '3 months', 'brid',
-                              'https://images.unsplash.com/photo-1444464666168-49d633b86797?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80'),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          _petProfileCard('Pólar', '1 year', 'dog',
-                              'https://images.unsplash.com/photo-1547407139-3c921a66005c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80'),
-                          _petProfileCard('Bolt', '9 months', 'dog',
-                              'https://images.unsplash.com/photo-1590419690008-905895e8fe0d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=736&q=80'),
-                        ],
-                      ),
-                    ],
-                  )),
-              Padding(
-                  padding: const EdgeInsets.all(14.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: const [
-                          Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text('My Products',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w700, fontSize: 30)),
-                          ),
-                          Icon(
-                            Icons.arrow_circle_right_outlined,
-                            color: Color(
-                              0xFF8E6FD8,
-                            ),
-                            size: 25.0,
-                          )
-                        ],
-                      ),
-                      _cardProduct(Product(
-                          0,
-                          "https://cdn.discordapp.com/attachments/833897513349021706/955338658792243220/unsplash_Sm7ebvMgi-E_1.png",
-                          "Fresh Kisses",
-                          "16 Jan 2022",
-                          "200"))
-                    ],
-                  )),
             ],
           ),
-        ],
-      ),
-    ));
+        )));
   }
 
   Widget _petProfileCard(String name, String age, String breed, String link) {

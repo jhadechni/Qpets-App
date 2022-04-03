@@ -1,6 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
+
+import '../controllers/products_controller.dart';
 
 typedef SearchBarTextChangeCallback = void Function(String s);
 
@@ -21,6 +22,7 @@ class SearchBar extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
+    // ignore: todo
     // TODO: implement build
     return Stack(alignment: AlignmentDirectional.centerEnd, children: [
       TextField(
@@ -30,14 +32,14 @@ class SearchBar extends StatelessWidget {
           controller: _controller,
           textAlignVertical: TextAlignVertical.center,
           decoration: InputDecoration(
-              hintStyle: TextStyle(color: Color.fromRGBO(109, 107, 124, 0.44)),
+              hintStyle: const TextStyle(color: Color.fromRGBO(109, 107, 124, 0.44)),
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.black.withOpacity(0.15)),
                 borderRadius: BorderRadius.circular(18),
               ),
               focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(18),
-                  borderSide: BorderSide(color: Color(0xff7F77C6))),
+                  borderSide: const BorderSide(color: Color(0xff7F77C6))),
               contentPadding: const EdgeInsets.symmetric(horizontal: 25.0),
               filled: true,
               fillColor: Color(0xffE7E6EC),
@@ -46,14 +48,14 @@ class SearchBar extends StatelessWidget {
         width: 63,
         height: 63,
         decoration: BoxDecoration(
-            color: Color(0xff7F77C6),
-            borderRadius: BorderRadius.all(Radius.circular(16)),
+            color: const Color(0xff7F77C6),
+            borderRadius: const BorderRadius.all(Radius.circular(16)),
             boxShadow: [
               BoxShadow(
-                color: Color(0xff7F77C6).withOpacity(0.35),
+                color: const Color(0xff7F77C6).withOpacity(0.35),
                 spreadRadius: 1,
                 blurRadius: 10,
-                offset: Offset(0, 0), // changes position of shadow
+                offset: const Offset(0, 0), // changes position of shadow
               ),
             ]),
         child: Center(

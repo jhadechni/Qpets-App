@@ -41,13 +41,13 @@ dependencies:
   timeline_tile: ^2.0.0
   google_place: ^0.4.7
   geolocator: ^8.2.0
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   curved_navigation_bar: ^1.0.3
   syncfusion_flutter_calendar: ^19.4.56
-  intl: ^0.17.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -58,7 +58,6 @@ dev_dependencies:
   dart_pre_commit: ^3.0.0
   git_hooks: 0.1.3-nullsafety.0
   provider: ^5.0.0
-
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
