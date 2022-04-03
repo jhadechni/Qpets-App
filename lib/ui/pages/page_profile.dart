@@ -11,36 +11,9 @@ class PageProfile extends StatefulWidget {
 }
 
 class PageProfileState extends State<PageProfile> {
-  late final List<List> _pets = [];
 
   @override
   void initState() {
-    setState(() {
-      _pets.add([
-        'Firulais',
-        '2 years',
-        'dog',
-        'https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80'
-      ]);
-      _pets.add([
-        'Diomedes',
-        '3 months',
-        'brid',
-        'https://images.unsplash.com/photo-1444464666168-49d633b86797?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80'
-      ]);
-      _pets.add([
-        'Pólar',
-        '1 year',
-        'dog',
-        'https://images.unsplash.com/photo-1547407139-3c921a66005c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80'
-      ]);
-      _pets.add([
-        'Bolt',
-        '9 months',
-        'dog',
-        'https://images.unsplash.com/photo-1590419690008-905895e8fe0d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=736&q=80'
-      ]);
-    });
     super.initState();
   }
 

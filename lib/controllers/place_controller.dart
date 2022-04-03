@@ -10,11 +10,13 @@ import '../domain/place.dart';
 class PlaceController extends GetxController {
   RxList _places = [].obs;
   RxList _predictions = [].obs;
+  late Place _PlacePredict;
 
   var googlePlace = GooglePlace(
       'AIzaSyBMHyZvPvNTYMgY5V81Ge10aGxuj0Pu_TE'); // DotEnv().env['PLACE_API_KEY']!
   List get getPlaces => _places;
   List get getPredictions => _predictions;
+  Place get getPlacePredict => _PlacePredict;
 
   @override
   // ignore: unnecessary_overrides
@@ -70,16 +72,52 @@ class PlaceController extends GetxController {
       Position position = await _determinePosition();
       var result = await googlePlace.autocomplete.get(value,
           location: LatLon(position.latitude, position.longitude),
-          radius: 3000);
+          radius: 1000);
       if (result != null && result.predictions != null) {
-        _predictions = result.predictions! as RxList;
+        _predictions.clear();
+        for (var prediction in result.predictions!) {
+          _predictions.add(prediction);
+        }
       }
     } else {
       _predictions.clear();
     }
   }
 
+  void findPlacePredictions(String placeid) async {
+    var result = await googlePlace.details.get(placeid,
+        fields: "vicinity,geometry,name,place_id,type,opening_hours");
+    if (result != null && result.result != null) {
+      var data = result.result;
+      double? lat = data?.geometry?.location!.lat;
+      double? lng = data?.geometry?.location!.lng;
 
+      Place newPlace = Place(
+          id: data!.placeId!,
+          latLng: LatLng(lat!, lng!),
+          name: data.name!,
+          category: data.types!.contains('veterinary_care')
+              ? PlaceCategory.veterinaries
+              : data.types!.contains('park')
+                  ? PlaceCategory.parks
+                  : PlaceCategory.stores,
+          openNow: data.openingHours?.openNow!.toString(),
+          address: data.vicinity!);
+      final placesExists = _places
+          .singleWhere((element) => element.getId == newPlace.getId, orElse: (() {
+        return null;
+      }));
+      if (placesExists == null) {
+        _places.add(newPlace);
+      }
+      _PlacePredict = newPlace;
+
+    }
+  }
+
+  predictionClear() {
+    _predictions.clear();
+  }
 
   // Types> veterinary_care | park | pet_store
 

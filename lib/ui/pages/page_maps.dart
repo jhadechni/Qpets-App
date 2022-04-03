@@ -5,7 +5,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:google_place/google_place.dart';
 import 'package:qpets_app/controllers/place_controller.dart';
 import 'package:qpets_app/shared/search_bar.dart';
 
@@ -20,14 +19,11 @@ class MapsPage extends StatefulWidget {
 }
 
 class MapPageState extends State<MapsPage> {
-
   final Set<Marker> _markers = {};
   bool _veterinariesPlaces = true;
   bool _parksPlaces = false;
   bool _storesPlaces = false;
   late GoogleMapController googleMapController;
-
-  var googlePlace = GooglePlace('AIzaSyBMHyZvPvNTYMgY5V81Ge10aGxuj0Pu_TE');
 
   @override
   void initState() {
@@ -50,7 +46,6 @@ class MapPageState extends State<MapsPage> {
         filterPlaces.add(p);
       }
     }
-
     setState(() {
       _markers.clear();
       for (var filterP in filterPlaces) {
@@ -64,68 +59,6 @@ class MapPageState extends State<MapsPage> {
         _markers.add(marker);
       }
     });
-  }
-
-  void findPlace(String value) async {
-    if (value.isNotEmpty) {
-      Position position = await _determinePosition();
-      var result = await googlePlace.autocomplete.get(value,
-          location: LatLon(position.latitude, position.longitude),
-          radius: 3000);
-      if (result != null && result.predictions != null && mounted) {
-        setState(() {
-          _predictions = result.predictions!;
-        });
-      }
-    } else {
-      setState(() {
-        _predictions = [];
-      });
-    }
-  }
-
-  void findPlacePredictions(String placeid) async {
-    var result = await googlePlace.details.get(placeid,
-        fields: "vicinity,geometry,name,place_id,type,opening_hours");
-    if (result != null && result.result != null && mounted) {
-      var data = result.result;
-      double? lat = data?.geometry?.location!.lat;
-      double? lng = data?.geometry?.location!.lng;
-
-      Place newPlace = Place(
-          id: data!.placeId!,
-          latLng: LatLng(lat!, lng!),
-          name: data.name!,
-          category: data.types!.contains('veterinary_care')
-              ? PlaceCategory.veterinaries
-              : data.types!.contains('park')
-                  ? PlaceCategory.parks
-                  : PlaceCategory.stores,
-          openNow: data.openingHours?.openNow!.toString(),
-          address: data.vicinity!);
-      final placesExists = placeController.getPlaces
-          .singleWhere((element) => element.id == newPlace.getId, orElse: (() {
-        return null;
-      }));
-      if (placesExists == null) {
-        setState(() {
-          final marker = Marker(
-              markerId: MarkerId(newPlace.getId),
-              position: LatLng(newPlace.latitude, newPlace.longitude),
-              infoWindow: InfoWindow(
-                title: newPlace.getName,
-              ),
-              onTap: () => _modalBottom(newPlace));
-          _markers.add(marker);
-        });
-        placeController.addPlace(newPlace);
-      }
-      _predictions.clear();
-      googleMapController.animateCamera(CameraUpdate.newCameraPosition(
-          CameraPosition(
-              target: LatLng(newPlace.latitude, newPlace.longitude),
-              zoom: 16)));
-    }
   }
 
   static const CameraPosition _initialCamaraPos = CameraPosition(
@@ -153,10 +86,9 @@ class MapPageState extends State<MapsPage> {
             zoomGesturesEnabled: true,
           ),
           GestureDetector(
-            onTap: () {
-              setState(() {
-                _predictions.clear();
-              });
+            onDoubleTap: () {
+              placeController.predictionClear();
+              setState(() {});
             },
           ),
           Stack(
@@ -166,52 +98,71 @@ class MapPageState extends State<MapsPage> {
                   Padding(
                     padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
                     // ignore: avoid_print
-                    child: SearchBar((value) => findPlace(value), "Find a place!"),
+                    child: SearchBar(
+                      placeholder: 'find a place!',
+                      onTextChangeCallback: (s) => placeController.findPlace(s),
+                    ),
                   ),
                   _categoryButtonBar(),
                 ],
               ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(10, 64, 10, 0),
-                child: _predictions.isNotEmpty
-                    ? Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
+              Obx(
+                () => Padding(
+                    padding: EdgeInsets.fromLTRB(10, 64, 10, 0),
+                    child: placeController.getPredictions.isNotEmpty ? Row(
+                        // mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Expanded(
-                            child: Container(
-                                height: 280.0,
-                                width: 370.0,
-                                decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.9),
-                                  borderRadius: BorderRadius.vertical(
-                                    bottom: Radius.circular(25.0),
-                                    top: Radius.circular(25.0),
+                              child: Container(
+                                  height: 280.0,
+                                  width: 370.0,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white.withOpacity(0.9),
+                                    borderRadius: BorderRadius.vertical(
+                                      bottom: Radius.circular(25.0),
+                                      top: Radius.circular(25.0),
+                                    ),
                                   ),
-                                ),
-                                child: ListView.builder(
-                                    itemCount: _predictions.length,
-                                    itemBuilder: (context, index) {
-                                      return ListTile(
-                                          leading: CircleAvatar(
-                                            backgroundColor:
-                                                const Color(0xFF8E6FD8),
-                                            child: Icon(
-                                              Icons.pin_drop,
-                                              color: Colors.white,
+                                  child: ListView.builder(
+                                      itemCount:
+                                          placeController.getPredictions.length,
+                                      itemBuilder: (context, index) {
+                                        return ListTile(
+                                            leading: CircleAvatar(
+                                              backgroundColor:
+                                                  const Color(0xFF8E6FD8),
+                                              child: Icon(
+                                                Icons.pin_drop,
+                                                color: Colors.white,
+                                              ),
                                             ),
-                                          ),
-                                          title: Text(
-                                              _predictions[index].description!),
-                                          onTap: () {
-                                            findPlacePredictions(
-                                                _predictions[index].placeId!);
-                                          });
-                                    })),
-                          ),
+                                            title: Text(placeController
+                                                .getPredictions[index]
+                                                .description!),
+                                            onTap: () {
+                                              placeController.findPlacePredictions(
+                                                  placeController
+                                                      .getPredictions[index]
+                                                      .placeId!);
+                                              setMarkers();
+                                              placeController.predictionClear();
+                                              googleMapController.animateCamera(
+                                                  CameraUpdate.newCameraPosition(
+                                                      CameraPosition(
+                                                          target: LatLng(
+                                                              placeController
+                                                                  .getPlacePredict
+                                                                  .latitude,
+                                                              placeController
+                                                                  .getPlacePredict
+                                                                  .longitude),
+                                                          zoom: 16)));
+                                                          
+                                            });
+                                      }))),
                         ],
-                      )
-                    : Container(),
-              ),
+                      ): Container()),
+              )
             ],
           )
         ],

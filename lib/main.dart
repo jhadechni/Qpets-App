@@ -12,11 +12,14 @@ import 'package:qpets_app/ui/pages/page_profile.dart';
 import 'package:qpets_app/ui/pages/page_store.dart';
 import 'package:provider/provider.dart';
 
+import 'controllers/user_controller.dart';
+
 // import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() {
   // await dotenv.load(fileName: ".env");
   Get.put(PlaceController());
+  Get.put(UserController());
   runApp(GetMaterialApp(
       home: const BottomNavBar(),
       debugShowCheckedModeBanner: false,
