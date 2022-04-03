@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:qpets_app/controllers/pet_profile_controller.dart';
 import 'package:qpets_app/controllers/products_controller.dart';
+import 'package:qpets_app/controllers/timeline_controller.dart';
 import 'package:qpets_app/ui/provider/event_provider.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -11,16 +13,24 @@ import 'package:qpets_app/ui/pages/page_maps.dart';
 import 'package:qpets_app/ui/pages/page_profile.dart';
 import 'package:qpets_app/ui/pages/page_store.dart';
 import 'package:provider/provider.dart';
+
+class InitialBinding implements Bindings {
+  @override
+  void dependencies() {
+    Get.put(ProductController());
+    Get.lazyPut(() => TimelineController(), fenix: true);
+    Get.lazyPut(() => PetProfileController(), fenix: true);
+  }
+}
+
 void main() {
-  final productController = Get.put(ProductController());
   runApp(GetMaterialApp(
-    home: const BottomNavBar(),
-    debugShowCheckedModeBanner: false,
-    
-    theme: ThemeData(
-      textTheme: GoogleFonts.robotoTextTheme(),
-      primarySwatch: Colors.purple
-    )));
+      initialBinding: InitialBinding(),
+      home: const BottomNavBar(),
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+          textTheme: GoogleFonts.robotoTextTheme(),
+          primarySwatch: Colors.purple)));
 }
 
 class BottomNavBar extends StatefulWidget {
@@ -96,5 +106,4 @@ class _BottomNavBarState extends State<BottomNavBar> {
               ),
             )),
       );
-
 }
