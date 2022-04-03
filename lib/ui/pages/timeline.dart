@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:qpets_app/domain/controllers/timeline_controller.dart';
+import 'package:qpets_app/controllers/timeline_controller.dart';
 import 'package:qpets_app/domain/timeline_event.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 import 'package:intl/intl.dart';

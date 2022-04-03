@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:qpets_app/domain/controllers/pet_profile_controller.dart';
-import 'package:qpets_app/domain/controllers/timeline_controller.dart';
+import 'package:qpets_app/controllers/pet_profile_controller.dart';
+import 'package:qpets_app/controllers/timeline_controller.dart';
 import 'package:qpets_app/ui/provider/event_provider.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
