@@ -158,7 +158,7 @@ class PageProfileState extends State<PageProfile> {
                           "https://cdn.discordapp.com/attachments/833897513349021706/955338658792243220/unsplash_Sm7ebvMgi-E_1.png",
                           "Fresh Kisses",
                           "16 Jan 2022",
-                          "200"))
+                          "200","Dog"))
                     ],
                   )),
             ],

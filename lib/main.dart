@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qpets_app/controllers/pet_profile_controller.dart';
+import 'package:qpets_app/controllers/products_controller.dart';
 import 'package:qpets_app/controllers/timeline_controller.dart';
 import 'package:qpets_app/ui/provider/event_provider.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
@@ -16,6 +17,7 @@ import 'package:provider/provider.dart';
 class InitialBinding implements Bindings {
   @override
   void dependencies() {
+    Get.put(ProductController());
     Get.lazyPut(() => TimelineController(), fenix: true);
     Get.lazyPut(() => PetProfileController(), fenix: true);
   }
@@ -87,7 +89,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
               ],
               color: const Color(0xFF8E6FD8),
               buttonBackgroundColor: const Color(0xFFF6A641),
-              backgroundColor: Colors.transparent,
+              backgroundColor: Colors.transparent.withOpacity(0),
               animationCurve: Curves.easeInOut,
               animationDuration: const Duration(milliseconds: 170),
               onTap: (int tappedIndex) {
