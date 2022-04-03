@@ -34,7 +34,8 @@ class MapPageState extends State<MapsPage> {
   void setMarkers() {
     PlaceController placeController = Get.find();
     List filterPlaces = [];
-    for (var p in placeController.getPlaces) {
+    var places = placeController.getPlaces;
+    for (var p in places) {
       if (p.placeCategory == PlaceCategory.veterinaries &&
           _veterinariesPlaces == true) {
         filterPlaces.add(p);

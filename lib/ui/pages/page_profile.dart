@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qpets_app/controllers/user_controller.dart';
 import 'package:qpets_app/ui/pages/pet_profile.dart';
+import 'package:qpets_app/ui/pages/produc_detail.dart';
 
 import '../../domain/product.dart';
 
@@ -123,34 +124,21 @@ class PageProfileState extends State<PageProfile> {
                               )
                             ],
                           ),
-                          // Expanded(
-                          //     child: ListView(
-                          //   children: userController.pets
-                          //       .map((pet) => Padding(
-                          //             padding: const EdgeInsets.all(4.0),
-                          //             child: _petProfileCard(pet.name,
-                          //                 '2 years', pet.breed, pet.imgUrl),
-                          //           ))
-                          //       .toList(),
-                          // ))
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              _petProfileCard('Firulais', '2 years', 'dog',
-                                  'https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80'),
-                              _petProfileCard('Diomedes', '3 months', 'brid',
-                                  'https://images.unsplash.com/photo-1444464666168-49d633b86797?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80'),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              _petProfileCard('Pólar', '1 year', 'dog',
-                                  'https://images.unsplash.com/photo-1547407139-3c921a66005c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80'),
-                              _petProfileCard('Bolt', '9 months', 'dog',
-                                  'https://images.unsplash.com/photo-1590419690008-905895e8fe0d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=736&q=80'),
-                            ],
-                          ),
+                          GridView.count(
+                            crossAxisCount: 2,
+                            shrinkWrap: true,
+                            childAspectRatio: (290 / 180),
+                            children: userController.pets
+                                .map((pet) => Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: _petProfileCard(
+                                          pet.name,
+                                          ' ${DateTime.now().difference(pet.dob).inDays.toString()} Days',
+                                          pet.breed,
+                                          pet.imgUrl),
+                                    ))
+                                .toList(),
+                          )
                         ],
                       )),
                   Padding(
@@ -194,9 +182,7 @@ class PageProfileState extends State<PageProfile> {
               transition: Transition.cupertinoDialog,
               duration: const Duration(milliseconds: 250),
             )),
-        child: SizedBox(
-            height: 100,
-            width: 180,
+        
             child: Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15.0),
@@ -248,7 +234,7 @@ class PageProfileState extends State<PageProfile> {
                   )
                 ],
               ),
-            )));
+            ));
   }
 
   Widget profileImage(String image) {
@@ -265,7 +251,9 @@ class PageProfileState extends State<PageProfile> {
 
   Widget _cardProduct(Product product) {
     return GestureDetector(
-        onTap: () => Get.to(() => {}),
+        onTap: () => Get.to(() => ProductDetail(product),
+            transition: Transition.cupertinoDialog,
+            duration: const Duration(milliseconds: 250)),
         child: Container(
             padding: const EdgeInsets.only(bottom: 20),
             child: Container(
