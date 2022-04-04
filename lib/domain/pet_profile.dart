@@ -1,6 +1,7 @@
 /// CurrentAge: auto-generated
 class PetProfileFields {
   String gender;
+  String name;
   String type;
   String breed;
   bool vaccineCheck;
@@ -11,6 +12,7 @@ class PetProfileFields {
   DateTime dob;
   PetProfileFields(
       {required this.gender,
+      required this.name,
       required this.type,
       required this.breed,
       this.vaccineCheck = false,

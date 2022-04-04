@@ -4,6 +4,7 @@ import 'package:qpets_app/domain/pet_profile.dart';
 class PetProfileController extends GetxController {
   final profileField = PetProfileFields(
           gender: "Male",
+          name: 'polar',
           type: "Dog",
           breed: "Siberian Husky",
           weight: 20,
