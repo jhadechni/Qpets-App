@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:qpets_app/ui/pages/page_login.dart';
+import 'package:qpets_app/ui/pages/page_splash.dart';
+import 'package:qpets_app/ui/pages/pages_signup.dart';
 import 'package:qpets_app/ui/provider/event_provider.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -34,13 +37,16 @@ class _BottomNavBarState extends State<BottomNavBar> {
   final MapsPage maps = const MapsPage();
   final PageProfile profile = const PageProfile();
   final PageStore store = const PageStore();
+  final Pagesplash splash =   Pagesplash();
+    final Pageslogin login =   const Pageslogin();
+    final pagessingup singup = const pagessingup();
 
   Widget _showPage = const PageHome();
 
   Widget _pageChooser(int page) {
     switch (page) {
       case 0:
-        return home;
+        return singup;
       case 1:
         return store;
       case 2:
