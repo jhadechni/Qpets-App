@@ -4,6 +4,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_place/google_place.dart';
 
 // import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_config/flutter_config.dart';
 
 import '../domain/place.dart';
 
@@ -13,7 +14,7 @@ class PlaceController extends GetxController {
   late Place _PlacePredict;
 
   var googlePlace = GooglePlace(
-      'AIzaSyBMHyZvPvNTYMgY5V81Ge10aGxuj0Pu_TE'); // DotEnv().env['PLACE_API_KEY']!
+      FlutterConfig.get('PLACE_API_KEY'));
   List get getPlaces => _places;
   List get getPredictions => _predictions;
   Place get getPlacePredict => _PlacePredict;
@@ -103,15 +104,14 @@ class PlaceController extends GetxController {
                   : PlaceCategory.stores,
           openNow: data.openingHours?.openNow!.toString(),
           address: data.vicinity!);
-      final placesExists = _places
-          .singleWhere((element) => element.getId == newPlace.getId, orElse: (() {
+      final placesExists = _places.singleWhere(
+          (element) => element.getId == newPlace.getId, orElse: (() {
         return null;
       }));
       if (placesExists == null) {
         _places.add(newPlace);
       }
       _PlacePredict = newPlace;
-
     }
   }
 

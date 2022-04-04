@@ -16,6 +16,9 @@ import 'package:qpets_app/ui/pages/page_profile.dart';
 import 'package:qpets_app/ui/pages/page_store.dart';
 import 'package:provider/provider.dart';
 
+// import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_config/flutter_config.dart';
+
 class InitialBinding implements Bindings {
   @override
   void dependencies() {
@@ -23,11 +26,14 @@ class InitialBinding implements Bindings {
     Get.put(PlaceController());
     Get.put(UserController());
     Get.lazyPut(() => TimelineController(), fenix: true);
-    Get.lazyPut(() => PetProfileController(), fenix: true); 
+    Get.lazyPut(() => PetProfileController(), fenix: true);
   }
 }
 
-void main() {
+void main() async {
+  // await dotenv.load(fileName: ".env");
+  WidgetsFlutterBinding.ensureInitialized();
+  await FlutterConfig.loadEnvVariables();
   runApp(GetMaterialApp(
       initialBinding: InitialBinding(),
       home: const BottomNavBar(),
