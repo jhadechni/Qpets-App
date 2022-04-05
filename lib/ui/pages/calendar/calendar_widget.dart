@@ -7,6 +7,8 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class CalendarWidget extends StatelessWidget {
   EventController controller = Get.find<EventController>();
+
+  CalendarWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return GetBuilder<EventController>(
