@@ -4,7 +4,7 @@ import 'package:qpets_app/domain/calendar/event.dart';
 import 'package:qpets_app/utils/utils.dart';
 import 'package:provider/provider.dart';
 
-import '../../provider/event_provider.dart';
+import '../../../controllers/calendar_event_controller.dart';
 
 class EventEditingPage extends StatefulWidget {
   final Event? event;

@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
+import '../../domain/product.dart';
+
 class ProductDetail extends StatelessWidget {
-  const ProductDetail(this.image, this.productName, this.storeName, this.price, {Key? key}) : super(key: key);
-  final String image;
-  final String productName;
-  final String storeName;
-  final String price;
-  final String description = "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem Lorem ipsum Lorem ipsum Lorem ipsum LoremLorem ipsum Lorem ipsum Lorem ipsum Lorem";
-  
+  const ProductDetail(this.product, {Key? key}) : super(key: key);
+  final Product product;
+  final String description =
+      "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem Lorem ipsum Lorem ipsum Lorem ipsum LoremLorem ipsum Lorem ipsum Lorem ipsum Lorem";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,15 +21,14 @@ class ProductDetail extends StatelessWidget {
             Stack(
               children: [_banner(80), _customAppBar()],
             ),
-            _productImage(
-                image),
+            _productImage(product.image),
             Column(
               children: [
-                _tittleText(productName),
-                _storeNameText(storeName),
-                _textPrice("$price USD"),
-                _textDescription(
-                    description),
+                _tittleText(product.name),
+                _storeNameText(product.storeName),
+                _storeNameText("for: ${product.type}"),
+                _textPrice("${product.price} USD"),
+                _textDescription(description),
               ],
             ),
             Container(

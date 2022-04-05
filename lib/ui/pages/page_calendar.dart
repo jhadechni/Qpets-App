@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qpets_app/ui/pages/calendar/event_editing_page.dart';
 import 'package:qpets_app/ui/pages/calendar/calendar_widget.dart';
-import 'package:qpets_app/ui/provider/event_provider.dart';
+import 'package:qpets_app/controllers/calendar_event_controller.dart';
 import 'package:provider/provider.dart';
 
 ChangeNotifierProvider<EventProvider> wrap(Widget child) {
@@ -19,7 +19,7 @@ class CalendarPage extends StatelessWidget {
           centerTitle: true,
           backgroundColor: const Color(0xFF8E6FD8),
         ),
-        body: calendar_widget(),
+        body: CalendarWidget(),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add, color: Colors.black),
           backgroundColor: const Color(0xFF8E6FD8),
