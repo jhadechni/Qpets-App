@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:qpets_app/controllers/calendar_event_controller.dart';
 import 'package:qpets_app/domain/calendar/event.dart';
 
 import 'package:qpets_app/utils/utils.dart';
-import 'package:provider/provider.dart';
-
-import '../../../controllers/calendar_event_controller.dart';
 
 class EventEditingPage extends StatefulWidget {
   final Event? event;
@@ -21,12 +20,14 @@ class _EventEditingPageState extends State<EventEditingPage> {
   final titleController = TextEditingController();
   late DateTime fromDate;
   late DateTime toDate;
+  EventController controller = Get.find<EventController>();
+
   @override
   void initState() {
     super.initState();
     if (widget.event == null) {
       fromDate = DateTime.now();
-      toDate = DateTime.now().add(Duration(hours: 2));
+      toDate = DateTime.now().add(const Duration(hours: 2));
     }
   }
 
@@ -38,26 +39,26 @@ class _EventEditingPageState extends State<EventEditingPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-          appBar: AppBar(
-            leading: CloseButton(),
-            actions: buildEditingActions(),
-            backgroundColor: const Color(0xFF8E6FD8),
-          ),
-          body: SingleChildScrollView(
-            padding: EdgeInsets.all(12),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  buildTitle(),
-                  SizedBox(height: 12),
-                  buildDateTimePickers(),
-                ],
-              ), // Column
-            ), // Form
-          ), // SingleChildScrollView
-        );
+        appBar: AppBar(
+          leading: const CloseButton(),
+          actions: buildEditingActions(),
+          backgroundColor: const Color(0xFF8E6FD8),
+        ),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(12),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                buildTitle(),
+                const SizedBox(height: 12),
+                buildDateTimePickers(),
+              ],
+            ), // Column
+          ), // Form
+        ), // SingleChildScrollView
+      );
 
   List<Widget> buildEditingActions() => [
         ElevatedButton.icon(
@@ -66,14 +67,14 @@ class _EventEditingPageState extends State<EventEditingPage> {
             shadowColor: const Color(0xFF8E6FD8),
           ),
           onPressed: saveForm,
-          icon: Icon(Icons.done),
-          label: Text('SAVE'),
+          icon: const Icon(Icons.done),
+          label: const Text('SAVE'),
         ),
       ];
 
   Widget buildTitle() => TextFormField(
-        style: TextStyle(fontSize: 24),
-        decoration: InputDecoration(
+        style: const TextStyle(fontSize: 24),
+        decoration: const InputDecoration(
           border: UnderlineInputBorder(),
           hintText: "Add Title",
         ),
@@ -179,7 +180,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
   }) =>
       ListTile(
         title: Text(text),
-        trailing: Icon(Icons.arrow_drop_down),
+        trailing: const Icon(Icons.arrow_drop_down),
         onTap: onClicked,
       );
 
@@ -190,7 +191,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(header, style: TextStyle(fontWeight: FontWeight.bold)),
+          Text(header, style: const TextStyle(fontWeight: FontWeight.bold)),
           child,
         ],
       );
@@ -204,8 +205,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
           to: toDate,
           isAllDay: false);
 
-      final provider = Provider.of<EventProvider>(context, listen: false);
-      provider.addEvent(event);
+      controller.addEvent(event);
       Navigator.of(context).pop();
     }
   }

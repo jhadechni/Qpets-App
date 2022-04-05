@@ -1,15 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qpets_app/ui/pages/calendar/event_editing_page.dart';
 import 'package:qpets_app/ui/pages/calendar/calendar_widget.dart';
-import 'package:qpets_app/controllers/calendar_event_controller.dart';
-import 'package:provider/provider.dart';
-
-ChangeNotifierProvider<EventProvider> wrap(Widget child) {
-  return ChangeNotifierProvider(
-    create: (context) => EventProvider(),
-    child: child,
-  );
-}
 
 class CalendarPage extends StatelessWidget {
   @override

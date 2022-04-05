@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
+import 'package:qpets_app/controllers/calendar_event_controller.dart';
 import 'package:qpets_app/domain/calendar/event_data_source.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
-import 'package:qpets_app/controllers/calendar_event_controller.dart';
 
+// ignore: use_key_in_widget_constructors
 class TasksWidget extends StatefulWidget {
   @override
   _TasksWidgetState createState() => _TasksWidgetState();
 }
 
 class _TasksWidgetState extends State<TasksWidget> {
+  EventController controller = Get.find<EventController>();
+
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<EventProvider>(context);
-    final selectedEvents = provider.eventsOfSelectedDate;
+    final selectedEvents = controller.events;
     if (selectedEvents.isEmpty) {
       return const Center(
         child: Text(
@@ -28,21 +30,14 @@ class _TasksWidgetState extends State<TasksWidget> {
             timeTextStyle: const TextStyle(fontSize: 16, color: Colors.black)),
         child: SfCalendar(
           view: CalendarView.timelineDay,
-          dataSource: EventDataSource(provider.events),
-          initialDisplayDate: provider.selectedDate,
+          dataSource: EventDataSource(),
+          initialDisplayDate: controller.selectedDate,
           appointmentBuilder: appointmentBuilder,
           headerHeight: 0,
           todayHighlightColor: Colors.black,
           selectionDecoration: BoxDecoration(
             color: Colors.red.withOpacity(0.3),
           ),
-          onTap: (details) {
-            // if (details.appointments == null) return;
-            // final event = details.appointments!.first;
-            // Navigator.of(context).push(MaterialPageRoute(
-            //   builder: (context) => EventViewingPage(event: event),
-            // )); 
-          },
         ));
   }
 

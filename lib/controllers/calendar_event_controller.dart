@@ -8,5 +8,6 @@ class EventController extends GetxController {
   void addEvent(Event event) {
     events.add(event);
     events.refresh();
+    update();
   }
 }
