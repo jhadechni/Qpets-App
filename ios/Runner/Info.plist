@@ -40,6 +40,10 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<key>NSLocationAlwaysUsageDescription</key>
+    <string>Needed to access location always when the app is open.</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Needed to access location when the app is open and run in background.</string>
 	<false/>
 </dict>
 </plist>
