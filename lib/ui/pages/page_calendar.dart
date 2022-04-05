@@ -3,6 +3,8 @@ import 'package:qpets_app/ui/pages/calendar/event_editing_page.dart';
 import 'package:qpets_app/ui/pages/calendar/calendar_widget.dart';
 
 class CalendarPage extends StatelessWidget {
+  CalendarPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
