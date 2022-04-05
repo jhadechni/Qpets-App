@@ -9,7 +9,7 @@ import flutter_config
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
-    GMSServices.provideAPIKey(FlutterConfigPlugin.env(for: "IOS_API_KEY"))AndroidGoogleMapsFlutter
+    GMSServices.provideAPIKey(FlutterConfigPlugin.env(for: "IOS_API_KEY"))
     GeneratedPluginRegistrant.register(with: self)
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
