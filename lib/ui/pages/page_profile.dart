@@ -53,7 +53,7 @@ class PageProfileState extends State<PageProfile> {
                   Padding(
                     padding: const EdgeInsets.all(14.0),
                     child: SizedBox(
-                      height: 150,
+                      height: 200,
                       child: Card(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15.0),
@@ -66,35 +66,43 @@ class PageProfileState extends State<PageProfile> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Row(
-                                children: [
-                                  Expanded(
-                                      child: ProfileField(
-                                    field: "Email",
-                                    value:
-                                        userController.userProfile.value.email,
-                                  )),
-                                  Expanded(
-                                      child: ProfileField(
-                                    field: "Gender",
-                                    value:
-                                        userController.userProfile.value.gender,
-                                  ))
-                                ],
+                              Align(
+                                alignment: Alignment.center,
+                                child: 
+                                  Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                              child: ProfileField(
+                                            field: "Email",
+                                            value:
+                                                userController.userProfile.value.email,
+                                          )),
+                                          Expanded(
+                                              child: ProfileField(
+                                            field: "Gender",
+                                            value:
+                                                userController.userProfile.value.gender,
+                                          ))
+                                        ],
+                                      ),
+                                      Row(children: [
+                                        Expanded(
+                                            child: ProfileField(
+                                          field: "Phone",
+                                          value: userController.userProfile.value.phone,
+                                        )),
+                                        Expanded(
+                                            child: ProfileField(
+                                          field: "Address",
+                                          value:
+                                              userController.userProfile.value.address,
+                                        ))
+                                      ]),
+                                    ],
+                                  ),
                               ),
-                              Row(children: [
-                                Expanded(
-                                    child: ProfileField(
-                                  field: "Phone",
-                                  value: userController.userProfile.value.phone,
-                                )),
-                                Expanded(
-                                    child: ProfileField(
-                                  field: "Address",
-                                  value:
-                                      userController.userProfile.value.address,
-                                ))
-                              ]),
                             ],
                           ),
                         ),

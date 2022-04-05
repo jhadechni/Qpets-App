@@ -1,12 +1,9 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 import 'package:qpets_app/controllers/user_controller.dart';
 import 'package:qpets_app/ui/pages/page_profile.dart';
 import 'package:flutter/widgets.dart';
-
 import 'test_utils.dart';
 
 
