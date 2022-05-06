@@ -27,8 +27,8 @@ class MapPageState extends State<MapsPage> {
 
   @override
   void initState() {
-    setMarkers();
     super.initState();
+    setMarkers();
   }
 
   void setMarkers() {

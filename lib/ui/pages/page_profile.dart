@@ -333,7 +333,7 @@ class ProfileField extends StatelessWidget {
   final fieldStyle = const TextStyle(
       fontWeight: FontWeight.w400, fontSize: 16.0, color: Color(0xff383558));
   final fieldValueStyle = const TextStyle(
-      fontWeight: FontWeight.w300, fontSize: 16.0, color: Color(0xff717171));
+      fontWeight: FontWeight.w300, fontSize: 14.0, color: Color(0xff717171));
   @override
   Widget build(BuildContext context) {
     return Container(

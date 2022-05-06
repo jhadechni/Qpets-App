@@ -2,27 +2,24 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_place/google_place.dart';
-
 import 'package:flutter_config/flutter_config.dart';
-
 import '../domain/place.dart';
 
 class PlaceController extends GetxController {
-  RxList _places = [].obs;
-  RxList _predictions = [].obs;
-  late Place _PlacePredict;
+  final RxList _places = [].obs;
+  final RxList _predictions = [].obs;
+  late Place _placePredict;
 
-  var googlePlace = GooglePlace(
-      FlutterConfig.get('PLACE_API_KEY'));
+  var googlePlace = GooglePlace(FlutterConfig.get('PLACE_API_KEY'));
   List get getPlaces => _places;
   List get getPredictions => _predictions;
-  Place get getPlacePredict => _PlacePredict;
+  Place get getPlacePredict => _placePredict;
 
   @override
   // ignore: unnecessary_overrides
   void onInit() async {
-    // findPlaces();
     super.onInit();
+    findPlaces();
   }
 
   findPlaces() async {
@@ -44,22 +41,24 @@ class PlaceController extends GetxController {
     var datastr = resultStore?.results;
     data?.addAll(datastr!);
     _places.clear();
-    for (var placeR in data!) {
-      double? lat = placeR.geometry!.location!.lat;
-      double? lng = placeR.geometry!.location!.lng;
-      //find the photo size 400x400
-      // var resPhoto = await googlePlace.photos.get(placeR.photos![0].photoReference,400,400);
-      _places.add(Place(
-          id: placeR.placeId!,
-          latLng: LatLng(lat!, lng!),
-          name: placeR.name!,
-          category: placeR.types!.contains('veterinary_care')
-              ? PlaceCategory.veterinaries
-              : placeR.types!.contains('park')
-                  ? PlaceCategory.parks
-                  : PlaceCategory.stores,
-          openNow: placeR.openingHours?.openNow!.toString(),
-          address: placeR.vicinity!));
+    if (data != null) {
+      for (var placeR in data) {
+        double? lat = placeR.geometry!.location!.lat;
+        double? lng = placeR.geometry!.location!.lng;
+        //find the photo size 400x400
+        // var resPhoto = await googlePlace.photos.get(placeR.photos![0].photoReference,400,400);
+        _places.add(Place(
+            id: placeR.placeId!,
+            latLng: LatLng(lat!, lng!),
+            name: placeR.name!,
+            category: placeR.types!.contains('veterinary_care')
+                ? PlaceCategory.veterinaries
+                : placeR.types!.contains('park')
+                    ? PlaceCategory.parks
+                    : PlaceCategory.stores,
+            openNow: placeR.openingHours?.openNow.toString(),
+            address: placeR.vicinity!));
+      }
     }
   }
 
@@ -85,13 +84,13 @@ class PlaceController extends GetxController {
   }
 
   void findPlacePredictions(String placeid) async {
+    // _placePredict
     var result = await googlePlace.details.get(placeid,
         fields: "vicinity,geometry,name,place_id,type,opening_hours");
     if (result != null && result.result != null) {
       var data = result.result;
       double? lat = data?.geometry?.location!.lat;
       double? lng = data?.geometry?.location!.lng;
-
       Place newPlace = Place(
           id: data!.placeId!,
           latLng: LatLng(lat!, lng!),
@@ -103,14 +102,14 @@ class PlaceController extends GetxController {
                   : PlaceCategory.stores,
           openNow: data.openingHours?.openNow!.toString(),
           address: data.vicinity!);
-      final placesExists = _places.singleWhere(
+      var placesExists = _places.singleWhere(
           (element) => element.getId == newPlace.getId, orElse: (() {
         return null;
       }));
       if (placesExists == null) {
         _places.add(newPlace);
       }
-      _PlacePredict = newPlace;
+      _placePredict = newPlace;
     }
   }
 
