@@ -1,0 +1,6 @@
+
+
+//use case
+class Places {
+
+}
