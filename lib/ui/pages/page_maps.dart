@@ -8,7 +8,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:qpets_app/controllers/place_controller.dart';
 import 'package:qpets_app/shared/search_bar.dart';
 
-import 'package:qpets_app/domain/place.dart';
+import 'package:qpets_app/domain/entities/place.dart';
 import 'package:get/get.dart';
 
 class MapsPage extends StatefulWidget {
