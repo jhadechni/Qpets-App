@@ -9,6 +9,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_config/flutter_config.dart';
 
+import 'domain/repositories/place_repository.dart';
+import 'domain/use_case/places.dart';
 
 class Palette {
   static const MaterialColor ourPurple = MaterialColor(
@@ -32,10 +34,13 @@ class InitialBinding implements Bindings {
   @override
   void dependencies() {
     Get.put(ProductController());
+    Get.put(PlaceRepository());
+    Get.put(PlacesUseCase());
     Get.put(PlaceController());
     Get.put(UserController());
     Get.lazyPut(() => TimelineController(), fenix: true);
     Get.lazyPut(() => PetProfileController(), fenix: true);
+
   }
 }
 
