@@ -5,6 +5,8 @@ import 'package:qpets_app/controllers/place_controller.dart';
 import 'package:qpets_app/controllers/products_controller.dart';
 import 'package:qpets_app/controllers/timeline_controller.dart';
 import 'package:qpets_app/controllers/user_controller.dart';
+import 'package:qpets_app/domain/repositories/product_repository.dart';
+import 'package:qpets_app/domain/use_case/products.dart';
 import 'package:qpets_app/ui/pages/page_splash.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -34,15 +36,20 @@ class Palette {
 class InitialBinding implements Bindings {
   @override
   void dependencies() {
-    Get.put(ProductController());
-    Get.put(PlaceRepository());
-    Get.put(PlacesUseCase());
-    Get.put(PlaceController());
-    Get.put(UserController());
-    Get.put(EventController());
+    //Products
+    Get.lazyPut(() => ProductController(), fenix: true);
+    Get.lazyPut(() => ProductRepository(), fenix: true);
+    Get.lazyPut(() => ProductsUseCase(), fenix: true);
+    //Places
+    Get.lazyPut(() => PlaceRepository(), fenix: true);
+    Get.lazyPut(() => PlacesUseCase(), fenix: true);
+    Get.lazyPut(() => PlaceController(), fenix: true);
+    //User
+    Get.lazyPut(() => UserController(), fenix: true);
+    //Timeline
     Get.lazyPut(() => TimelineController(), fenix: true);
+    //Pets
     Get.lazyPut(() => PetProfileController(), fenix: true);
-
   }
 }
 
