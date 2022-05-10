@@ -20,7 +20,7 @@ class Place {
     this.openNow,
   });
 
-  // getters for the lat-long of the place
+  // getters for the lat-long, id, name and category of the place
   double get latitude => latLng.latitude;
 
   double get longitude => latLng.longitude;
@@ -49,6 +49,20 @@ class Place {
       img: img ?? this.img,
     );
   }
+    Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'latitude': latLng.latitude,
+      'longitude': latLng.longitude,
+      'name': name,
+      'category': category.toString(),
+      'opennow': openNow,
+      'address': address,
+      'img': img, 
+    };
+  }
+
+
 }
 
 enum PlaceCategory {

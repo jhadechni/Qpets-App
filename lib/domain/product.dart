@@ -5,6 +5,8 @@ class Product {
   String storeName;
   String price;
   String type;
-  
-  Product(this.id, this.image, this.name, this.storeName, this.price,this.type);
+  String description;
+
+  Product(
+      this.id, this.image, this.name, this.storeName, this.price, this.type, this.description);
 }

@@ -66,7 +66,7 @@ class PageStoreState extends State<PageStore> {
             ),
             Expanded(
                 child: Obx(() => ListView(
-                      children: _productController.filteredList
+                      children: _productController.products
                           .map((product) => Padding(
                                 padding:
                                     const EdgeInsets.only(left: 25, right: 25),
@@ -158,7 +158,7 @@ class PageStoreState extends State<PageStore> {
   Widget _cardProduct(Product product) {
     return GestureDetector(
         key: Key(product.id.toString()),
-        onTap: () => Get.to(() => ProductDetail(product),
+        onTap: () => Get.to(() => ProductDetail(product: product),
             transition: Transition.cupertinoDialog,
             duration: const Duration(milliseconds: 250)),
         child: Container(
@@ -225,7 +225,7 @@ class PageStoreState extends State<PageStore> {
   }
 
   Widget _cardPriceText(String text) {
-    return Text("$text USD",
+    return Text("$text COP",
         key: Key(text),
         style: const TextStyle(
           color: Color.fromRGBO(127, 119, 198, 1),

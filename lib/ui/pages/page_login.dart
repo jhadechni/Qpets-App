@@ -26,7 +26,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   @override
-  String _email='',_Contra='';
+  String _email='', _contra='';
   
 
 
@@ -126,7 +126,7 @@ class _LoginPageState extends State<LoginPage> {
           if(op==1){
             _email=value;
           }else{
-            _Contra=value;
+            _contra=value;
           }
           
         })
@@ -148,12 +148,8 @@ class _LoginPageState extends State<LoginPage> {
   }
 
      void login(Authentication controller , AuthenticationController authentication){
-           controller.login(_email, _Contra);
-        authentication.login(_email, _Contra).then((value) => Get.to(BottomNavBar()));
-     
-        
-
-        
+           controller.login(_email, _contra);
+           authentication.login(_email, _contra).then((value) => Get.to(() => BottomNavBar()));
      }
 
 
