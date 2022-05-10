@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:qpets_app/firebasecentral.dart';
 import 'package:qpets_app/ui/pages/page_login.dart';
 
 class Pagesplash extends StatefulWidget {

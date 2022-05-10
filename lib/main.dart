@@ -11,7 +11,10 @@ import 'package:qpets_app/ui/pages/page_splash.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_config/flutter_config.dart';
+import 'package:firebase_core/firebase_core.dart';
 
+import 'controllers/authentication_controller.dart';
+import 'domain/authentication.dart';
 import 'domain/repositories/place_repository.dart';
 import 'domain/use_case/places.dart';
 
@@ -50,17 +53,26 @@ class InitialBinding implements Bindings {
     Get.lazyPut(() => TimelineController(), fenix: true);
     //Pets
     Get.lazyPut(() => PetProfileController(), fenix: true);
+
+    //Auth
+    Get.lazyPut(() => AuthenticationController(), fenix: true);
+    Get.lazyPut(() => Authentication(), fenix: true);
+
+    //Events
+    Get.lazyPut(() => EventController(), fenix: true);
   }
 }
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await FlutterConfig.loadEnvVariables();
-  runApp(GetMaterialApp(
-      initialBinding: InitialBinding(),
-      home: const Pagesplash(),
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-          textTheme: GoogleFonts.robotoTextTheme(),
-          primarySwatch: Palette.ourPurple)));
+  Firebase.initializeApp().then((value) {
+    runApp(GetMaterialApp(
+        initialBinding: InitialBinding(),
+        home: const Pagesplash(),
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+            textTheme: GoogleFonts.robotoTextTheme(),
+            primarySwatch: Palette.ourPurple)));
+  });
 }
