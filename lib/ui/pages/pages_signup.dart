@@ -133,7 +133,7 @@ class _SingupPageState extends State<SingupPage> {
       if(isNumeric(numero)==true){
         if(contra==contra2){
           controller.signup(nombre, contra, numero, correo); 
-          authetication.signUp(correo, contra,_numero,_nombre, context).then((value) => Get.to(LoginPage())); 
+          authetication.signUp(correo, contra,_numero,_nombre, context);   
           
          
           
