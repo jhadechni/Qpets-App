@@ -1,14 +1,14 @@
 class Product {
-  String? id;
-  String? image;
-  String? name;
-  String? storeName;
-  String? price;
-  String? type;
-  String? description;
-  String? facebook;
-  String? instagram;
-  String? phoneNumber;
+  String id;
+  String image;
+  String name;
+  String storeName;
+  String price;
+  String type;
+  String description;
+  String facebook;
+  String instagram;
+  String phoneNumber;
 
   Product({
     required this.id,
@@ -24,43 +24,18 @@ class Product {
   });
 
   // Getters
-  String? get getName => name;
+  String get getName => name;
 
-  String? get getstoreName => storeName;
+  String get getstoreName => storeName;
 
-  String? get getPrice => price;
+  String get getPrice => price;
 
-  String? get getType => type;
-
-  Product copyWith({
-    String? id,
-    String? image,
-    String? name,
-    String? storeName,
-    String? price,
-    String? type,
-    String? description,
-    String? facebook,
-    String? instagram,
-    String? phoneNumber,
-  }) {
-    return Product(
-      id: id ?? this.id,
-      image: image ?? this.image,
-      name: name ?? this.name,
-      storeName: storeName ?? this.storeName,
-      price: price ?? this.price,
-      type: type ?? this.type,
-      description: description ?? this.description,
-      facebook: facebook ?? this.facebook,
-      instagram: instagram ?? this.instagram,
-      phoneNumber: phoneNumber ?? this.phoneNumber,
-    );
-  }
+  String get getType => type;
 
   Map<String, dynamic> toMap() {
     return {
       'id': id,
+      "image": image,
       'name': name,
       'storeName': storeName,
       'price': price,
@@ -72,17 +47,18 @@ class Product {
     };
   }
 
-  Product.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    image = json['image'];
-    name = json['name'];
-    storeName = json['storeName'];
-    price = json['price'];
-    type = json['type'];
-    description = json['description'];
-    facebook = json['facebook'];
-    instagram = json['instagram'];
-    phoneNumber = json['phoneNumber'];
+  factory Product.fromJson(Map<String, dynamic> json) {
+    return Product(
+        id: json['_id'],
+        image: json['image'],
+        name: json['name'],
+        storeName: json['storeName'],
+        price: json['price'],
+        type: json['type'],
+        description: json['description'],
+        facebook: json['facebook'],
+        instagram: json['instagram'],
+        phoneNumber: json['phoneNumber']);
   }
 
   Map<String, dynamic> toJson() {
