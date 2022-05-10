@@ -16,6 +16,7 @@ class AuthenticationController extends GetxController {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
           
+            
 
           
       return Future.value();
@@ -42,9 +43,12 @@ class AuthenticationController extends GetxController {
     try {
       await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
+         
           
-          Get.to(const LoginPage());
+          
           agregarUsuario(nombre, numero, email, password);
+         
+        
       
       return Future.value(true);
     } on FirebaseAuthException catch (e) {
@@ -70,7 +74,8 @@ class AuthenticationController extends GetxController {
   }
 
   String userEmail() {
-    String email = FirebaseAuth.instance.currentUser!.email ?? "a@a.com";
+     
+    String email = FirebaseAuth.instance.currentUser!.email!;
     return email;
   }
 

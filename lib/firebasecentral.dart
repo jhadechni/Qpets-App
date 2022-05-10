@@ -15,7 +15,7 @@ class FirebaseCentral extends StatelessWidget {
           if (snapshot.hasData) {
             return  const BottomNavBar();
           } else {
-            return const LoginPage();
+            return  LoginPage();
           }
         });
   }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qpets_app/controllers/user_controller.dart';
+import 'package:qpets_app/domain/authentication.dart';
+import 'package:qpets_app/ui/pages/page_login.dart';
 import 'package:qpets_app/ui/pages/pet_profile.dart';
 import 'package:qpets_app/ui/pages/produc_detail.dart';
 
@@ -23,12 +25,13 @@ class PageProfileState extends State<PageProfile> {
   @override
   Widget build(BuildContext context) {
       AuthenticationController authentication = Get.find();
+      Authentication controller = Get.find();
     return Obx(() => SafeArea(
             child: SingleChildScrollView(
           child: Stack(
             children: [
               GestureDetector(
-                    onTap: () => authentication.logout(),
+                    onTap: () => logout(authentication, controller),
                     child: const Padding(
                       padding: EdgeInsets.only(bottom: 20),
                       child: Icon(Icons.logout, size: 50),
@@ -339,6 +342,13 @@ class PageProfileState extends State<PageProfile> {
         ),
         textAlign: TextAlign.left);
   }
+
+  
+void logout(AuthenticationController authentication , Authentication controller){
+  controller.logout();
+  authentication.logout();
+  Get.to(LoginPage());
+}
 }
 
 class ProfileField extends StatelessWidget {
@@ -361,4 +371,6 @@ class ProfileField extends StatelessWidget {
       ]),
     );
   }
+
+
 }

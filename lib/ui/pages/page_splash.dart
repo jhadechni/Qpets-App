@@ -15,7 +15,7 @@ class _PagesplashState extends State<Pagesplash> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 5)).then((value) {
-    Get.to(const FirebaseCentral());
+    Get.to(const LoginPage());
     });
   }
 
