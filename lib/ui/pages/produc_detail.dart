@@ -18,10 +18,8 @@ class ProductDetail extends StatelessWidget {
           items: [
             HawkFabMenuItem(
               label: 'Facebook',
-              ontap: () {
-                const SnackBar(
-                  content: Text('Facebook'),
-                );
+              ontap: () async {
+               await launchUrlString("https://facebook.com");
               },
               icon: const Icon(
                 FontAwesomeIcons.facebookSquare,
@@ -31,18 +29,16 @@ class ProductDetail extends StatelessWidget {
             ),
             HawkFabMenuItem(
               label: 'Phone',
-              ontap: () async {
-               await launchUrlString("https://google.com");
+              ontap: () {
+                _makePhoneCall("123456");
               },
               icon: const Icon(Icons.phone),
               labelColor: Colors.black,
             ),
             HawkFabMenuItem(
               label: 'Instagram',
-              ontap: () {
-                const SnackBar(
-                  content: Text('Instagram'),
-                );
+              ontap: () async {
+                await launchUrlString("https://instagram.com");
               },
               icon: const Icon(
                 FontAwesomeIcons.instagram,
@@ -129,4 +125,11 @@ class ProductDetail extends StatelessWidget {
     );
   }
 
+  Future<void> _makePhoneCall(String phoneNumber) async {
+    final Uri launchUri = Uri(
+      scheme: 'tel',
+      path: phoneNumber,
+    );
+    await launchUrl(launchUri);
+  }
 }
