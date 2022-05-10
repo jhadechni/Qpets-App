@@ -14,7 +14,7 @@ class ProductDetail extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(),
         body: HawkFabMenu(
-          icon: AnimatedIcons.menu_arrow,
+          icon: AnimatedIcons.view_list,
           items: [
             HawkFabMenuItem(
               label: 'Facebook',

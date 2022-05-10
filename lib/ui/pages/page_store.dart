@@ -66,7 +66,7 @@ class PageStoreState extends State<PageStore> {
             ),
             Expanded(
                 child: Obx(() => ListView(
-                      children: _productController.filteredList
+                      children: _productController.products
                           .map((product) => Padding(
                                 padding:
                                     const EdgeInsets.only(left: 25, right: 25),

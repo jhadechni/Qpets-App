@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:path/path.dart';
 import 'package:qpets_app/domain/entities/place.dart';
