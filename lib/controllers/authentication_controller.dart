@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../shared/bottom_navbar.dart';
 import '../ui/pages/page_login.dart';
 
 
@@ -15,6 +16,7 @@ class AuthenticationController extends GetxController {
     try {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
+          Get.to(() => BottomNavBar());
           
             
 
@@ -43,6 +45,7 @@ class AuthenticationController extends GetxController {
     try {
       await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
+          Get.to(LoginPage());
          
           
           

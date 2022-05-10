@@ -149,7 +149,7 @@ class _LoginPageState extends State<LoginPage> {
 
      void login(Authentication controller , AuthenticationController authentication){
            controller.login(_email, _contra);
-           authentication.login(_email, _contra).then((value) => Get.to(() => BottomNavBar()));
+           authentication.login(_email, _contra);
      }
 
 
