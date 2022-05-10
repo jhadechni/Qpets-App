@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:qpets_app/ui/pages/page_login.dart';
-import 'package:qpets_app/ui/pages/page_splash.dart';
 import 'package:qpets_app/ui/pages/pages_signup.dart';
 import 'package:qpets_app/ui/provider/event_provider.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';

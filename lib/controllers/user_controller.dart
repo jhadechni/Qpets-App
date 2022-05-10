@@ -61,6 +61,6 @@ class UserController extends GetxController {
         "Fresh Kisses",
         "16 Jan 2021",
         "200",
-        "Dog")
+        "Dog","")
   ].obs;
 }

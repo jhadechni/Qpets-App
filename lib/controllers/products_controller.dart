@@ -14,35 +14,37 @@ class ProductController extends GetxController {
         "Product name",
         "Store name",
         "200",
-        "Dog"),
+        "Dog",
+        "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem Lorem ipsum Lorem ipsum Lorem ipsum LoremLorem ipsum Lorem ipsum Lorem ipsum Lorem"),
     Product(
         1,
         "https://cdn.discordapp.com/attachments/833897513349021706/955338900002455642/unsplash_2hpiy9XuXC4.png",
         "Product name",
         "Store name",
         "200",
-        "Dog"),
+        "Dog",
+        "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem Lorem ipsum Lorem ipsum Lorem ipsum LoremLorem ipsum Lorem ipsum Lorem ipsum Lorem"),
     Product(
         2,
         "https://cdn.discordapp.com/attachments/833897513349021706/955339290785742858/unsplash_FiQNJA-CND4.png",
         "Product name",
         "Store name",
         "200",
-        "Cat"),
+        "Cat","Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem Lorem ipsum Lorem ipsum Lorem ipsum LoremLorem ipsum Lorem ipsum Lorem ipsum Lorem"),
     Product(
         3,
         "https://cdn.discordapp.com/attachments/833897513349021706/955338658792243220/unsplash_Sm7ebvMgi-E_1.png",
         "Product name",
         "Store name",
         "200",
-        "Fish"),
+        "Fish",""),
     Product(
         4,
         "https://cdn.discordapp.com/attachments/833897513349021706/955338658792243220/unsplash_Sm7ebvMgi-E_1.png",
         "Product name",
         "Store name",
         "200",
-        "Bird")
+        "Bird","")
   ].obs;
 
   RxList<Product> filteredList = <Product>[].obs;
