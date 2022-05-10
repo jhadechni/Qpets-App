@@ -1,5 +1,6 @@
 /// CurrentAge: auto-generated
 class PetProfileFields {
+  static const baseUrl = "https://qpets.herokuapp.com/pets";
   String gender;
   String name;
   String type;
@@ -21,4 +22,25 @@ class PetProfileFields {
       this.neutered = false,
       required this.dob,
       required this.imgUrl});
+  factory PetProfileFields.fromJson(Map<String, dynamic> json) {
+    return PetProfileFields(
+        gender: json["gender"],
+        name: json["name"],
+        type: json["type"],
+        breed: json["breed"],
+        weight: json["weight"],
+        dob: DateTime.parse(json["dob"]),
+        imgUrl: json["imgUrl"]);
+  }
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['gender'] = gender;
+    data['name'] = name;
+    data['type'] = type;
+    data['breed'] = breed;
+    data['weight'] = weight;
+    data['dob'] = dob.toString();
+    data['imgUrl'] = imgUrl;
+    return data;
+  }
 }
