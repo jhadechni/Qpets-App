@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qpets_app/controllers/calendar_event_controller.dart';
 import 'package:qpets_app/controllers/pet_profile_controller.dart';
 import 'package:qpets_app/controllers/place_controller.dart';
 import 'package:qpets_app/controllers/products_controller.dart';
@@ -38,6 +39,7 @@ class InitialBinding implements Bindings {
     Get.put(PlacesUseCase());
     Get.put(PlaceController());
     Get.put(UserController());
+    Get.put(EventController());
     Get.lazyPut(() => TimelineController(), fenix: true);
     Get.lazyPut(() => PetProfileController(), fenix: true);
 
