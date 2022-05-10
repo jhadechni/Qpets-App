@@ -260,7 +260,7 @@ class PageProfileState extends State<PageProfile> {
   Widget _cardProduct(Product product) {
     return GestureDetector(
         key: const Key('product-card'),
-        onTap: () => Get.to(() => ProductDetail(product),
+        onTap: () => Get.to(() => ProductDetail(product: product),
             transition: Transition.cupertinoDialog,
             duration: const Duration(milliseconds: 250)),
         child: 

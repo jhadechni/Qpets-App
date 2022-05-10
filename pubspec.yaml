@@ -44,6 +44,8 @@ dependencies:
   intl: ^0.17.0
   flutter_config: ^2.0.0
   sqflite: ^2.0.0+4
+  hawk_fab_menu: ^1.1.2 
+  url_launcher: ^6.1.0
 
 dev_dependencies:
   flutter_test:
