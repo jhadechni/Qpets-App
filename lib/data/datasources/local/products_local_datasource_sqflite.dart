@@ -13,22 +13,22 @@ class ProductLocalDataSource {
   }
 
   _initDatabase() async {
-    String path = join(await getDatabasesPath(), 'products_database.db');
+    String path = join(await getDatabasesPath(), 'product_database.db');
     return await openDatabase(path, version: 1, onCreate: _onCreate);
   }
 
   Future _onCreate(Database db, int version) async {
     await db.execute(
-        'CREATE TABLE products (_id TEXT PRIMARY KEY, image TEXT, name TEXT,storeName TEXT, price TEXT, type TEXT, description TEXT, facebook TEXT, instagram TEXT, phoneNumber TEXT)');
+        'CREATE TABLE product (id TEXT PRIMARY KEY, image TEXT, name TEXT,storeName TEXT, price TEXT, type TEXT, description TEXT, facebook TEXT, instagram TEXT, phoneNumber TEXT)');
   }
 
   Future<void> addAllProducts(List<Product> products) async {
     final db = await database;
     // aquí se debe llamar al db.insert
     // ignore: avoid_function_literals_in_foreach_calls
-    products.forEach((element) async {
+    await Future.forEach(products, (Product element) async {
       await db.insert(
-        'products',
+        'product',
         element.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
@@ -38,7 +38,7 @@ class ProductLocalDataSource {
   Future<void> addProduct(Product product) async {
     final db = await database;
     await db.insert(
-      'products',
+      'product',
       product.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
@@ -47,26 +47,28 @@ class ProductLocalDataSource {
   Future<List<Product>> getAllProducts() async {
     final db = await database;
 
-    final List<Map<String, dynamic>> products = await db.query('products');
+    final List<Map<String, dynamic>> products = await db.query('product');
+    print("GetALl");
+    print(products);
     return List.generate(products.length, (i) {
       //keep in mind the index
       return Product(
         id: products[i]['id'],
-        image : products[i]['image'],
-        name : products[i]['name'],
-        storeName : products[i]['storeName'],
-        price : products[i]['price'],
-        type : products[i]['type'],
-        description : products[i]['description'],
-        facebook : products[i]['facebook'],
-        instagram : products[i]['instagram'],
-        phoneNumber : products[i]['phoneNumber'],
+        image: products[i]['image'] ?? "",
+        name: products[i]['name'],
+        storeName: products[i]['storeName'],
+        price: products[i]['price'],
+        type: products[i]['type'],
+        description: products[i]['description'],
+        facebook: products[i]['facebook'],
+        instagram: products[i]['instagram'],
+        phoneNumber: products[i]['phoneNumber'],
       );
     });
   }
 
   Future<void> deleteAll() async {
     Database db = await database;
-    await db.delete('products');
+    await db.delete('product');
   }
 }
