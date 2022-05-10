@@ -4,6 +4,7 @@ import 'package:qpets_app/controllers/user_controller.dart';
 import 'package:qpets_app/ui/pages/pet_profile.dart';
 import 'package:qpets_app/ui/pages/produc_detail.dart';
 
+import '../../controllers/authentication_controller.dart';
 import '../../domain/product.dart';
 
 class PageProfile extends StatefulWidget {
@@ -21,10 +22,17 @@ class PageProfileState extends State<PageProfile> {
   UserController userController = Get.find();
   @override
   Widget build(BuildContext context) {
+      AuthenticationController authentication = Get.find();
     return Obx(() => SafeArea(
             child: SingleChildScrollView(
           child: Stack(
             children: [
+              GestureDetector(
+                    onTap: () => authentication.logout(),
+                    child: const Padding(
+                      padding: EdgeInsets.only(bottom: 20),
+                      child: Icon(Icons.logout, size: 50),
+                    )),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [

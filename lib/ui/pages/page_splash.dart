@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:qpets_app/firebasecentral.dart';
 import 'package:qpets_app/ui/pages/page_login.dart';
 
 class Pagesplash extends StatefulWidget {
@@ -14,7 +15,7 @@ class _PagesplashState extends State<Pagesplash> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 5)).then((value) {
-    Get.to(const LoginPage());
+    Get.to(const FirebaseCentral());
     });
   }
 

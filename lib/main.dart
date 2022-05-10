@@ -9,7 +9,10 @@ import 'package:qpets_app/ui/pages/page_splash.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_config/flutter_config.dart';
+import 'package:firebase_core/firebase_core.dart';
 
+import 'controllers/authentication_controller.dart';
+import 'domain/authentication.dart';
 class Palette {
   static const MaterialColor ourPurple = MaterialColor(
     0xFF8E6FD8, // 0% comes in here, this will be color picked if no shade is selected when defining a Color property which doesn’t require a swatch.
@@ -35,6 +38,8 @@ class InitialBinding implements Bindings {
     Get.put(PlaceController());
     Get.put(UserController());
     Get.put(EventController());
+    Get.put(AuthenticationController());
+    Get.put(Authentication());
     Get.lazyPut(() => TimelineController(), fenix: true);
     Get.lazyPut(() => PetProfileController(), fenix: true);
   }
@@ -43,11 +48,15 @@ class InitialBinding implements Bindings {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await FlutterConfig.loadEnvVariables();
-  runApp(GetMaterialApp(
+  Firebase.initializeApp().then((value) {
+    runApp(GetMaterialApp(
       initialBinding: InitialBinding(),
       home: const Pagesplash(),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           textTheme: GoogleFonts.robotoTextTheme(),
           primarySwatch: Colors.purple)));
+    
+  });
+  
 }
