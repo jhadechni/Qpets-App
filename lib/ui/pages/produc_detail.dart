@@ -1,55 +1,67 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
-
+import 'package:hawk_fab_menu/hawk_fab_menu.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import '../../domain/product.dart';
 
 class ProductDetail extends StatelessWidget {
-  const ProductDetail(this.product, {Key? key}) : super(key: key);
+  ProductDetail({required this.product});
   final Product product;
-  final String description =
-      "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem Lorem ipsum Lorem ipsum Lorem ipsum LoremLorem ipsum Lorem ipsum Lorem ipsum Lorem";
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Stack(
-              children: [_banner(80), _customAppBar()],
+        appBar: AppBar(),
+        body: HawkFabMenu(
+          icon: AnimatedIcons.view_list,
+          items: [
+            HawkFabMenuItem(
+              label: 'Facebook',
+              ontap: () async {
+               await launchUrlString("https://facebook.com");
+              },
+              icon: const Icon(
+                FontAwesomeIcons.facebookSquare,
+              ),
+              color: const Color(0xFF7F77C6),
+              labelColor: Colors.black,
             ),
-            _productImage(product.image),
-            Column(
-              children: [
-                _tittleText(product.name),
-                _storeNameText(product.storeName),
-                _storeNameText("for: ${product.type}"),
-                _textPrice("${product.price} USD"),
-                _textDescription(description),
-              ],
+            HawkFabMenuItem(
+              label: 'Phone',
+              ontap: () {
+                _makePhoneCall("123456");
+              },
+              icon: const Icon(Icons.phone),
+              labelColor: Colors.black,
             ),
-            Container(
-                padding: const EdgeInsets.all(30),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: const [
-                      Icon(
-                        FontAwesomeIcons.facebookSquare,
-                        size: 60,
-                        color: Color(0xFF7F77C6),
-                      ),
-                      Icon(FontAwesomeIcons.squarePhone,
-                          size: 60, color: Color(0xFF7F77C6)),
-                      Icon(FontAwesomeIcons.instagramSquare,
-                          size: 60, color: Color(0xFF7F77C6))
-                    ]))
+            HawkFabMenuItem(
+              label: 'Instagram',
+              ontap: () async {
+                await launchUrlString("https://instagram.com");
+              },
+              icon: const Icon(
+                FontAwesomeIcons.instagram,
+              ),
+            ),
           ],
-        )),
-      ),
-    );
+          body: SingleChildScrollView(
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              _productImage(product.image),
+              Column(
+                children: [
+                  _tittleText(product.name),
+                  _storeNameText(product.storeName),
+                  _storeNameText("for: ${product.type}"),
+                  _textPrice("${product.price} COP"),
+                  _textDescription(product.description),
+                ],
+              )
+            ],
+          )),
+        ));
   }
 
   Widget _tittleText(String text) {
@@ -89,6 +101,7 @@ class ProductDetail extends StatelessWidget {
   Widget _textDescription(String text) {
     return Container(
         padding: const EdgeInsets.only(left: 30, right: 30, top: 10),
+        width: 400,
         child: Text(
           text,
           style: const TextStyle(
@@ -112,34 +125,11 @@ class ProductDetail extends StatelessWidget {
     );
   }
 
-  Widget _banner(double bannerHeight) {
-    return Container(
-      width: double.infinity,
-      height: bannerHeight,
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
-        color: Color(0xFF7F77C6),
-      ),
+  Future<void> _makePhoneCall(String phoneNumber) async {
+    final Uri launchUri = Uri(
+      scheme: 'tel',
+      path: phoneNumber,
     );
-  }
-
-  Widget _customAppBar() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(30),
-          child: GestureDetector(
-            onTap: () => Get.back(),
-            child: const Icon(
-              Icons.arrow_back,
-              color: Colors.white,
-              size: 40,
-            ),
-          ),
-        )
-      ],
-    );
+    await launchUrl(launchUri);
   }
 }
