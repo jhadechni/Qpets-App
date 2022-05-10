@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:qpets_app/domain/pet_profile.dart';
 import 'package:qpets_app/domain/user.dart';
 
-import '../domain/product.dart';
+import '../domain/entities/product.dart';
 
 class UserController extends GetxController {
   final userProfile = User(
@@ -54,13 +54,5 @@ class UserController extends GetxController {
             'https://images.unsplash.com/photo-1590419690008-905895e8fe0d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=736&q=80'),
   ].obs;
 
-  RxList<Product> productsSale = [
-    Product(
-        0,
-        "https://cdn.discordapp.com/attachments/833897513349021706/955338658792243220/unsplash_Sm7ebvMgi-E_1.png",
-        "Fresh Kisses",
-        "16 Jan 2021",
-        "200",
-        "Dog","")
-  ].obs;
+  RxList<Product> productsSale = <Product>[].obs;
 }

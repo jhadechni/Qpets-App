@@ -1,23 +1,30 @@
 import 'package:get/get.dart';
+import 'package:qpets_app/domain/entities/product.dart';
 import 'package:qpets_app/domain/use_case/products.dart';
-import '../domain/product.dart';
 
 class ProductController extends GetxController {
-  late List products = [].obs;
+  final products = <Product>[].obs;
   ProductsUseCase productsUseCase = Get.find();
 
   ProductController() {
+    getProductFromRepository();
     filterCategory("");
-    getAllPlaces();
+    print(products);
   }
   List get getProducts => products;
 
   RxList<Product> filteredList = <Product>[].obs;
   final filter = "".obs;
 
-  Future<void> getAllPlaces() async {
-    var list = await productsUseCase.getAllPlaces();
-    products = list;
+  Future<void> getProductFromRepository() async {
+    bool success = await productsUseCase.getProductsRemote();
+    await getAllProducts();
+  }
+
+  Future<void> getAllProducts() async {
+    var list = await productsUseCase.getAllProducts();
+    products.value = list;
+    filteredList.value = list;
   }
 
   addProduct(Product product) async {

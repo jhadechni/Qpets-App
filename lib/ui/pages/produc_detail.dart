@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hawk_fab_menu/hawk_fab_menu.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import '../../domain/product.dart';
+import '../../domain/entities/product.dart';
 
 class ProductDetail extends StatelessWidget {
   ProductDetail({required this.product});
@@ -19,7 +19,7 @@ class ProductDetail extends StatelessWidget {
             HawkFabMenuItem(
               label: 'Facebook',
               ontap: () async {
-               await launchUrlString("https://facebook.com");
+                await launchUrlString(product.facebook);
               },
               icon: const Icon(
                 FontAwesomeIcons.facebookSquare,
@@ -30,7 +30,7 @@ class ProductDetail extends StatelessWidget {
             HawkFabMenuItem(
               label: 'Phone',
               ontap: () {
-                _makePhoneCall("123456");
+                _makePhoneCall(product.phoneNumber);
               },
               icon: const Icon(Icons.phone),
               labelColor: Colors.black,
@@ -38,7 +38,7 @@ class ProductDetail extends StatelessWidget {
             HawkFabMenuItem(
               label: 'Instagram',
               ontap: () async {
-                await launchUrlString("https://instagram.com");
+                await launchUrlString(product.instagram);
               },
               icon: const Icon(
                 FontAwesomeIcons.instagram,
@@ -66,9 +66,10 @@ class ProductDetail extends StatelessWidget {
 
   Widget _tittleText(String text) {
     return Container(
-      padding: const EdgeInsets.only(top: 30),
+      padding: const EdgeInsets.only(top: 30,bottom: 10),
       child: Text(
         text,
+        textAlign: TextAlign.center,
         style: const TextStyle(
           color: Color.fromRGBO(56, 53, 88, 1),
           fontSize: 36,
@@ -104,6 +105,7 @@ class ProductDetail extends StatelessWidget {
         width: 400,
         child: Text(
           text,
+          textAlign: TextAlign.center,
           style: const TextStyle(
             color: Color.fromRGBO(151, 151, 162, 1),
             fontSize: 18,
