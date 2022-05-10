@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qpets_app/controllers/products_controller.dart';
 import 'package:qpets_app/ui/pages/produc_detail.dart';
-import '../../domain/product.dart';
+import '../../domain/entities/product.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../../shared/list_view_loader.dart';
 import '../../shared/search_bar.dart';
 
 class PageStore extends StatefulWidget {
@@ -64,16 +65,20 @@ class PageStoreState extends State<PageStore> {
                   padding: const EdgeInsets.only(left: 20, top: 20, bottom: 20),
                   child: _tittleText("Our Products")),
             ),
-            Expanded(
-                child: Obx(() => ListView(
-                      children: _productController.products
-                          .map((product) => Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 25, right: 25),
-                                child: _cardProduct(product),
-                              ))
-                          .toList(),
-                    ))),
+            Expanded(child: Obx(() {
+              if (_productController.filteredList.isNotEmpty) {
+                return ListView(
+                  children: _productController.filteredList
+                      .map((product) => Padding(
+                            padding: const EdgeInsets.only(left: 25, right: 25),
+                            child: _cardProduct(product),
+                          ))
+                      .toList(),
+                );
+              } else {
+                return ListLoader(numberOfFields: 3);
+              }
+            })),
           ],
         ),
       ),
@@ -178,7 +183,7 @@ class PageStoreState extends State<PageStore> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      _cardTitleText(product.name),
+                      _cardTitleText(trimName(product.name)),
                       _cardSubtitleText(product.storeName),
                       _cardSubtitleText("for: ${product.type}"),
                       _cardPriceText(product.price)
@@ -191,7 +196,7 @@ class PageStoreState extends State<PageStore> {
 
   Widget _cardImage(String link) {
     return Container(
-      key: Key(link),
+        key: Key(link),
         width: 110,
         height: 200,
         decoration: BoxDecoration(
@@ -233,5 +238,15 @@ class PageStoreState extends State<PageStore> {
           fontWeight: FontWeight.bold,
         ),
         textAlign: TextAlign.left);
+  }
+
+  String trimName(String name) {
+    try {
+      var splitted = name.split(' ');
+      String trimmedName = splitted[0] + " " + splitted[1] + '...';
+      return trimmedName;
+    } catch (e) {
+      return name;
+    }
   }
 }
