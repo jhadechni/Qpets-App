@@ -10,20 +10,23 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_config/flutter_config.dart';
 
+import 'domain/repositories/place_repository.dart';
+import 'domain/use_case/places.dart';
+
 class Palette {
   static const MaterialColor ourPurple = MaterialColor(
-    0xFF8E6FD8, // 0% comes in here, this will be color picked if no shade is selected when defining a Color property which doesn’t require a swatch.
+    0xFF7F77C6, // 0% comes in here, this will be color picked if no shade is selected when defining a Color property which doesn’t require a swatch.
     <int, Color>{
-      50: Color(0x8064c2), //10%
-      100: Color(0x7259ad), //20%
-      200: Color(0x634e97), //30%
-      300: Color(0x554382), //40%
-      400: Color(0x47386c), //50%
-      500: Color(0x392c56), //60%
-      600: Color(0x2b2141), //70%
-      700: Color(0x1c162b), //80%
-      800: Color(0x0e0b16), //90%
-      900: Color(0x000000), //100%
+      50: Color(0x008064c2), //10%
+      100: Color(0x007259ad), //20%
+      200: Color(0x00634e97), //30%
+      300: Color(0x00554382), //40%
+      400: Color(0x0047386c), //50%
+      500: Color(0x00392c56), //60%
+      600: Color(0x002b2141), //70%
+      700: Color(0x001c162b), //80%
+      800: Color(0x000e0b16), //90%
+      900: Color(0x00000000), //100%
     },
   );
 }
@@ -32,11 +35,14 @@ class InitialBinding implements Bindings {
   @override
   void dependencies() {
     Get.put(ProductController());
+    Get.put(PlaceRepository());
+    Get.put(PlacesUseCase());
     Get.put(PlaceController());
     Get.put(UserController());
     Get.put(EventController());
     Get.lazyPut(() => TimelineController(), fenix: true);
     Get.lazyPut(() => PetProfileController(), fenix: true);
+
   }
 }
 
@@ -49,5 +55,5 @@ void main() async {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           textTheme: GoogleFonts.robotoTextTheme(),
-          primarySwatch: Colors.purple)));
+          primarySwatch: Palette.ourPurple)));
 }

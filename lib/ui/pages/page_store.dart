@@ -22,58 +22,60 @@ class PageStoreState extends State<PageStore> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(20),
-            child: SearchBar(
-              placeholder: "Search for a Product",
-              onTextChangeCallback:(s) => _productController.filterCategory(s)),
-          ),
-          Align(
-            alignment: Alignment.topLeft,
-            child: Padding(
-                padding: const EdgeInsets.only(left: 20, top: 20),
-                child: _tittleText("Pet Categories")),
-          ),
-          SingleChildScrollView(
-            padding: const EdgeInsets.all(20),
-            scrollDirection: Axis.horizontal,
-            child: Wrap(
-              alignment: WrapAlignment.spaceBetween,
-              spacing: 10,
-              children: [
-                _filterCard("All", FontAwesomeIcons.angellist,
-                    Colors.grey),
-                _filterCard("Dog", FontAwesomeIcons.dog,
-                    const Color.fromRGBO(64, 142, 234, 1)),
-                _filterCard("Cat", FontAwesomeIcons.cat,
-                    const Color.fromRGBO(140, 2, 248, 1)),
-                _filterCard("Bird", FontAwesomeIcons.dove,
-                    const Color.fromRGBO(246, 166, 65, 1)),
-                _filterCard("Fish", FontAwesomeIcons.fish,
-                    const Color.fromRGBO(251, 68, 68, 1)),
-              ],
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: SearchBar(
+                  placeholder: "Search for a Product",
+                  onTextChangeCallback: (s) =>
+                      _productController.filterCategory(s)),
             ),
-          ),
-          Align(
-            alignment: Alignment.topLeft,
-            child: Padding(
-                padding: const EdgeInsets.only(left: 20, top: 20, bottom: 20),
-                child: _tittleText("Our Products")),
-          ),
-          Expanded(
-              child: Obx(() => ListView(
-                    children: _productController.filteredList
-                        .map((product) => Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 25, right: 25),
-                              child: _cardProduct(product),
-                            ))
-                        .toList(),
-                  ))),
-        ],
+            Align(
+              alignment: Alignment.topLeft,
+              child: Padding(
+                  padding: const EdgeInsets.only(left: 20, top: 20),
+                  child: _tittleText("Pet Categories")),
+            ),
+            SingleChildScrollView(
+              padding: const EdgeInsets.all(20),
+              scrollDirection: Axis.horizontal,
+              child: Wrap(
+                alignment: WrapAlignment.spaceBetween,
+                spacing: 10,
+                children: [
+                  _filterCard("All", FontAwesomeIcons.angellist, Colors.grey),
+                  _filterCard("Dog", FontAwesomeIcons.dog,
+                      const Color.fromRGBO(64, 142, 234, 1)),
+                  _filterCard("Cat", FontAwesomeIcons.cat,
+                      const Color.fromRGBO(140, 2, 248, 1)),
+                  _filterCard("Bird", FontAwesomeIcons.dove,
+                      const Color.fromRGBO(246, 166, 65, 1)),
+                  _filterCard("Fish", FontAwesomeIcons.fish,
+                      const Color.fromRGBO(251, 68, 68, 1)),
+                ],
+              ),
+            ),
+            Align(
+              alignment: Alignment.topLeft,
+              child: Padding(
+                  padding: const EdgeInsets.only(left: 20, top: 20, bottom: 20),
+                  child: _tittleText("Our Products")),
+            ),
+            Expanded(
+                child: Obx(() => ListView(
+                      children: _productController.filteredList
+                          .map((product) => Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 25, right: 25),
+                                child: _cardProduct(product),
+                              ))
+                          .toList(),
+                    ))),
+          ],
+        ),
       ),
     );
   }
@@ -81,6 +83,7 @@ class PageStoreState extends State<PageStore> {
   Widget _tittleText(text) {
     return Text(
       text,
+      key: Key(text),
       style: const TextStyle(
         color: Color.fromRGBO(0, 0, 0, 1),
         fontSize: 27,
@@ -91,13 +94,14 @@ class PageStoreState extends State<PageStore> {
 
   Widget _filterCard(String text, IconData icon, Color color) {
     return GestureDetector(
+      key: Key(text),
       onTap: () {
         _productController.changeFilter(text);
         _productController.filterCategory(text);
       },
       child: Container(
         width: 81,
-        height: 100,
+        height: 114,
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(23),
@@ -153,8 +157,8 @@ class PageStoreState extends State<PageStore> {
 
   Widget _cardProduct(Product product) {
     return GestureDetector(
-        onTap: () => Get.to(
-            () => ProductDetail(product),
+        key: Key(product.id.toString()),
+        onTap: () => Get.to(() => ProductDetail(product: product),
             transition: Transition.cupertinoDialog,
             duration: const Duration(milliseconds: 250)),
         child: Container(
@@ -187,6 +191,7 @@ class PageStoreState extends State<PageStore> {
 
   Widget _cardImage(String link) {
     return Container(
+      key: Key(link),
         width: 110,
         height: 200,
         decoration: BoxDecoration(
@@ -198,6 +203,7 @@ class PageStoreState extends State<PageStore> {
   Widget _cardTitleText(String text) {
     return Text(
       text,
+      key: Key(text),
       style: const TextStyle(
         color: Color.fromRGBO(56, 53, 88, 1),
         fontSize: 24,
@@ -209,6 +215,7 @@ class PageStoreState extends State<PageStore> {
 
   Widget _cardSubtitleText(String text) {
     return Text(text,
+        key: Key(text),
         style: const TextStyle(
           color: Color.fromRGBO(127, 119, 198, 1),
           fontSize: 20,
@@ -218,7 +225,8 @@ class PageStoreState extends State<PageStore> {
   }
 
   Widget _cardPriceText(String text) {
-    return Text("$text USD",
+    return Text("$text COP",
+        key: Key(text),
         style: const TextStyle(
           color: Color.fromRGBO(127, 119, 198, 1),
           fontSize: 24,

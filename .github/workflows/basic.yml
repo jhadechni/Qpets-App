@@ -15,3 +15,4 @@
             with:
               flutter-version: '2.10.2'
           - run: flutter pub get
+          - run: flutter test

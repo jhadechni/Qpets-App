@@ -53,7 +53,7 @@ class PageProfileState extends State<PageProfile> {
                   Padding(
                     padding: const EdgeInsets.all(14.0),
                     child: SizedBox(
-                      height: 150,
+                      height: 200,
                       child: Card(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15.0),
@@ -66,35 +66,43 @@ class PageProfileState extends State<PageProfile> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Row(
-                                children: [
-                                  Expanded(
-                                      child: ProfileField(
-                                    field: "Email",
-                                    value:
-                                        userController.userProfile.value.email,
-                                  )),
-                                  Expanded(
-                                      child: ProfileField(
-                                    field: "Gender",
-                                    value:
-                                        userController.userProfile.value.gender,
-                                  ))
-                                ],
+                              Align(
+                                alignment: Alignment.center,
+                                child: 
+                                  Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                              child: ProfileField(
+                                            field: "Email",
+                                            value:
+                                                userController.userProfile.value.email,
+                                          )),
+                                          Expanded(
+                                              child: ProfileField(
+                                            field: "Gender",
+                                            value:
+                                                userController.userProfile.value.gender,
+                                          ))
+                                        ],
+                                      ),
+                                      Row(children: [
+                                        Expanded(
+                                            child: ProfileField(
+                                          field: "Phone",
+                                          value: userController.userProfile.value.phone,
+                                        )),
+                                        Expanded(
+                                            child: ProfileField(
+                                          field: "Address",
+                                          value:
+                                              userController.userProfile.value.address,
+                                        ))
+                                      ]),
+                                    ],
+                                  ),
                               ),
-                              Row(children: [
-                                Expanded(
-                                    child: ProfileField(
-                                  field: "Phone",
-                                  value: userController.userProfile.value.phone,
-                                )),
-                                Expanded(
-                                    child: ProfileField(
-                                  field: "Address",
-                                  value:
-                                      userController.userProfile.value.address,
-                                ))
-                              ]),
                             ],
                           ),
                         ),
@@ -133,7 +141,7 @@ class PageProfileState extends State<PageProfile> {
                                       padding: const EdgeInsets.all(4.0),
                                       child: _petProfileCard(
                                           pet.name,
-                                          ' ${DateTime.now().difference(pet.dob).inDays.toString()} Days',
+                                          '${DateTime.now().difference(pet.dob).inDays.toString()} Days',
                                           pet.breed,
                                           pet.imgUrl),
                                     ))
@@ -177,64 +185,64 @@ class PageProfileState extends State<PageProfile> {
 
   Widget _petProfileCard(String name, String age, String breed, String link) {
     return GestureDetector(
+        key: const Key('pet-profile-card'),
         onTap: (() => Get.to(
               () => const PetProfile(),
               transition: Transition.cupertinoDialog,
               duration: const Duration(milliseconds: 250),
             )),
-        
-            child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15.0),
-              ),
-              color: const Color(0xffE2E2EC),
-              elevation: 0,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                      width: 60,
-                      height: 80,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: NetworkImage(link), fit: BoxFit.cover),
-                          borderRadius: BorderRadius.circular(10))),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 2.0, right: 4.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          name,
-                          style: const TextStyle(
-                            color: Color.fromRGBO(56, 53, 88, 1),
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          textAlign: TextAlign.left,
-                        ),
-                        Text(age,
-                            style: const TextStyle(
-                              color: Color.fromRGBO(127, 119, 198, 1),
-                              fontSize: 14,
-                              fontWeight: FontWeight.normal,
-                            ),
-                            textAlign: TextAlign.left),
-                        Text(breed,
-                            style: const TextStyle(
-                              color: Color.fromRGBO(127, 119, 198, 1),
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            textAlign: TextAlign.left),
-                      ],
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          color: const Color(0xffE2E2EC),
+          elevation: 0,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                  width: 60,
+                  height: 80,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: NetworkImage(link), fit: BoxFit.cover),
+                      borderRadius: BorderRadius.circular(10))),
+              Padding(
+                padding: const EdgeInsets.only(left: 2.0, right: 4.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      name,
+                      style: const TextStyle(
+                        color: Color.fromRGBO(56, 53, 88, 1),
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.left,
                     ),
-                  )
-                ],
-              ),
-            ));
+                    Text(age,
+                        style: const TextStyle(
+                          color: Color.fromRGBO(127, 119, 198, 1),
+                          fontSize: 14,
+                          fontWeight: FontWeight.normal,
+                        ),
+                        textAlign: TextAlign.left),
+                    Text(breed,
+                        style: const TextStyle(
+                          color: Color.fromRGBO(127, 119, 198, 1),
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.left),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ));
   }
 
   Widget profileImage(String image) {
@@ -251,26 +259,26 @@ class PageProfileState extends State<PageProfile> {
 
   Widget _cardProduct(Product product) {
     return GestureDetector(
-        onTap: () => Get.to(() => ProductDetail(product),
+        key: const Key('product-card'),
+        onTap: () => Get.to(() => ProductDetail(product: product),
             transition: Transition.cupertinoDialog,
             duration: const Duration(milliseconds: 250)),
-        child: Container(
-            padding: const EdgeInsets.only(bottom: 20),
-            child: Container(
-              width: 228,
-              height: 132,
+        child: 
+             Container(
+              width: 240,
+              height: 102,
               padding: const EdgeInsets.only(
-                  top: 20, left: 10, right: 10, bottom: 10),
+                  top: 10, left: 10, right: 10, bottom: 10),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: const Color(0xffE2E2EC)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              child: Wrap(
+                alignment: WrapAlignment.center,
                 children: [
                   _cardImage(product.image),
                   Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                     mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    
                     children: [
                       _cardTitleText(product.name),
                       _cardSubtitleText(product.storeName),
@@ -279,13 +287,13 @@ class PageProfileState extends State<PageProfile> {
                   )
                 ],
               ),
-            )));
+            ));
   }
 
   Widget _cardImage(String link) {
     return Container(
         width: 80,
-        height: 160,
+        height: 80,
         decoration: BoxDecoration(
             image:
                 DecorationImage(image: NetworkImage(link), fit: BoxFit.cover),
@@ -333,7 +341,7 @@ class ProfileField extends StatelessWidget {
   final fieldStyle = const TextStyle(
       fontWeight: FontWeight.w400, fontSize: 16.0, color: Color(0xff383558));
   final fieldValueStyle = const TextStyle(
-      fontWeight: FontWeight.w300, fontSize: 16.0, color: Color(0xff717171));
+      fontWeight: FontWeight.w300, fontSize: 14.0, color: Color(0xff717171));
   @override
   Widget build(BuildContext context) {
     return Container(
