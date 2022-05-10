@@ -9,10 +9,13 @@ class CalendarPage extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           title: Text("Qpet Calendar"),
+          automaticallyImplyLeading:false,
           centerTitle: true,
           backgroundColor: const Color(0xFF8E6FD8),
         ),
-        body: CalendarWidget(),
+        body: 
+          CalendarWidget()
+        ,
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add, color: Colors.black),
           backgroundColor: const Color(0xFF8E6FD8),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:qpets_app/domain/agenda.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class PageHome extends StatefulWidget {
   const PageHome({Key? key}) : super(key: key);

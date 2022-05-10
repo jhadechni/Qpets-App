@@ -15,6 +15,7 @@ class CalendarWidget extends StatelessWidget {
       builder: (_) {
         return SfCalendar(
           view: CalendarView.month,
+          monthViewSettings: MonthViewSettings(showAgenda: true),
           dataSource: EventDataSource(),
           initialSelectedDate: DateTime.now(),
           cellBorderColor: const Color.fromARGB(255, 186, 171, 223),
