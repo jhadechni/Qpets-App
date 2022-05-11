@@ -14,7 +14,7 @@ class CalendarWidget extends StatelessWidget {
     return GetBuilder<EventController>(builder: (_) {
       return SfCalendar(
         view: CalendarView.month,
-        monthViewSettings: MonthViewSettings(
+        monthViewSettings: const MonthViewSettings(
             showAgenda: true,
             monthCellStyle: MonthCellStyle(
               backgroundColor: Color(0xFFEEECFC),
