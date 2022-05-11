@@ -15,9 +15,7 @@ class EventEditingPage extends StatefulWidget {
 }
 
 class _EventEditingPageState extends State<EventEditingPage> {
-  bool _isSelected = false;
-  bool _isSelected2 = false;
-  bool _isSelected3 = false;
+  Color bgColor = Colors.blue;
   final _formKey = GlobalKey<FormState>();
   final titleController = TextEditingController();
   late DateTime fromDate;
@@ -44,7 +42,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
         appBar: AppBar(
           leading: const CloseButton(),
           actions: buildEditingActions(),
-          backgroundColor: const Color(0xFF8E6FD8),
+          backgroundColor: bgColor,
         ),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(12),
@@ -68,7 +66,35 @@ class _EventEditingPageState extends State<EventEditingPage> {
         children: [
           Expanded(
               flex: 2,
-              child: buildDropdownField(text: "Color", onClicked: () => {}))
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  FloatingActionButton(
+                    backgroundColor: Colors.amberAccent,
+                    onPressed: () {
+                      setState(() {
+                        bgColor = Colors.amberAccent;
+                      });
+                    },
+                  ),
+                  FloatingActionButton(
+                    backgroundColor: Colors.blue,
+                    onPressed: () {
+                      setState(() {
+                        bgColor = Colors.blue;
+                      });
+                    },
+                  ),
+                  FloatingActionButton(
+                    backgroundColor: Colors.red,
+                    onPressed: () {
+                      setState(() {
+                        bgColor = Colors.red;
+                      });
+                    },
+                  ),
+                ],
+              ))
         ],
       ));
   Widget buildFrom() => buildHeader(
@@ -88,8 +114,8 @@ class _EventEditingPageState extends State<EventEditingPage> {
   List<Widget> buildEditingActions() => [
         ElevatedButton.icon(
           style: ElevatedButton.styleFrom(
-            primary: const Color(0xFF8E6FD8),
-            shadowColor: const Color(0xFF8E6FD8),
+            primary: bgColor,
+            shadowColor: bgColor,
           ),
           onPressed: saveForm,
           icon: const Icon(Icons.done),
@@ -209,7 +235,8 @@ class _EventEditingPageState extends State<EventEditingPage> {
           description: 'Descripción',
           from: fromDate,
           to: toDate,
-          isAllDay: false);
+          isAllDay: false,
+          backgroundColor: bgColor);
 
       controller.addEvent(event);
       Navigator.of(context).pop();

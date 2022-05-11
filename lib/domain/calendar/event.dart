@@ -5,7 +5,7 @@ class Event {
   final String description;
   final DateTime from;
   final DateTime to;
-  // final Color backgroundColor;
+  final Color backgroundColor;
   final bool isAllDay;
 
   const Event({
@@ -13,7 +13,8 @@ class Event {
     required this.description,
     required this.from,
     required this.to,
-    // this.backgroundColor = Colors.lightGreen,
+    this.backgroundColor = Colors.lightGreen,
     this.isAllDay = false,
   });
+
 }
