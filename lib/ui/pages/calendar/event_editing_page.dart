@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qpets_app/controllers/calendar_event_controller.dart';
 import 'package:qpets_app/domain/calendar/event.dart';
-
 import 'package:qpets_app/utils/utils.dart';
 
 class EventEditingPage extends StatefulWidget {
@@ -16,6 +15,9 @@ class EventEditingPage extends StatefulWidget {
 }
 
 class _EventEditingPageState extends State<EventEditingPage> {
+  bool _isSelected = false;
+  bool _isSelected2 = false;
+  bool _isSelected3 = false;
   final _formKey = GlobalKey<FormState>();
   final titleController = TextEditingController();
   late DateTime fromDate;
@@ -54,12 +56,35 @@ class _EventEditingPageState extends State<EventEditingPage> {
                 buildTitle(),
                 const SizedBox(height: 12),
                 buildDateTimePickers(),
+                colorPicker(),
               ],
             ), // Column
           ), // Form
         ), // SingleChildScrollView
       );
-
+  Widget colorPicker() => buildHeader(
+      header: "Color",
+      child: Row(
+        children: [
+          Expanded(
+              flex: 2,
+              child: buildDropdownField(text: "Color", onClicked: () => {}))
+        ],
+      ));
+  Widget buildFrom() => buildHeader(
+        header: "Desde",
+        child: Row(
+          children: [
+            Expanded(
+              flex: 2,
+              child: buildDropdownField(
+                text: Utils.toDate(fromDate),
+                onClicked: () => pickFromDateTime(pickDate: true),
+              ),
+            ),
+          ],
+        ),
+      );
   List<Widget> buildEditingActions() => [
         ElevatedButton.icon(
           style: ElevatedButton.styleFrom(
@@ -79,32 +104,13 @@ class _EventEditingPageState extends State<EventEditingPage> {
           hintText: "Añadir Título",
         ),
         onFieldSubmitted: (_) => saveForm(),
-        validator: (title) =>
-            title != null && title.isEmpty ? "El título no puede estar vacío" : null,
+        validator: (title) => title != null && title.isEmpty
+            ? "El título no puede estar vacío"
+            : null,
         controller: titleController,
       );
   Widget buildDateTimePickers() => Column(
         children: [buildFrom(), buildTo()],
-      );
-  Widget buildFrom() => buildHeader(
-        header: "Desde",
-        child: Row(
-          children: [
-            Expanded(
-              flex: 2,
-              child: buildDropdownField(
-                text: Utils.toDate(fromDate),
-                onClicked: () => pickFromDateTime(pickDate: true),
-              ),
-            ),
-            Expanded(
-              child: buildDropdownField(
-                text: Utils.toTime(fromDate),
-                onClicked: () => pickFromDateTime(pickDate: false),
-              ),
-            ),
-          ],
-        ),
       );
 
   Widget buildTo() => buildHeader(

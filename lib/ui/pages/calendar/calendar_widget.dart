@@ -11,23 +11,28 @@ class CalendarWidget extends StatelessWidget {
   CalendarWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<EventController>(
-      builder: (_) {
-        return SfCalendar(
-          view: CalendarView.month,
-          monthViewSettings: MonthViewSettings(showAgenda: true),
-          dataSource: EventDataSource(),
-          initialSelectedDate: DateTime.now(),
-          cellBorderColor: const Color.fromARGB(255, 186, 171, 223),
-          onLongPress: (details) {
-            controller.setDate(details.date!);
-            showModalBottomSheet(
-              context: context,
-              builder: (context) => TasksWidget(),
-            );
-          },
-        );
-      }
-    );
+    return GetBuilder<EventController>(builder: (_) {
+      return SfCalendar(
+        view: CalendarView.month,
+        monthViewSettings: MonthViewSettings(
+            showAgenda: true,
+            monthCellStyle: MonthCellStyle(
+              backgroundColor: Color(0xFFEEECFC),
+              trailingDatesBackgroundColor: Color(0xff216583),
+              leadingDatesBackgroundColor:Colors.white,
+              todayBackgroundColor: Color(0xFFC6BFFF),
+            )),
+        dataSource: EventDataSource(),
+        initialSelectedDate: DateTime.now(),
+        cellBorderColor: const Color.fromARGB(255, 186, 171, 223),
+        onLongPress: (details) {
+          controller.setDate(details.date!);
+          showModalBottomSheet(
+            context: context,
+            builder: (context) => TasksWidget(),
+          );
+        },
+      );
+    });
   }
 }
