@@ -4,11 +4,11 @@ import 'package:qpets_app/controllers/place_controller.dart';
 import 'package:qpets_app/controllers/products_controller.dart';
 import 'package:qpets_app/controllers/timeline_controller.dart';
 import 'package:qpets_app/controllers/user_controller.dart';
+import 'package:qpets_app/domain/repositories/pet_repository.dart';
 import 'package:qpets_app/ui/pages/page_splash.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_config/flutter_config.dart';
-
 
 class Palette {
   static const MaterialColor ourPurple = MaterialColor(
@@ -34,6 +34,7 @@ class InitialBinding implements Bindings {
     Get.put(ProductController());
     Get.put(PlaceController());
     Get.put(UserController());
+    Get.put(PetRepository());
     Get.lazyPut(() => TimelineController(), fenix: true);
     Get.lazyPut(() => PetProfileController(), fenix: true);
   }

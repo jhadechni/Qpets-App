@@ -4,8 +4,8 @@ import 'package:qpets_app/domain/repositories/pet_repository.dart';
 
 class PetProfileController extends GetxController {
   PetRepository _repository = Get.find<PetRepository>();
-  //late Rx<PetProfileFields> profileFields;
-  final profileFields = PetProfileFields(
+  /*  final profileFields = PetProfileFields(
+          id: "0",
           gender: "Male",
           name: 'polar',
           type: "Dog",
@@ -13,9 +13,8 @@ class PetProfileController extends GetxController {
           weight: 20,
           dob: DateTime.utc(2021, 10, 20),
           imgUrl: "https://i.imgur.com/BpG6vSU.jpg")
-      .obs;
-  /* Future<void> fetchPetInfo(String id) async {
-    final pet = await _repository.fetchPetInfo(id);
-    profileFields.value = pet;
-  } */
+      .obs; */
+  Future<PetProfileFields> fetchPetInfo(String id) {
+    return _repository.fetchPetInfo(id);
+  }
 }

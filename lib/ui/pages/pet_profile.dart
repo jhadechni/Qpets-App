@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:qpets_app/controllers/pet_profile_controller.dart';
 import 'package:qpets_app/controllers/timeline_controller.dart';
+import 'package:qpets_app/domain/pet_profile.dart';
 import 'package:qpets_app/domain/timeline_event.dart';
 import 'package:qpets_app/ui/pages/timeline.dart';
 import 'package:timeline_tile/timeline_tile.dart';
@@ -34,68 +35,81 @@ class _PetProfileWindow extends StatelessWidget {
   final PetProfileController controller = Get.find<PetProfileController>();
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return Card(
-        color: Colors.transparent,
-        elevation: 0,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Row(
-              children: [
-                Expanded(
-                    child: _ProfileField(
-                  field: "Current Age",
-                  value: DateTime.now()
-                      .difference(controller.profileFields.value.dob)
-                      .inDays
-                      .toString(),
-                )),
-                Expanded(
-                    child: _ProfileField(
-                  field: "Gender",
-                  value: controller.profileFields.value.gender,
-                ))
-              ],
-            ),
-            Row(children: [
-              Expanded(
-                  child: _ProfileField(
-                field: "Breed",
-                value: controller.profileFields.value.breed,
-              )),
-              Expanded(
-                  child: _ProfileField(
-                      field: "Vaccine Check",
-                      value: controller.profileFields.value.vaccineCheck
-                          .toString()))
-            ]),
-            Row(children: [
-              Expanded(
-                  child: _ProfileField(
-                field: "Type",
-                value: controller.profileFields.value.type,
-              )),
-              Expanded(
-                  child: _ProfileField(
-                field: "Weight",
-                value: controller.profileFields.value.weight.toString(),
-              ))
-            ]),
-            Row(children: [
-              Expanded(
-                  child: _ProfileField(
-                field: "Chip Check",
-                value: controller.profileFields.value.chipCheck.toString(),
-              )),
-              Expanded(
-                  child: _ProfileField(
-                field: "Spayed and Neutered",
-                value: controller.profileFields.value.neutered.toString(),
-              ))
-            ]),
-          ],
-        ));
+    return FutureBuilder<PetProfileFields>(
+      future: controller.fetchPetInfo("0"),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Card(
+              color: Colors.transparent,
+              elevation: 0,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                          child: _ProfileField(
+                        field: "Current Age",
+                        value: DateTime.now()
+                            .difference(snapshot.data!.dob)
+                            .inDays
+                            .toString(),
+                      )),
+                      Expanded(
+                          child: _ProfileField(
+                        field: "Gender",
+                        value: snapshot.data!.gender,
+                      ))
+                    ],
+                  ),
+                  Row(children: [
+                    Expanded(
+                        child: _ProfileField(
+                      field: "Breed",
+                      value: snapshot.data!.breed,
+                    )),
+                    Expanded(
+                        child: _ProfileField(
+                            field: "Vaccine Check",
+                            value: snapshot.data!.vaccineCheck.toString()))
+                  ]),
+                  Row(children: [
+                    Expanded(
+                        child: _ProfileField(
+                      field: "Type",
+                      value: snapshot.data!.type,
+                    )),
+                    Expanded(
+                        child: _ProfileField(
+                      field: "Weight",
+                      value: snapshot.data!.weight.toString(),
+                    ))
+                  ]),
+                  Row(children: [
+                    Expanded(
+                        child: _ProfileField(
+                      field: "Chip Check",
+                      value: snapshot.data!.chipCheck.toString(),
+                    )),
+                    Expanded(
+                        child: _ProfileField(
+                      field: "Spayed and Neutered",
+                      value: snapshot.data!.neutered.toString(),
+                    ))
+                  ]),
+                ],
+              ));
+        } else if (snapshot.hasError) {
+          return Center(
+            child: Text("${snapshot.error}"),
+          );
+        } else {
+          return Center(
+            child: Text("Loading..."),
+          );
+        }
+      },
+    );
   }
 }
 
@@ -263,12 +277,15 @@ class PetProfile extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   children: <Widget>[
                 Row(children: const [
-                  Text("Polar",
-                      style: TextStyle(
-                          fontSize: 24.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black)),
-                  IconButton(icon: Icon(Icons.edit), onPressed: null)
+                  Padding(
+                    padding: EdgeInsets.all(5.0),
+                    child: Text("Polar",
+                        style: TextStyle(
+                            fontSize: 24.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black)),
+                  )
+                  //IconButton(icon: Icon(Icons.edit), onPressed: null)
                 ]),
                 Container(
                     height: 250,

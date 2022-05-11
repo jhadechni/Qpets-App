@@ -10,20 +10,22 @@ class PetRepository {
       final response = await http.get(uri).timeout(const Duration(seconds: 3));
       if (response.statusCode == 200) {
         final jsonResponse = json.decode(utf8.decode(response.bodyBytes));
-        final Map<String, dynamic> data = <String, dynamic>{};
-        data['gender'] = jsonResponse["response"]["gender"];
-        data['name'] = jsonResponse["response"]["name"];
+        print(jsonResponse["pets"][0]);
+        /*  data['name'] = jsonResponse["response"]["name"];
+        data['image'] = jsonResponse["response"]["image"];
+        data['dob'] = jsonResponse["response"]["dob"];
         data['type'] = jsonResponse["response"]["type"];
         data['breed'] = jsonResponse["response"]["breed"];
+        data['gender'] = jsonResponse["response"]["gender"];
         data['weight'] = jsonResponse["response"]["weight"];
-        data['dob'] = jsonResponse["response"]["dob"];
-        data['imgUrl'] = jsonResponse["response"]["imgUrl"];
-        return PetProfileFields.fromJson(data);
+        data["_id"] = jsonResponse["response"]["_id"]; */
+        return PetProfileFields.fromJson(jsonResponse["pets"][0]);
       } else {
         return Future.error("Fetching pet info failed");
       }
     } catch (e) {
-      return Future.error("Error whiel trying to fetch pet info");
+      print(e);
+      return Future.error("Error while trying to fetch pet info");
     }
   }
 }
