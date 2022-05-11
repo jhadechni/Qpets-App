@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qpets_app/controllers/calendar_event_controller.dart';
 import 'package:qpets_app/domain/calendar/event.dart';
-
 import 'package:qpets_app/utils/utils.dart';
 
 class EventEditingPage extends StatefulWidget {
@@ -16,6 +15,7 @@ class EventEditingPage extends StatefulWidget {
 }
 
 class _EventEditingPageState extends State<EventEditingPage> {
+  Color bgColor = Colors.blue;
   final _formKey = GlobalKey<FormState>();
   final titleController = TextEditingController();
   late DateTime fromDate;
@@ -42,52 +42,69 @@ class _EventEditingPageState extends State<EventEditingPage> {
         appBar: AppBar(
           leading: const CloseButton(),
           actions: buildEditingActions(),
-          backgroundColor: const Color(0xFF8E6FD8),
+          backgroundColor: bgColor,
         ),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(12),
           child: Form(
             key: _formKey,
             child: Column(
-              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 buildTitle(),
-                const SizedBox(height: 12),
+                const SizedBox(height: 50),
                 buildDateTimePickers(),
+                const SizedBox(height: 50),
+                colorPicker(),
               ],
             ), // Column
           ), // Form
         ), // SingleChildScrollView
       );
-
-  List<Widget> buildEditingActions() => [
-        ElevatedButton.icon(
-          style: ElevatedButton.styleFrom(
-            primary: const Color(0xFF8E6FD8),
-            shadowColor: const Color(0xFF8E6FD8),
-          ),
-          onPressed: saveForm,
-          icon: const Icon(Icons.done),
-          label: const Text('SAVE'),
-        ),
-      ];
-
-  Widget buildTitle() => TextFormField(
-        style: const TextStyle(fontSize: 24),
-        decoration: const InputDecoration(
-          border: UnderlineInputBorder(),
-          hintText: "Add Title",
-        ),
-        onFieldSubmitted: (_) => saveForm(),
-        validator: (title) =>
-            title != null && title.isEmpty ? "Title Cannotbe Empty" : null,
-        controller: titleController,
-      );
-  Widget buildDateTimePickers() => Column(
-        children: [buildFrom(), buildTo()],
-      );
+  Widget colorPicker() => buildHeader(
+      header: "Color",
+      child: Row(
+        children: [
+          Expanded(
+              flex: 2,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  FloatingActionButton(
+                    heroTag: "btn2",
+                    backgroundColor: Colors.green,
+                    onPressed: () {
+                      setState(() {
+                        bgColor = Colors.green;
+                      });
+                    },
+                    child: Icon(
+                      Icons.park_sharp,
+                      size: 35,
+                      color: Colors.green[900],
+                    ),
+                  ),
+                  FloatingActionButton(
+                    heroTag: "btn1",
+                    backgroundColor: Colors.blue,
+                    onPressed: () {
+                      setState(() {
+                        bgColor = Colors.blue;
+                      });
+                    },
+                    
+                    child: Icon(
+                      Icons.pets,
+                      size: 35,
+                      color: Colors.blue[900],
+                    ),
+                  ),
+                ],
+              ))
+        ],
+      ));
   Widget buildFrom() => buildHeader(
-        header: "FROM",
+        header: "Desde",
         child: Row(
           children: [
             Expanded(
@@ -97,18 +114,40 @@ class _EventEditingPageState extends State<EventEditingPage> {
                 onClicked: () => pickFromDateTime(pickDate: true),
               ),
             ),
-            Expanded(
-              child: buildDropdownField(
-                text: Utils.toTime(fromDate),
-                onClicked: () => pickFromDateTime(pickDate: false),
-              ),
-            ),
           ],
         ),
       );
+  List<Widget> buildEditingActions() => [
+        ElevatedButton.icon(
+          style: ElevatedButton.styleFrom(
+            primary: bgColor,
+            shadowColor: bgColor,
+          ),
+          onPressed: saveForm,
+          icon: const Icon(Icons.done),
+          label: const Text('GUARDAR'),
+        ),
+      ];
+
+  Widget buildTitle() => TextFormField(
+        style: const TextStyle(fontSize: 24),
+        decoration: const InputDecoration(
+          border: UnderlineInputBorder(),
+          hintText: "Añadir Título",
+        ),
+        onFieldSubmitted: (_) => saveForm(),
+        validator: (title) => title != null && title.isEmpty
+            ? "El título no puede estar vacío"
+            : null,
+        controller: titleController,
+      );
+  Widget buildDateTimePickers() => Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [buildFrom(), buildTo()],
+      );
 
   Widget buildTo() => buildHeader(
-        header: "TO",
+        header: "Hasta",
         child: Row(
           children: [
             Expanded(
@@ -200,10 +239,11 @@ class _EventEditingPageState extends State<EventEditingPage> {
     if (isValid) {
       final event = Event(
           title: titleController.text,
-          description: 'Description',
+          description: 'Descripción',
           from: fromDate,
           to: toDate,
-          isAllDay: false);
+          isAllDay: false,
+          backgroundColor: bgColor);
 
       controller.addEvent(event);
       Navigator.of(context).pop();

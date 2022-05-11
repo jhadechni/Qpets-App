@@ -16,4 +16,5 @@ class Event {
     this.backgroundColor = Colors.lightGreen,
     this.isAllDay = false,
   });
+
 }
