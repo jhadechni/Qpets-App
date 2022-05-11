@@ -97,6 +97,7 @@ class _SingupPageState extends State<SingupPage> {
     return Padding(
       padding: const EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 0),
       child: TextFormField(
+        obscureText: (op==2 || op==5) ? true : false,
         decoration: InputDecoration(
           hintText: hint,
           labelText: placeholder,
