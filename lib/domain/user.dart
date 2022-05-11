@@ -15,6 +15,11 @@ class User {
   User(this.name, this.pic, this.age, this.email, this.gender, this.phone,
       this.address);
 
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(json["Nombre"], json["Pic"], json["Age"], json["Correo"],
+        json["Gender"], json["Numero"], json["Address"]);
+  }
+
   setPets(List<PetProfileFields> petsProfiles) {
     pets = petsProfiles;
   }
