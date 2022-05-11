@@ -49,11 +49,12 @@ class _EventEditingPageState extends State<EventEditingPage> {
           child: Form(
             key: _formKey,
             child: Column(
-              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 buildTitle(),
-                const SizedBox(height: 12),
+                const SizedBox(height: 50),
                 buildDateTimePickers(),
+                const SizedBox(height: 50),
                 colorPicker(),
               ],
             ), // Column
@@ -70,12 +71,17 @@ class _EventEditingPageState extends State<EventEditingPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   FloatingActionButton(
-                    backgroundColor: Colors.amberAccent,
+                    backgroundColor: Colors.green,
                     onPressed: () {
                       setState(() {
-                        bgColor = Colors.amberAccent;
+                        bgColor = Colors.green;
                       });
                     },
+                    child: Icon(
+                      Icons.park_sharp,
+                      size: 35,
+                      color: Colors.green[900],
+                    ),
                   ),
                   FloatingActionButton(
                     backgroundColor: Colors.blue,
@@ -84,14 +90,12 @@ class _EventEditingPageState extends State<EventEditingPage> {
                         bgColor = Colors.blue;
                       });
                     },
-                  ),
-                  FloatingActionButton(
-                    backgroundColor: Colors.red,
-                    onPressed: () {
-                      setState(() {
-                        bgColor = Colors.red;
-                      });
-                    },
+                    
+                    child: Icon(
+                      Icons.pets,
+                      size: 35,
+                      color: Colors.blue[900],
+                    ),
                   ),
                 ],
               ))
@@ -136,6 +140,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
         controller: titleController,
       );
   Widget buildDateTimePickers() => Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [buildFrom(), buildTo()],
       );
 
