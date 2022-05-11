@@ -92,7 +92,6 @@ class _EventEditingPageState extends State<EventEditingPage> {
                         bgColor = Colors.blue;
                       });
                     },
-                    
                     child: Icon(
                       Icons.pets,
                       size: 35,
@@ -112,6 +111,32 @@ class _EventEditingPageState extends State<EventEditingPage> {
               child: buildDropdownField(
                 text: Utils.toDate(fromDate),
                 onClicked: () => pickFromDateTime(pickDate: true),
+              ),
+            ),
+            Expanded(
+              child: buildDropdownField(
+                text: Utils.toTime(fromDate),
+                onClicked: () => pickFromDateTime(pickDate: false),
+              ),
+            ),
+          ],
+        ),
+      );
+  Widget buildTo() => buildHeader(
+        header: "Hasta",
+        child: Row(
+          children: [
+            Expanded(
+              flex: 2,
+              child: buildDropdownField(
+                text: Utils.toDate(toDate),
+                onClicked: () => pickToDateTime(pickDate: true),
+              ),
+            ),
+            Expanded(
+              child: buildDropdownField(
+                text: Utils.toTime(toDate),
+                onClicked: () => pickToDateTime(pickDate: false),
               ),
             ),
           ],
@@ -146,26 +171,6 @@ class _EventEditingPageState extends State<EventEditingPage> {
         children: [buildFrom(), buildTo()],
       );
 
-  Widget buildTo() => buildHeader(
-        header: "Hasta",
-        child: Row(
-          children: [
-            Expanded(
-              flex: 2,
-              child: buildDropdownField(
-                text: Utils.toDate(toDate),
-                onClicked: () => pickToDateTime(pickDate: true),
-              ),
-            ),
-            Expanded(
-              child: buildDropdownField(
-                text: Utils.toTime(toDate),
-                onClicked: () => pickToDateTime(pickDate: false),
-              ),
-            ),
-          ],
-        ),
-      );
   Future pickFromDateTime({required bool pickDate}) async {
     final date = await pickDateTime(fromDate, pickDate: pickDate);
     if (date == null) return;
