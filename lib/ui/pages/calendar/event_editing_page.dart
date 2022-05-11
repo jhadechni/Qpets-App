@@ -71,6 +71,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   FloatingActionButton(
+                    heroTag: "btn2",
                     backgroundColor: Colors.green,
                     onPressed: () {
                       setState(() {
@@ -84,6 +85,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
                     ),
                   ),
                   FloatingActionButton(
+                    heroTag: "btn1",
                     backgroundColor: Colors.blue,
                     onPressed: () {
                       setState(() {
