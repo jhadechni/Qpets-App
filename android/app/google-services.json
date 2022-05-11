@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "752646443563",
+    "project_id": "qpetsapp",
+    "storage_bucket": "qpetsapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:752646443563:android:075f37d9d32a02c2bd106e",
+        "android_client_info": {
+          "package_name": "com.example.qpets_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "752646443563-8e6vr4ka6ackb94ju4p1u71m9gpq3e96.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJYBLf6N1G4VJM81SX_LHCKM905Ce_w4I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "752646443563-8e6vr4ka6ackb94ju4p1u71m9gpq3e96.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

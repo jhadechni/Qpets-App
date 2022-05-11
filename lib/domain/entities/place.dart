@@ -52,10 +52,11 @@ class Place {
     Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'latlng': latLng,
+      'latitude': latLng.latitude,
+      'longitude': latLng.longitude,
       'name': name,
-      'category': category,
-      'openNow': openNow,
+      'category': category.toString(),
+      'opennow': openNow,
       'address': address,
       'img': img, 
     };

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qpets_app/controllers/user_controller.dart';
+import 'package:qpets_app/domain/authentication.dart';
+import 'package:qpets_app/ui/pages/page_login.dart';
 import 'package:qpets_app/ui/pages/pet_profile.dart';
 import 'package:qpets_app/ui/pages/produc_detail.dart';
 
-import '../../domain/product.dart';
+import '../../controllers/authentication_controller.dart';
+import '../../domain/entities/product.dart';
 
 class PageProfile extends StatefulWidget {
   const PageProfile({Key? key}) : super(key: key);
@@ -21,10 +24,18 @@ class PageProfileState extends State<PageProfile> {
   UserController userController = Get.find();
   @override
   Widget build(BuildContext context) {
+    AuthenticationController authentication = Get.find();
+    Authentication controller = Get.find();
     return Obx(() => SafeArea(
             child: SingleChildScrollView(
           child: Stack(
             children: [
+              GestureDetector(
+                  onTap: () => logout(authentication, controller),
+                  child: const Padding(
+                    padding: EdgeInsets.only(bottom: 20),
+                    child: Icon(Icons.logout, size: 50),
+                  )),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -68,40 +79,40 @@ class PageProfileState extends State<PageProfile> {
                             children: [
                               Align(
                                 alignment: Alignment.center,
-                                child: 
-                                  Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Expanded(
-                                              child: ProfileField(
-                                            field: "Email",
-                                            value:
-                                                userController.userProfile.value.email,
-                                          )),
-                                          Expanded(
-                                              child: ProfileField(
-                                            field: "Gender",
-                                            value:
-                                                userController.userProfile.value.gender,
-                                          ))
-                                        ],
-                                      ),
-                                      Row(children: [
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      children: [
                                         Expanded(
                                             child: ProfileField(
-                                          field: "Phone",
-                                          value: userController.userProfile.value.phone,
+                                          field: "Email",
+                                          value: userController
+                                              .userProfile.value.email,
                                         )),
                                         Expanded(
                                             child: ProfileField(
-                                          field: "Address",
-                                          value:
-                                              userController.userProfile.value.address,
+                                          field: "Gender",
+                                          value: userController
+                                              .userProfile.value.gender,
                                         ))
-                                      ]),
-                                    ],
-                                  ),
+                                      ],
+                                    ),
+                                    Row(children: [
+                                      Expanded(
+                                          child: ProfileField(
+                                        field: "Phone",
+                                        value: userController
+                                            .userProfile.value.phone,
+                                      )),
+                                      Expanded(
+                                          child: ProfileField(
+                                        field: "Address",
+                                        value: userController
+                                            .userProfile.value.address,
+                                      ))
+                                    ]),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
@@ -263,31 +274,29 @@ class PageProfileState extends State<PageProfile> {
         onTap: () => Get.to(() => ProductDetail(product: product),
             transition: Transition.cupertinoDialog,
             duration: const Duration(milliseconds: 250)),
-        child: 
-             Container(
-              width: 240,
-              height: 102,
-              padding: const EdgeInsets.only(
-                  top: 10, left: 10, right: 10, bottom: 10),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: const Color(0xffE2E2EC)),
-              child: Wrap(
-                alignment: WrapAlignment.center,
+        child: Container(
+          width: 240,
+          height: 102,
+          padding:
+              const EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 10),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: const Color(0xffE2E2EC)),
+          child: Wrap(
+            alignment: WrapAlignment.center,
+            children: [
+              _cardImage(product.image),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  _cardImage(product.image),
-                  Column(
-                     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    
-                    children: [
-                      _cardTitleText(product.name),
-                      _cardSubtitleText(product.storeName),
-                      _cardPriceText(product.price)
-                    ],
-                  )
+                  _cardTitleText(product.name),
+                  _cardSubtitleText(product.storeName),
+                  _cardPriceText(product.price)
                 ],
-              ),
-            ));
+              )
+            ],
+          ),
+        ));
   }
 
   Widget _cardImage(String link) {
@@ -330,6 +339,13 @@ class PageProfileState extends State<PageProfile> {
           fontWeight: FontWeight.bold,
         ),
         textAlign: TextAlign.left);
+  }
+
+  void logout(
+      AuthenticationController authentication, Authentication controller) {
+    controller.logout();
+    authentication.logout();
+    Get.to(LoginPage());
   }
 }
 

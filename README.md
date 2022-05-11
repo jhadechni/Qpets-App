@@ -22,7 +22,7 @@ samples, guidance on mobile development, and a full API reference.
 
 Follow the guidelines of this page: [Commit guidelines](https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716)
 
-[App](https://youtu.be/uQ8ZnTUcQmU)
+[App Demo Video](https://youtu.be/RJyIEM5f_ig)
 
 ## Contributors:
 
