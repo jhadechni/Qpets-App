@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qpets_app/controllers/user_controller.dart';
 import 'package:qpets_app/domain/authentication.dart';
+import 'package:qpets_app/domain/user.dart';
 import 'package:qpets_app/ui/pages/page_login.dart';
 import 'package:qpets_app/ui/pages/pet_profile.dart';
 import 'package:qpets_app/ui/pages/produc_detail.dart';
@@ -22,176 +23,182 @@ class PageProfileState extends State<PageProfile> {
   }
 
   UserController userController = Get.find();
+  AuthenticationController authentication = Get.find();
+  Authentication controller = Get.find();
   @override
   Widget build(BuildContext context) {
-    AuthenticationController authentication = Get.find();
-    Authentication controller = Get.find();
-    return Obx(() => SafeArea(
-            child: SingleChildScrollView(
-          child: Stack(
-            children: [
-              GestureDetector(
-                  onTap: () => logout(authentication, controller),
-                  child: const Padding(
-                    padding: EdgeInsets.only(bottom: 20),
-                    child: Icon(Icons.logout, size: 50),
-                  )),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(
-                      padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
-                      child:
-                          profileImage(userController.userProfile.value.pic)),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(userController.userProfile.value.name,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.w700, fontSize: 30)),
-                      const Icon(
-                        Icons.create_outlined,
-                        color: Color(
-                          0xFF8E6FD8,
+    return FutureBuilder<User>(
+        future: userController.fetchUserData(authentication.getUid()),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Obx(() => SafeArea(
+                    child: SingleChildScrollView(
+                        child: Stack(
+                  children: [
+                    GestureDetector(
+                        onTap: () => logout(authentication, controller),
+                        child: const Padding(
+                          padding: EdgeInsets.only(bottom: 20),
+                          child: Icon(Icons.logout, size: 50),
+                        )),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Padding(
+                            padding:
+                                const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
+                            child: profileImage(snapshot.data!.pic)),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(snapshot.data!.name,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w700, fontSize: 30)),
+                            const Icon(
+                              Icons.create_outlined,
+                              color: Color(
+                                0xFF8E6FD8,
+                              ),
+                              size: 25.0,
+                            )
+                          ],
                         ),
-                        size: 25.0,
-                      )
-                    ],
-                  ),
-                  Text('${userController.userProfile.value.age} years',
-                      style: const TextStyle(
-                          fontWeight: FontWeight.w200, fontSize: 15)),
-                  Padding(
-                    padding: const EdgeInsets.all(14.0),
-                    child: SizedBox(
-                      height: 200,
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
-                        color: const Color.fromARGB(255, 226, 226, 236),
-                        elevation: 0,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Align(
-                                alignment: Alignment.center,
+                        Text('${snapshot.data!.age} years',
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w200, fontSize: 15)),
+                        Padding(
+                          padding: const EdgeInsets.all(14.0),
+                          child: SizedBox(
+                            height: 200,
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                              color: const Color.fromARGB(255, 226, 226, 236),
+                              elevation: 0,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
                                 child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
                                   children: [
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                            child: ProfileField(
-                                          field: "Email",
-                                          value: userController
-                                              .userProfile.value.email,
-                                        )),
-                                        Expanded(
-                                            child: ProfileField(
-                                          field: "Gender",
-                                          value: userController
-                                              .userProfile.value.gender,
-                                        ))
-                                      ],
+                                    Align(
+                                      alignment: Alignment.center,
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                  child: ProfileField(
+                                                field: "Email",
+                                                value: snapshot.data!.email,
+                                              )),
+                                              Expanded(
+                                                  child: ProfileField(
+                                                field: "Gender",
+                                                value: snapshot.data!.gender,
+                                              ))
+                                            ],
+                                          ),
+                                          Row(children: [
+                                            Expanded(
+                                                child: ProfileField(
+                                              field: "Phone",
+                                              value: snapshot.data!.phone,
+                                            )),
+                                            Expanded(
+                                                child: ProfileField(
+                                              field: "Address",
+                                              value: snapshot.data!.address,
+                                            ))
+                                          ]),
+                                        ],
+                                      ),
                                     ),
-                                    Row(children: [
-                                      Expanded(
-                                          child: ProfileField(
-                                        field: "Phone",
-                                        value: userController
-                                            .userProfile.value.phone,
-                                      )),
-                                      Expanded(
-                                          child: ProfileField(
-                                        field: "Address",
-                                        value: userController
-                                            .userProfile.value.address,
-                                      ))
-                                    ]),
                                   ],
                                 ),
                               ),
-                            ],
+                            ),
                           ),
                         ),
-                      ),
+                        Padding(
+                            padding: const EdgeInsets.all(14.0),
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: const [
+                                    Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Text('Your Pets',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 30)),
+                                    ),
+                                    Icon(
+                                      Icons.add_circle_outline_outlined,
+                                      color: Color(
+                                        0xFF8E6FD8,
+                                      ),
+                                      size: 25.0,
+                                    )
+                                  ],
+                                ),
+                                GridView.count(
+                                  crossAxisCount: 2,
+                                  shrinkWrap: true,
+                                  childAspectRatio: (290 / 180),
+                                  children: userController.pets
+                                      .map((pet) => Padding(
+                                            padding: const EdgeInsets.all(4.0),
+                                            child: _petProfileCard(
+                                                pet.name,
+                                                '${DateTime.now().difference(pet.dob).inDays.toString()} Days',
+                                                pet.breed,
+                                                pet.imgUrl),
+                                          ))
+                                      .toList(),
+                                )
+                              ],
+                            )),
+                        Padding(
+                            padding: const EdgeInsets.all(14.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: const [
+                                    Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Text('My Products',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 30)),
+                                    ),
+                                    Icon(
+                                      Icons.arrow_circle_right_outlined,
+                                      color: Color(
+                                        0xFF8E6FD8,
+                                      ),
+                                      size: 25.0,
+                                    )
+                                  ],
+                                ),
+                                //_cardProduct(userController.productsSale.first)
+                              ],
+                            )),
+                      ],
                     ),
-                  ),
-                  Padding(
-                      padding: const EdgeInsets.all(14.0),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: const [
-                              Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Text('Your Pets',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 30)),
-                              ),
-                              Icon(
-                                Icons.add_circle_outline_outlined,
-                                color: Color(
-                                  0xFF8E6FD8,
-                                ),
-                                size: 25.0,
-                              )
-                            ],
-                          ),
-                          GridView.count(
-                            crossAxisCount: 2,
-                            shrinkWrap: true,
-                            childAspectRatio: (290 / 180),
-                            children: userController.pets
-                                .map((pet) => Padding(
-                                      padding: const EdgeInsets.all(4.0),
-                                      child: _petProfileCard(
-                                          pet.name,
-                                          '${DateTime.now().difference(pet.dob).inDays.toString()} Days',
-                                          pet.breed,
-                                          pet.imgUrl),
-                                    ))
-                                .toList(),
-                          )
-                        ],
-                      )),
-                  Padding(
-                      padding: const EdgeInsets.all(14.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: const [
-                              Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Text('My Products',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 30)),
-                              ),
-                              Icon(
-                                Icons.arrow_circle_right_outlined,
-                                color: Color(
-                                  0xFF8E6FD8,
-                                ),
-                                size: 25.0,
-                              )
-                            ],
-                          ),
-                          _cardProduct(userController.productsSale.first)
-                        ],
-                      )),
-                ],
-              ),
-            ],
-          ),
-        )));
+                  ],
+                ))));
+          } else if (snapshot.hasError) {
+            return Center(child: Text("Error"));
+          } else {
+            return Center(child: Text("Loading..."));
+          }
+        });
   }
 
   Widget _petProfileCard(String name, String age, String breed, String link) {
