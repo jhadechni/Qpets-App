@@ -32,7 +32,7 @@ class PageStoreState extends State<PageStore> {
               child: SearchBar(
                   placeholder: "Search for a Product",
                   onTextChangeCallback: (s) =>
-                      _productController.filterCategory(s)),
+                      _productController.runFilter(s)),
             ),
             Align(
               alignment: Alignment.topLeft,
