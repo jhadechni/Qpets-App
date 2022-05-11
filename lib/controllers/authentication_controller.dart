@@ -57,7 +57,7 @@ class AuthenticationController extends GetxController {
         return Future.error('The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
         ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text('La cuenta ya.')));
+            .showSnackBar(const SnackBar(content: Text('User already exist.')));
 
         return Future.error('The account already exists for that email.');
       }

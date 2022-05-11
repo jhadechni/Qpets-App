@@ -51,4 +51,17 @@ class ProductController extends GetxController {
     }
     filteredList.refresh();
   }
+
+  void runFilter(String enteredKeyword) {
+     List<Product> copyOfProducts = List<Product>.from(products);
+    if (enteredKeyword.isEmpty) {
+      filteredList.value = copyOfProducts;
+    } else {
+      filteredList.value = copyOfProducts
+          .where((product) =>
+              product.name.toLowerCase().contains(enteredKeyword.toLowerCase()))
+          .toList();
+    }
+    filteredList.refresh();
+  }
 }
