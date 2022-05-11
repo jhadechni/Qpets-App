@@ -11,14 +11,6 @@ class PetRepository {
       if (response.statusCode == 200) {
         final jsonResponse = json.decode(utf8.decode(response.bodyBytes));
         print(jsonResponse["pets"][0]);
-        /*  data['name'] = jsonResponse["response"]["name"];
-        data['image'] = jsonResponse["response"]["image"];
-        data['dob'] = jsonResponse["response"]["dob"];
-        data['type'] = jsonResponse["response"]["type"];
-        data['breed'] = jsonResponse["response"]["breed"];
-        data['gender'] = jsonResponse["response"]["gender"];
-        data['weight'] = jsonResponse["response"]["weight"];
-        data["_id"] = jsonResponse["response"]["_id"]; */
         return PetProfileFields.fromJson(jsonResponse["pets"][0]);
       } else {
         return Future.error("Fetching pet info failed");
