@@ -59,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     children: [
                       _formField("Correo electronico", "Example@Example.com",1),
-                      _formField("Contraseña", "",2),
+                      _formField("Contraseña", "", 2),
                     ],
                   ),
                 ),
@@ -117,13 +117,14 @@ class _LoginPageState extends State<LoginPage> {
     return Padding(
       padding: const EdgeInsets.only(left: 30, right: 30,top: 30,bottom: 10),
       child: TextFormField(
+        obscureText: op==2 ? true: false,
         decoration: InputDecoration(
           hintText: hint,
           labelText: placeholder,
         ),
         onChanged: (value) => 
         setState(() {
-          if(op==1){
+          if(op == 1){
             _email=value;
           }else{
             _contra=value;
