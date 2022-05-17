@@ -19,7 +19,7 @@ class _ProfileField extends StatelessWidget {
       fontWeight: FontWeight.w300, fontSize: 12.0, color: Color(0xff717171));
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+
     return Container(
       padding: const EdgeInsets.only(bottom: 10.0),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -104,8 +104,8 @@ class _PetProfileWindow extends StatelessWidget {
             child: Text("${snapshot.error}"),
           );
         } else {
-          return Center(
-            child: Text("Loading..."),
+          return const Center(
+            child: const Text("Loading..."),
           );
         }
       },
@@ -130,7 +130,6 @@ class _CarouselState extends State<_Carousel> {
   final CarouselController _controller = CarouselController();
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Column(children: [
       Expanded(
           child: CarouselSlider(
@@ -183,7 +182,7 @@ class _PetTimeLine extends StatelessWidget {
                 .map((e) => e.id % 2 == 0 ? getBottomTile(e) : getUpperTile(e))
                 .toList())),
         IconButton(
-            constraints: BoxConstraints(maxHeight: 24, maxWidth: 24),
+            constraints: const BoxConstraints(maxHeight: 24, maxWidth: 24),
             onPressed: () {
               Get.to(() => TimeLine(),
                   duration: const Duration(milliseconds: 250),
@@ -216,7 +215,7 @@ class _PetTimeLine extends StatelessWidget {
             child: Column(
           children: <Widget>[
             Text("${DateFormat("MMMd").format(e.date)}",
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 14.0,
                     fontWeight: FontWeight.bold,
                     color: Colors.black)),
@@ -246,7 +245,7 @@ class _PetTimeLine extends StatelessWidget {
           child: Column(
         children: <Widget>[
           Text("${DateFormat("MMMd").format(e.date)}",
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 14.0,
                   fontWeight: FontWeight.bold,
                   color: Colors.black)),
@@ -265,7 +264,7 @@ class PetProfile extends StatelessWidget {
   const PetProfile({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+
     return Scaffold(
       body: SafeArea(
           child: Column(
@@ -326,12 +325,12 @@ class PetProfile extends StatelessWidget {
       children: [
         Container(
             height: 200,
-            decoration: BoxDecoration(
-                image: DecorationImage(
+            decoration: const BoxDecoration(
+                image:  DecorationImage(
                     image: NetworkImage("https://i.imgur.com/BpG6vSU.jpg"),
                     fit: BoxFit.fitWidth))),
         Padding(
-            padding: EdgeInsets.only(top: 32.0),
+            padding: const EdgeInsets.only(top: 32.0),
             child: BackButton(onPressed: () {
               Get.back();
             })),

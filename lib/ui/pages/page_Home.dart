@@ -41,7 +41,7 @@ class Pagehomestate extends State<PageHome> {
                       Padding(
                         padding: const EdgeInsets.all(30),
                         child: Text(
-                          "Hello, ${snapshot.data!.name}!",
+                          "Hello, ${snapshot.data!.name.split(' ')[0]}!",
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.left,
                           style: const TextStyle(
