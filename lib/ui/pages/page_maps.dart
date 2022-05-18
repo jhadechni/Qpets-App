@@ -92,84 +92,87 @@ class MapPageState extends State<MapsPage> {
               setState(() {});
             },
           ),
-          Stack(
-            children: <Widget>[
-              Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
-                    // ignore: avoid_print
-                    child: SearchBar(
-                      placeholder: 'find a place!',
-                      onTextChangeCallback: (s) =>
-                          placeController.findPlacePrediction(s),
+          Padding(
+            padding: const EdgeInsets.only(top : 20),
+            child: Stack(
+              children: <Widget>[
+                Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
+                      // ignore: avoid_print
+                      child: SearchBar(
+                        placeholder: 'find a place!',
+                        onTextChangeCallback: (s) =>
+                            placeController.findPlacePrediction(s),
+                      ),
                     ),
-                  ),
-                  _categoryButtonBar(),
-                ],
-              ),
-              Obx(
-                () => Padding(
-                    padding: EdgeInsets.fromLTRB(10, 64, 10, 0),
-                    child: placeController.getPredictions.isNotEmpty
-                        ? Row(
-                            // mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                  child: Container(
-                                      height: 280.0,
-                                      width: 370.0,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white.withOpacity(0.9),
-                                        borderRadius: BorderRadius.vertical(
-                                          bottom: Radius.circular(25.0),
-                                          top: Radius.circular(25.0),
+                    _categoryButtonBar(),
+                  ],
+                ),
+                Obx(
+                  () => Padding(
+                      padding: EdgeInsets.fromLTRB(10, 64, 10, 0),
+                      child: placeController.getPredictions.isNotEmpty
+                          ? Row(
+                              // mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                    child: Container(
+                                        height: 280.0,
+                                        width: 370.0,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white.withOpacity(0.9),
+                                          borderRadius: BorderRadius.vertical(
+                                            bottom: Radius.circular(25.0),
+                                            top: Radius.circular(25.0),
+                                          ),
                                         ),
-                                      ),
-                                      child: ListView.builder(
-                                          itemCount: placeController
-                                              .getPredictions.length,
-                                          itemBuilder: (context, index) {
-                                            return ListTile(
-                                                leading: CircleAvatar(
-                                                  backgroundColor:
-                                                      const Color(0xFF8E6FD8),
-                                                  child: Icon(
-                                                    Icons.pin_drop,
-                                                    color: Colors.white,
+                                        child: ListView.builder(
+                                            itemCount: placeController
+                                                .getPredictions.length,
+                                            itemBuilder: (context, index) {
+                                              return ListTile(
+                                                  leading: CircleAvatar(
+                                                    backgroundColor:
+                                                        const Color(0xFF8E6FD8),
+                                                    child: Icon(
+                                                      Icons.pin_drop,
+                                                      color: Colors.white,
+                                                    ),
                                                   ),
-                                                ),
-                                                title: Text(placeController
-                                                    .getPredictions[index]
-                                                    .description!),
-                                                onTap: () {
-                                                  placeController
-                                                      .findPlacePredictions(
-                                                          placeController
-                                                              .getPredictions[
-                                                                  index]
-                                                              .placeId!);
-                                                  setMarkers();
-                                                  placeController
-                                                      .predictionClear();
-                                                  googleMapController.animateCamera(
-                                                      CameraUpdate.newCameraPosition(
-                                                          CameraPosition(
-                                                              target: LatLng(
-                                                                  placeController
-                                                                      .getPlacePredict
-                                                                      .latitude,
-                                                                  placeController
-                                                                      .getPlacePredict
-                                                                      .longitude),
-                                                              zoom: 16)));
-                                                });
-                                          }))),
-                            ],
-                          )
-                        : Container()),
-              )
-            ],
+                                                  title: Text(placeController
+                                                      .getPredictions[index]
+                                                      .description!),
+                                                  onTap: () {
+                                                    placeController
+                                                        .findPlacePredictions(
+                                                            placeController
+                                                                .getPredictions[
+                                                                    index]
+                                                                .placeId!);
+                                                    setMarkers();
+                                                    placeController
+                                                        .predictionClear();
+                                                    googleMapController.animateCamera(
+                                                        CameraUpdate.newCameraPosition(
+                                                            CameraPosition(
+                                                                target: LatLng(
+                                                                    placeController
+                                                                        .getPlacePredict
+                                                                        .latitude,
+                                                                    placeController
+                                                                        .getPlacePredict
+                                                                        .longitude),
+                                                                zoom: 16)));
+                                                  });
+                                            }))),
+                              ],
+                            )
+                          : Container()),
+                )
+              ],
+            ),
           )
         ],
       ),
