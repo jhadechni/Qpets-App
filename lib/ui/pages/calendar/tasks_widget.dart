@@ -20,7 +20,7 @@ class _TasksWidgetState extends State<TasksWidget> {
     if (selectedEvents.isEmpty) {
       return const Center(
         child: Text(
-          'No Events found!',
+          'No se ha encontrado ningun evento',
           style: TextStyle(color: Colors.black, fontSize: 24),
         ),
       );

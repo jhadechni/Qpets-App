@@ -1,6 +1,5 @@
 import 'package:flutter_config/flutter_config.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:get/get.dart';
 import 'package:google_place/google_place.dart';
 import 'package:qpets_app/domain/entities/place.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';

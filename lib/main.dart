@@ -13,7 +13,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:firebase_core/firebase_core.dart';
-
 import 'controllers/authentication_controller.dart';
 import 'domain/authentication.dart';
 import 'domain/repositories/place_repository.dart';
