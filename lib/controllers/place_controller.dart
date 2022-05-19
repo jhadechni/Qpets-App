@@ -38,7 +38,7 @@ class PlaceController extends GetxController {
     await placeUseCase.addPlace(place);
   }
 
-  void findPlacePrediction(String value) async {
+  Future<void> findPlacePrediction(String value) async {
     if (value.isNotEmpty) {
       Position position = await _determinePosition();
       var result = await placeUseCase.findpredictions(value, position);
@@ -51,7 +51,7 @@ class PlaceController extends GetxController {
     }
   }
 
-  void findPlacePredictions(String placeid) async {
+  Future<void> findPlacePredictions(String placeid) async {
     var result = await placeUseCase.findPlaceSelected(placeid);
     var placesExists = _places.contains(result);
     if (placesExists == false) {
