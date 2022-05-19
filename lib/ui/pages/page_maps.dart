@@ -24,11 +24,24 @@ class MapPageState extends State<MapsPage> {
   bool _parksPlaces = false;
   bool _storesPlaces = false;
   late GoogleMapController googleMapController;
+  late BitmapDescriptor mapMarkerV;
+  late BitmapDescriptor mapMarkerP;
+  late BitmapDescriptor mapMarkerS;
 
   @override
   void initState() {
     super.initState();
     setMarkers();
+    setCustomMarker();
+  }
+
+  void setCustomMarker() async {
+    mapMarkerV = await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(), 'images/vetM.png');
+    mapMarkerP = await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(), 'images/parkM.png');
+    mapMarkerS = await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(), 'images/storeM.png');
   }
 
   void setMarkers() {
@@ -56,6 +69,11 @@ class MapPageState extends State<MapsPage> {
             infoWindow: InfoWindow(
               title: filterP.getName,
             ),
+            icon: filterP.placeCategory == PlaceCategory.veterinaries
+                ? mapMarkerV
+                : filterP.placeCategory == PlaceCategory.parks
+                    ? mapMarkerP
+                    : mapMarkerS,
             onTap: () => _modalBottom(filterP));
         _markers.add(marker);
       }
@@ -79,6 +97,7 @@ class MapPageState extends State<MapsPage> {
             initialCameraPosition: _initialCamaraPos,
             zoomControlsEnabled: false,
             onMapCreated: (GoogleMapController controller) {
+              controller.setMapStyle(Utils.mapStyle);
               googleMapController = controller;
               setMarkers();
             },
@@ -93,7 +112,7 @@ class MapPageState extends State<MapsPage> {
             },
           ),
           Padding(
-            padding: const EdgeInsets.only(top : 20),
+            padding: const EdgeInsets.only(top: 20),
             child: Stack(
               children: <Widget>[
                 Column(
@@ -144,8 +163,8 @@ class MapPageState extends State<MapsPage> {
                                                   title: Text(placeController
                                                       .getPredictions[index]
                                                       .description!),
-                                                  onTap: () {
-                                                    placeController
+                                                  onTap: () async {
+                                                    await placeController
                                                         .findPlacePredictions(
                                                             placeController
                                                                 .getPredictions[
@@ -155,16 +174,15 @@ class MapPageState extends State<MapsPage> {
                                                     placeController
                                                         .predictionClear();
                                                     googleMapController.animateCamera(
-                                                        CameraUpdate.newCameraPosition(
-                                                            CameraPosition(
-                                                                target: LatLng(
-                                                                    placeController
-                                                                        .getPlacePredict
-                                                                        .latitude,
-                                                                    placeController
-                                                                        .getPlacePredict
-                                                                        .longitude),
-                                                                zoom: 16)));
+                                                        CameraUpdate.newCameraPosition(CameraPosition(
+                                                            target: LatLng(
+                                                                placeController
+                                                                    .getPlacePredict
+                                                                    .latitude,
+                                                                placeController
+                                                                    .getPlacePredict
+                                                                    .longitude),
+                                                            zoom: 16)));
                                                   });
                                             }))),
                               ],
@@ -375,4 +393,35 @@ class MapPageState extends State<MapsPage> {
       ),
     );
   }
+}
+
+class Utils {
+  static String mapStyle = '''
+[
+  {
+    "featureType": "poi",
+    "elementType": "labels.icon",
+    "stylers": [
+      {
+        "color": "#b3b3b3"
+      },
+      {
+        "visibility": "simplified"
+      }
+    ]
+  },
+  {
+    "featureType": "poi",
+    "elementType": "labels.text",
+    "stylers": [
+      {
+        "color": "#bfbfbf"
+      },
+      {
+        "visibility": "simplified"
+      }
+    ]
+  }
+]
+''';
 }
