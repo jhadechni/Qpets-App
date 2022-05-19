@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:hawk_fab_menu/hawk_fab_menu.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import '../../domain/entities/product.dart';
@@ -13,38 +12,6 @@ class ProductDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(),
-        body: HawkFabMenu(
-          icon: AnimatedIcons.view_list,
-          items: [
-            HawkFabMenuItem(
-              label: 'Facebook',
-              ontap: () async {
-                await launchUrlString(product.facebook);
-              },
-              icon: const Icon(
-                FontAwesomeIcons.facebookSquare,
-              ),
-              color: const Color(0xFF7F77C6),
-              labelColor: Colors.black,
-            ),
-            HawkFabMenuItem(
-              label: 'Phone',
-              ontap: () {
-                _makePhoneCall(product.phoneNumber);
-              },
-              icon: const Icon(Icons.phone),
-              labelColor: Colors.black,
-            ),
-            HawkFabMenuItem(
-              label: 'Instagram',
-              ontap: () async {
-                await launchUrlString(product.instagram);
-              },
-              icon: const Icon(
-                FontAwesomeIcons.instagram,
-              ),
-            ),
-          ],
           body: SingleChildScrollView(
               child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -61,7 +28,7 @@ class ProductDetail extends StatelessWidget {
               )
             ],
           )),
-        ));
+        );
   }
 
   Widget _tittleText(String text) {
