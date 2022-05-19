@@ -47,7 +47,7 @@ class _TasksWidgetState extends State<TasksWidget> {
   ) {
     final event = details.appointments.first;
     return Container(
-      width: details.bounds.width,
+      width: details.bounds.width ,
       height: details.bounds.height,
       decoration: BoxDecoration(
           color: event.backgroundColor.withOpacity(0.5),
@@ -60,7 +60,7 @@ class _TasksWidgetState extends State<TasksWidget> {
           style: const TextStyle(
             color: Colors.black,
             fontSize: 16,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.normal,
           ),
         ),
       ),

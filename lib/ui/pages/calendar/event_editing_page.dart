@@ -20,7 +20,7 @@ class EventEditingPage extends StatefulWidget {
 
 class _EventEditingPageState extends State<EventEditingPage> {
   Color bgColor = Colors.blue;
-
+  bool miniBool = true;
   final _formKey = GlobalKey<FormState>();
   final titleController = TextEditingController();
   late DateTime fromDate;
@@ -69,19 +69,45 @@ class _EventEditingPageState extends State<EventEditingPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 12),
                   buildTitle(),
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 20),
                   buildDateTimePickers(),
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 15),
                   colorPicker(),
+                  const SizedBox(height: 20),
+                  submitButton(),
                 ],
               ), // Column
             ), // Form
           ),
         ),
       );
-
+  Widget submitButton() => Container(
+        decoration: BoxDecoration(
+            color: const Color(0xff7F77C6),
+            borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+                bottomLeft: Radius.circular(10),
+                bottomRight: Radius.circular(10)),
+            boxShadow: [
+              BoxShadow(
+                color: const Color(0xff7F77C6).withOpacity(0.35),
+                spreadRadius: 3,
+                blurRadius: 10,
+                offset: const Offset(0, 0), // changes position of shadow
+              ),
+            ]),
+        child: TextButton(
+          onPressed: saveForm,
+          child: const Text("Add Event",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 18)),
+        ),
+      );
   Widget colorPicker() => buildHeader(
       header: "COLOR",
       child: Row(
@@ -93,10 +119,12 @@ class _EventEditingPageState extends State<EventEditingPage> {
                 children: [
                   FloatingActionButton(
                     heroTag: "btn2",
+                    mini: miniBool,
                     backgroundColor: Colors.green,
                     onPressed: () {
                       setState(() {
                         bgColor = Colors.green;
+                        miniBool = !miniBool;
                       });
                     },
                     child: Icon(
@@ -107,10 +135,12 @@ class _EventEditingPageState extends State<EventEditingPage> {
                   ),
                   FloatingActionButton(
                     heroTag: "btn1",
+                    mini: !miniBool,
                     backgroundColor: Colors.blue,
                     onPressed: () {
                       setState(() {
                         bgColor = Colors.blue;
+                        miniBool = !miniBool;
                       });
                     },
                     child: Icon(
