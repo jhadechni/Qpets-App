@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:qpets_app/controllers/calendar_event_controller.dart';
 import 'package:qpets_app/domain/calendar/event.dart';
 import 'package:qpets_app/utils/utils.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:qpets_app/utils/ourPurple.dart';
 
 class EventEditingPage extends StatefulWidget {
   final Event? event;
@@ -16,6 +18,7 @@ class EventEditingPage extends StatefulWidget {
 
 class _EventEditingPageState extends State<EventEditingPage> {
   Color bgColor = Colors.blue;
+
   final _formKey = GlobalKey<FormState>();
   final titleController = TextEditingController();
   late DateTime fromDate;
@@ -38,31 +41,37 @@ class _EventEditingPageState extends State<EventEditingPage> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          leading: const CloseButton(),
-          actions: buildEditingActions(),
-          backgroundColor: bgColor,
+  Widget build(BuildContext context) => MaterialApp(
+        theme: ThemeData(
+            textTheme: GoogleFonts.robotoTextTheme(),
+            primarySwatch: Palette.ourPurple),
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          appBar: AppBar(
+            leading: const CloseButton(),
+            actions: buildEditingActions(),
+            backgroundColor: bgColor,
+          ),
+          body: SingleChildScrollView(
+            padding: const EdgeInsets.all(12),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  buildTitle(),
+                  const SizedBox(height: 50),
+                  buildDateTimePickers(),
+                  const SizedBox(height: 50),
+                  colorPicker(),
+                ],
+              ), // Column
+            ), // Form
+          ), // SingleChildScrollView
         ),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.all(12),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                buildTitle(),
-                const SizedBox(height: 50),
-                buildDateTimePickers(),
-                const SizedBox(height: 50),
-                colorPicker(),
-              ],
-            ), // Column
-          ), // Form
-        ), // SingleChildScrollView
       );
   Widget colorPicker() => buildHeader(
-      header: "Color",
+      header: "COLOR",
       child: Row(
         children: [
           Expanded(
@@ -103,7 +112,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
         ],
       ));
   Widget buildFrom() => buildHeader(
-        header: "Desde",
+        header: "FROM",
         child: Row(
           children: [
             Expanded(
@@ -123,7 +132,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
         ),
       );
   Widget buildTo() => buildHeader(
-        header: "Hasta",
+        header: "TO",
         child: Row(
           children: [
             Expanded(
@@ -150,20 +159,26 @@ class _EventEditingPageState extends State<EventEditingPage> {
           ),
           onPressed: saveForm,
           icon: const Icon(Icons.done),
-          label: const Text('GUARDAR'),
+          label: const Text(
+            'SAVE',
+            style: const TextStyle(
+                fontWeight: FontWeight.w400,
+                fontFamily: "Roboto",
+                fontSize: 20),
+          ),
         ),
       ];
 
   Widget buildTitle() => TextFormField(
-        style: const TextStyle(fontSize: 24),
+        style: const TextStyle(
+            fontWeight: FontWeight.w300, fontFamily: "Roboto", fontSize: 20),
         decoration: const InputDecoration(
           border: UnderlineInputBorder(),
-          hintText: "Añadir Título",
+          hintText: "Add Title",
         ),
         onFieldSubmitted: (_) => saveForm(),
-        validator: (title) => title != null && title.isEmpty
-            ? "El título no puede estar vacío"
-            : null,
+        validator: (title) =>
+            title != null && title.isEmpty ? "Tittle cannot be empty" : null,
         controller: titleController,
       );
   Widget buildDateTimePickers() => Column(
@@ -235,7 +250,13 @@ class _EventEditingPageState extends State<EventEditingPage> {
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(header, style: const TextStyle(fontWeight: FontWeight.bold)),
+          Text(
+            header,
+            style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontFamily: "Roboto",
+                fontSize: 18),
+          ),
           child,
         ],
       );
