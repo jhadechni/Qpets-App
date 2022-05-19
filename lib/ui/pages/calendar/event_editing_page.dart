@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qpets_app/controllers/calendar_event_controller.dart';
@@ -41,35 +43,45 @@ class _EventEditingPageState extends State<EventEditingPage> {
   }
 
   @override
-  Widget build(BuildContext context) => MaterialApp(
-        theme: ThemeData(
-            textTheme: GoogleFonts.robotoTextTheme(),
-            primarySwatch: Palette.ourPurple),
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          appBar: AppBar(
-            leading: const CloseButton(),
-            actions: buildEditingActions(),
-            backgroundColor: bgColor,
-          ),
-          body: SingleChildScrollView(
+  Widget build(BuildContext context) => BackdropFilter(
+        filter: ImageFilter.blur(
+          sigmaX: 1.1,
+          sigmaY: 1.1,
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+              color: const Color(0xffE2E2EC),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.2),
+                  blurRadius: 2,
+                  spreadRadius: 1,
+                  offset: const Offset(0, -3), // Shadow position
+                ),
+              ],
+              borderRadius: const BorderRadius.only(
+                  topLeft: const Radius.circular(30),
+                  topRight: Radius.circular(30))),
+          child: SingleChildScrollView(
             padding: const EdgeInsets.all(12),
             child: Form(
               key: _formKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
+                  const SizedBox(height: 20),
                   buildTitle(),
                   const SizedBox(height: 50),
                   buildDateTimePickers(),
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 30),
                   colorPicker(),
                 ],
               ), // Column
             ), // Form
-          ), // SingleChildScrollView
+          ),
         ),
       );
+
   Widget colorPicker() => buildHeader(
       header: "COLOR",
       child: Row(
@@ -172,10 +184,24 @@ class _EventEditingPageState extends State<EventEditingPage> {
   Widget buildTitle() => TextFormField(
         style: const TextStyle(
             fontWeight: FontWeight.w300, fontFamily: "Roboto", fontSize: 20),
-        decoration: const InputDecoration(
-          border: UnderlineInputBorder(),
-          hintText: "Add Title",
-        ),
+        decoration: InputDecoration(
+            hintStyle: const TextStyle(color: const Color(0xff8C99B1)),
+            border: UnderlineInputBorder(
+              borderSide: const BorderSide(color: Colors.white),
+              borderRadius: BorderRadius.circular(6),
+            ),
+            enabledBorder: UnderlineInputBorder(
+              borderSide: const BorderSide(color: Colors.white),
+              borderRadius: BorderRadius.circular(6),
+            ),
+            focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: const Color(0xff7F77C6))),
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+            filled: true,
+            fillColor: Colors.white,
+            hintText: "Add Title"),
         onFieldSubmitted: (_) => saveForm(),
         validator: (title) =>
             title != null && title.isEmpty ? "Tittle cannot be empty" : null,
