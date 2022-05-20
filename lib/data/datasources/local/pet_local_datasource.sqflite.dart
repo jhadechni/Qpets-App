@@ -18,7 +18,7 @@ class PetLocalDatabase {
 
   Future _onCreate(Database db, int version) async {
     await db.execute(
-        'CREATE TABLE pets (id TEXT PRIMARY KEY, name TEXT, image TEXT, dob TEXT,breed TEXT, type TEXT, gender TEXT, weight TEXT, ownerId TEXT)');
+        'CREATE TABLE pets (_id TEXT PRIMARY KEY, name TEXT, image TEXT, dob TEXT,breed TEXT, type TEXT, gender TEXT, weight TEXT, ownerId TEXT)');
   }
 
   Future<void> addAllPets(List<PetProfileFields> pets) async {

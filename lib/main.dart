@@ -54,9 +54,9 @@ class InitialBinding implements Bindings {
     //Timeline
     Get.lazyPut(() => TimelineController(), fenix: true);
     //Pets
-    Get.lazyPut(() => PetController(), fenix: true);
-    Get.lazyPut(() => PetsUseCase(), fenix: true);
     Get.lazyPut(() => PetRepository(), fenix: true);
+    Get.lazyPut(() => PetsUseCase(), fenix: true);
+    Get.lazyPut(() => PetController(), fenix: true);
 
     //Auth
     Get.lazyPut(() => AuthenticationController(), fenix: true);
