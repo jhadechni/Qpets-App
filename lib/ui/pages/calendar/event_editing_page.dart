@@ -341,11 +341,11 @@ class _EventEditingPageState extends State<EventEditingPage> {
       final isEditing = widget.event != null;
       if (isEditing) {
         controller.editEvent(event, widget.event!);
-        Get.to(EventController());
+        Navigator.of(context).pop();
       } else {
         controller.addEvent(event);
-        Navigator.of(context).pop();
       }
+        Navigator.of(context).pop();
     }
   }
 }
