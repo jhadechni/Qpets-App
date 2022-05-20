@@ -49,13 +49,15 @@ class CalendarWidget extends StatelessWidget {
           initialSelectedDate: DateTime.now(),
           cellBorderColor: const Color.fromARGB(255, 186, 171, 223),
           onTap: (details) {
-            print(details);
             controller.setDate(details.date!);
-            showModalBottomSheet(
-              context: context,
-              builder: (context) =>
-                  EventEditingPage(event: details.appointments!.first),
-            );
+            if (details.appointments != null &&
+                details.appointments!.isNotEmpty) {
+              showModalBottomSheet(
+                context: context,
+                builder: (context) =>
+                    EventEditingPage(event: details.appointments!.first),
+              );
+            }
           },
         ),
       );
