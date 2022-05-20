@@ -1,39 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:qpets_app/main.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import '../../domain/entities/product.dart';
+import 'package:animated_floating_buttons/animated_floating_buttons.dart';
 
 class ProductDetail extends StatelessWidget {
-  ProductDetail({required this.product});
+  ProductDetail({Key? key, required this.product}) : super(key: key);
   final Product product;
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
-          body: SingleChildScrollView(
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+      floatingActionButton: AnimatedFloatingActionButton(
+          //Fab list
+          fabButtons: <Widget>[
+            _facebookBubble(product.facebook),
+            _instagramBubble(product.instagram),
+            _phoneBubble(product.phoneNumber)
+          ],
+          colorStartAnimation: Palette.ourPurple,
+          colorEndAnimation: Colors.red,
+          animatedIconData: AnimatedIcons.menu_close //To principal button
+          ),
+      appBar: AppBar(),
+      body: SingleChildScrollView(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          _productImage(product.image),
+          Column(
             children: [
-              _productImage(product.image),
-              Column(
-                children: [
-                  _tittleText(product.name),
-                  _storeNameText(product.storeName),
-                  _storeNameText("for: ${product.type}"),
-                  _textPrice("${product.price} COP"),
-                  _textDescription(product.description),
-                ],
-              )
+              _tittleText(product.name),
+              _storeNameText(product.storeName),
+              _storeNameText("for: ${product.type}"),
+              _textPrice("${product.price} COP"),
+              _textDescription(product.description),
             ],
-          )),
-        );
+          )
+        ],
+      )),
+    );
   }
 
   Widget _tittleText(String text) {
     return Container(
-      padding: const EdgeInsets.only(top: 30,bottom: 10),
+      padding: const EdgeInsets.only(top: 30, bottom: 10),
       child: Text(
         text,
         textAlign: TextAlign.center,
@@ -100,5 +114,41 @@ class ProductDetail extends StatelessWidget {
       path: phoneNumber,
     );
     await launchUrl(launchUri);
+  }
+
+  Widget _facebookBubble(String link) {
+    return FloatingActionButton(
+      onPressed: () => launchUrlString(link),
+      heroTag: "btn1",
+      tooltip: 'First button',
+      focusColor: Colors.blue,
+      hoverColor: Colors.blue,
+      backgroundColor: Colors.blue,
+      child: const Icon(FontAwesomeIcons.facebook),
+    );
+  }
+
+  Widget _instagramBubble(String link) {
+    return FloatingActionButton(
+      onPressed: () => launchUrlString(link),
+      heroTag: "btn2",
+      tooltip: 'First button',
+      focusColor: Palette.ourPurple,
+      hoverColor: Palette.ourPurple,
+      backgroundColor: Colors.deepPurple,
+      child: const Icon(FontAwesomeIcons.instagram),
+    );
+  }
+
+  Widget _phoneBubble(String phone) {
+    return FloatingActionButton(
+      onPressed: () => _makePhoneCall(phone),
+      heroTag: "btn3",
+      tooltip: 'First button',
+      focusColor: Colors.green,
+      hoverColor: Colors.green,
+      backgroundColor: Colors.green,
+      child: const Icon(FontAwesomeIcons.phone),
+    );
   }
 }
