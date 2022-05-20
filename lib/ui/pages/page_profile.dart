@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qpets_app/controllers/user_controller.dart';
 import 'package:qpets_app/domain/authentication.dart';
+import 'package:qpets_app/domain/pet_profile.dart';
 import 'package:qpets_app/domain/user.dart';
 import 'package:qpets_app/ui/pages/page_login.dart';
 import 'package:qpets_app/ui/pages/pet_profile.dart';
@@ -152,11 +153,7 @@ class PageProfileState extends State<PageProfile> {
                                   children: userController.pets
                                       .map((pet) => Padding(
                                             padding: const EdgeInsets.all(4.0),
-                                            child: _petProfileCard(
-                                                pet.name,
-                                                '${DateTime.now().difference(pet.dob).inDays.toString()} Days',
-                                                pet.breed,
-                                                pet.imgUrl),
+                                            child: _petProfileCard(pet),
                                           ))
                                       .toList(),
                                 )
@@ -201,11 +198,11 @@ class PageProfileState extends State<PageProfile> {
         });
   }
 
-  Widget _petProfileCard(String name, String age, String breed, String link) {
+  Widget _petProfileCard(PetProfileFields pet) {
     return GestureDetector(
         key: const Key('pet-profile-card'),
         onTap: (() => Get.to(
-              () => const PetProfile(),
+              () => PetProfile(pet: pet),
               transition: Transition.cupertinoDialog,
               duration: const Duration(milliseconds: 250),
             )),
@@ -224,7 +221,7 @@ class PageProfileState extends State<PageProfile> {
                   height: 80,
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: NetworkImage(link), fit: BoxFit.cover),
+                          image: NetworkImage(pet.imgUrl), fit: BoxFit.cover),
                       borderRadius: BorderRadius.circular(10))),
               Padding(
                 padding: const EdgeInsets.only(left: 2.0, right: 4.0),
@@ -233,7 +230,7 @@ class PageProfileState extends State<PageProfile> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      name,
+                      pet.name,
                       style: const TextStyle(
                         color: Color.fromRGBO(56, 53, 88, 1),
                         fontSize: 17,
@@ -241,14 +238,14 @@ class PageProfileState extends State<PageProfile> {
                       ),
                       textAlign: TextAlign.left,
                     ),
-                    Text(age,
+                    Text(DateTime.now().difference(pet.dob).inDays.toString(),
                         style: const TextStyle(
                           color: Color.fromRGBO(127, 119, 198, 1),
                           fontSize: 14,
                           fontWeight: FontWeight.normal,
                         ),
                         textAlign: TextAlign.left),
-                    Text(breed,
+                    Text(pet.breed,
                         style: const TextStyle(
                           color: Color.fromRGBO(127, 119, 198, 1),
                           fontSize: 14,

@@ -1,6 +1,6 @@
 /// CurrentAge: auto-generated
 class PetProfileFields {
-  static const baseUrl = "https://qpets.herokuapp.com/products/getPetInfo";
+  static const baseUrl = "https://qpets.herokuapp.com/pets";
   String id;
   String ownerUid;
   String gender;

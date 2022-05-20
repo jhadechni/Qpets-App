@@ -23,7 +23,7 @@ class PetRepository {
   }
 
   Future<List<PetProfileFields>> fetchAllPets(String uid) async {
-    final uri = Uri.parse("${PetProfileFields.baseUrl}/$uid");
+    final uri = Uri.parse("${PetProfileFields.baseUrl}/getAllPets/$uid");
     try {
       final response = await http.get(uri).timeout(const Duration(seconds: 3));
       if (response.statusCode == 200) {
@@ -43,7 +43,8 @@ class PetRepository {
 
   Future<bool> addRemotePet(PetProfileFields pet) async {
     try {
-      final res = await http.post(Uri.parse(PetProfileFields.baseUrl),
+      final res = await http.post(
+          Uri.parse("${PetProfileFields.baseUrl}/pets/createPet"),
           body: jsonEncode(pet.toJson()));
       if (res.statusCode != 201) {
         return Future.error("Pet Post response failed");
