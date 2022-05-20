@@ -2,6 +2,7 @@
 class PetProfileFields {
   static const baseUrl = "https://qpets.herokuapp.com/products/getPetInfo";
   String id;
+  String ownerUid;
   String gender;
   String name;
   String type;
@@ -14,6 +15,7 @@ class PetProfileFields {
   DateTime dob;
   PetProfileFields(
       {required this.id,
+      required this.ownerUid,
       required this.gender,
       required this.name,
       required this.type,
@@ -27,6 +29,7 @@ class PetProfileFields {
   factory PetProfileFields.fromJson(Map<String, dynamic> json) {
     return PetProfileFields(
         id: json["_id"],
+        ownerUid: json["ownerId"],
         gender: json["gender"],
         name: json["name"],
         type: json["type"],
@@ -44,6 +47,7 @@ class PetProfileFields {
     data['breed'] = breed;
     data['gender'] = gender;
     data['weight'] = weight;
+    data['ownerId'] = ownerUid;
     return data;
   }
 }

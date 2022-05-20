@@ -2,7 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:qpets_app/controllers/pet_profile_controller.dart';
+import 'package:qpets_app/controllers/pet_controller.dart';
 import 'package:qpets_app/controllers/timeline_controller.dart';
 import 'package:qpets_app/domain/pet_profile.dart';
 import 'package:qpets_app/domain/timeline_event.dart';
@@ -32,7 +32,7 @@ class _ProfileField extends StatelessWidget {
 }
 
 class _PetProfileWindow extends StatelessWidget {
-  final PetProfileController controller = Get.find<PetProfileController>();
+  final PetController controller = Get.find<PetController>();
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<PetProfileFields>(
