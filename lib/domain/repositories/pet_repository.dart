@@ -24,13 +24,15 @@ class PetRepository {
 
   Future<List<PetProfileFields>> fetchAllPets(String uid) async {
     final uri = Uri.parse("${PetProfileFields.baseUrl}/getAllPets/$uid");
+    print(uri.toString());
     try {
-      final response = await http.get(uri).timeout(const Duration(seconds: 3));
+      final response = await http.get(uri).timeout(const Duration(seconds: 5));
       if (response.statusCode == 200) {
         final jsonResponse = json.decode(utf8.decode(response.bodyBytes));
-        return List.generate(jsonResponse["pets"].length, (i) {
+        final List<dynamic> rawList = jsonResponse["pets"];
+        return List.generate(rawList.length, (i) {
           //keep in mind the index
-          return PetProfileFields.fromJson(jsonResponse["pets"][i]);
+          return PetProfileFields.fromJson(rawList[i]);
         });
       } else {
         return Future.error("Fetching pet info failed");
@@ -46,7 +48,7 @@ class PetRepository {
       final res = await http.post(
           Uri.parse("${PetProfileFields.baseUrl}/pets/createPet"),
           body: jsonEncode(pet.toJson()));
-      if (res.statusCode != 201) {
+      if (res.statusCode != 200) {
         return Future.error("Pet Post response failed");
       }
     } catch (e) {

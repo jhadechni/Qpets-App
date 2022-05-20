@@ -23,9 +23,10 @@ class PageProfileState extends State<PageProfile> {
     super.initState();
   }
 
-  UserController userController = Get.find();
-  AuthenticationController authentication = Get.find();
-  Authentication controller = Get.find();
+  UserController userController = Get.find<UserController>();
+  AuthenticationController authentication =
+      Get.find<AuthenticationController>();
+  Authentication controller = Get.find<Authentication>();
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<User>(

@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 /// CurrentAge: auto-generated
 class PetProfileFields {
   static const baseUrl = "https://qpets.herokuapp.com/pets";
@@ -27,6 +29,8 @@ class PetProfileFields {
       required this.dob,
       required this.imgUrl});
   factory PetProfileFields.fromJson(Map<String, dynamic> json) {
+    String dobStr = json["dob"];
+    dobStr = dobStr.replaceAll("/", "-"); //handle these cases
     return PetProfileFields(
         id: json["_id"],
         ownerUid: json["ownerId"],
@@ -35,11 +39,14 @@ class PetProfileFields {
         type: json["type"],
         breed: json["breed"],
         weight: json["weight"],
-        dob: DateTime.parse(json["dob"]),
-        imgUrl: json["image"]);
+        dob: DateTime.parse(dobStr),
+        imgUrl: json["image"] == ""
+            ? "https://i.imgur.com/BpG6vSU.jpg"
+            : json["image"]);
   }
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data["id"] = id;
     data['name'] = name;
     data['image'] = imgUrl;
     data['dob'] = dob.toString();

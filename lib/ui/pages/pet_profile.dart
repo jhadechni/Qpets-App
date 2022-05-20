@@ -47,7 +47,7 @@ class _PetProfileWindow extends StatelessWidget {
                 Expanded(
                     child: _ProfileField(
                   field: "Current Age",
-                  value: DateTime.now().difference(pet.dob).inDays.toString(),
+                  value: getTimeDifferenceFromNow(pet.dob),
                 )),
                 Expanded(
                     child: _ProfileField(
@@ -93,6 +93,20 @@ class _PetProfileWindow extends StatelessWidget {
             ]),
           ],
         ));
+  }
+
+  String getTimeDifferenceFromNow(DateTime dateTime) {
+    Duration difference = DateTime.now().difference(dateTime);
+
+    if (difference.inDays > 365) {
+      double years = difference.inDays / 365;
+      return "${years.round()} years";
+    }
+    if (difference.inDays > 31) {
+      double months = difference.inDays / 31;
+      return "${months.round()} months";
+    }
+    return "${difference.inDays} days";
   }
 }
 
@@ -261,10 +275,10 @@ class PetProfile extends StatelessWidget {
               child: ListView(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   children: <Widget>[
-                Row(children: const [
+                Row(children: [
                   Padding(
                     padding: EdgeInsets.all(5.0),
-                    child: Text("Polar",
+                    child: Text(pet.name,
                         style: TextStyle(
                             fontSize: 24.0,
                             fontWeight: FontWeight.bold,
@@ -305,7 +319,7 @@ class PetProfile extends StatelessWidget {
     );
   }
 
-  Widget getProfile(String? img) {
+  Widget getProfile(String img) {
     return Stack(
       alignment: Alignment.topLeft,
       children: [
@@ -313,9 +327,7 @@ class PetProfile extends StatelessWidget {
             height: 200,
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image:
-                        NetworkImage(img ?? "https://i.imgur.com/BpG6vSU.jpg"),
-                    fit: BoxFit.fitWidth))),
+                    image: NetworkImage(img), fit: BoxFit.fitWidth))),
         Padding(
             padding: EdgeInsets.only(top: 32.0),
             child: BackButton(onPressed: () {
