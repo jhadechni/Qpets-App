@@ -23,6 +23,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
   Color bgColor = Colors.blue;
   bool miniBool = true;
   String editText = "Add Event";
+  bool isEditing = true;
   final _formKey = GlobalKey<FormState>();
   final titleController = TextEditingController();
   late DateTime fromDate;
@@ -41,6 +42,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
       fromDate = event.from;
       toDate = event.to;
       editText = "Edit Event";
+      isEditing = false;
     }
   }
 
@@ -86,7 +88,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
                     const SizedBox(height: 15),
                     colorPicker(),
                     const SizedBox(height: 20),
-                    submitButton(),
+                    isEditing ? submitButton() : editingButtons(),
                   ],
                 ), // Column
               ), // Form
@@ -118,6 +120,61 @@ class _EventEditingPageState extends State<EventEditingPage> {
                   fontWeight: FontWeight.w600,
                   fontSize: 18)),
         ),
+      );
+  Widget editingButtons() => Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          Container(
+            decoration: BoxDecoration(
+                color: Colors.red,
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.red.withOpacity(0.35),
+                    spreadRadius: 3,
+                    blurRadius: 10,
+                    offset: const Offset(0, 0), // changes position of shadow
+                  ),
+                ]),
+            child: TextButton(
+              onPressed: () => delete(widget.event!),
+              child: Text("Delete",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18)),
+            ),
+          ),
+          Container(
+            decoration: BoxDecoration(
+                color: const Color(0xff7F77C6),
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10)),
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color(0xff7F77C6).withOpacity(0.35),
+                    spreadRadius: 3,
+                    blurRadius: 10,
+                    offset: const Offset(0, 0), // changes position of shadow
+                  ),
+                ]),
+            child: TextButton(
+              onPressed: saveForm,
+              child: Text(editText,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18)),
+            ),
+          )
+        ],
       );
   Widget colorPicker() => buildHeader(
       header: "COLOR",
@@ -346,5 +403,10 @@ class _EventEditingPageState extends State<EventEditingPage> {
       }
       Navigator.of(context).pop();
     }
+  }
+
+  Future delete(Event event) async {
+    controller.deleteEvent(event);
+    Navigator.of(context).pop();
   }
 }
