@@ -5,8 +5,9 @@ import 'package:get/get.dart';
 import 'package:qpets_app/controllers/calendar_event_controller.dart';
 import 'package:qpets_app/domain/calendar/event.dart';
 import 'package:qpets_app/utils/utils.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:qpets_app/utils/ourPurple.dart';
+
+Color ourPurple = Palette.ourPurple;
 
 class EventEditingPage extends StatefulWidget {
   final Event? event;
@@ -21,6 +22,7 @@ class EventEditingPage extends StatefulWidget {
 class _EventEditingPageState extends State<EventEditingPage> {
   Color bgColor = Colors.blue;
   bool miniBool = true;
+  String editText = "Add Event";
   final _formKey = GlobalKey<FormState>();
   final titleController = TextEditingController();
   late DateTime fromDate;
@@ -33,6 +35,12 @@ class _EventEditingPageState extends State<EventEditingPage> {
     if (widget.event == null) {
       fromDate = DateTime.now();
       toDate = DateTime.now().add(const Duration(hours: 2));
+    } else {
+      final event = widget.event!;
+      titleController.text = event.title;
+      fromDate = event.from;
+      toDate = event.to;
+      editText = "Edit Event";
     }
   }
 
@@ -62,24 +70,27 @@ class _EventEditingPageState extends State<EventEditingPage> {
               borderRadius: const BorderRadius.only(
                   topLeft: const Radius.circular(30),
                   topRight: Radius.circular(30))),
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(12),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  const SizedBox(height: 12),
-                  buildTitle(),
-                  const SizedBox(height: 20),
-                  buildDateTimePickers(),
-                  const SizedBox(height: 15),
-                  colorPicker(),
-                  const SizedBox(height: 20),
-                  submitButton(),
-                ],
-              ), // Column
-            ), // Form
+          child: Padding(
+            padding: EdgeInsets.all(12.0),
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(12),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    const SizedBox(height: 12),
+                    buildTitle(),
+                    const SizedBox(height: 20),
+                    buildDateTimePickers(),
+                    const SizedBox(height: 15),
+                    colorPicker(),
+                    const SizedBox(height: 20),
+                    submitButton(),
+                  ],
+                ), // Column
+              ), // Form
+            ),
           ),
         ),
       );
@@ -101,7 +112,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
             ]),
         child: TextButton(
           onPressed: saveForm,
-          child: const Text("Add Event",
+          child: Text(editText,
               style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w600,
@@ -119,7 +130,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
                 children: [
                   FloatingActionButton(
                     heroTag: "btn2",
-                    mini: miniBool,
+                    mini: !miniBool,
                     backgroundColor: Colors.green,
                     onPressed: () {
                       setState(() {
@@ -135,7 +146,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
                   ),
                   FloatingActionButton(
                     heroTag: "btn1",
-                    mini: !miniBool,
+                    mini: miniBool,
                     backgroundColor: Colors.blue,
                     onPressed: () {
                       setState(() {
@@ -309,6 +320,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
           Text(
             header,
             style: const TextStyle(
+                color: Palette.ourPurple,
                 fontWeight: FontWeight.bold,
                 fontFamily: "Roboto",
                 fontSize: 18),
@@ -326,9 +338,14 @@ class _EventEditingPageState extends State<EventEditingPage> {
           to: toDate,
           isAllDay: false,
           backgroundColor: bgColor);
-
-      controller.addEvent(event);
-      Navigator.of(context).pop();
+      final isEditing = widget.event != null;
+      if (isEditing) {
+        controller.editEvent(event, widget.event!);
+        Get.to(EventController());
+      } else {
+        controller.addEvent(event);
+        Navigator.of(context).pop();
+      }
     }
   }
 }
