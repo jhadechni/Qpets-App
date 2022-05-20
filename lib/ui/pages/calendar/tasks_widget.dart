@@ -60,7 +60,7 @@ class _TasksWidgetState extends State<TasksWidget> {
           style: const TextStyle(
             color: Colors.black,
             fontSize: 16,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.normal,
           ),
         ),
       ),

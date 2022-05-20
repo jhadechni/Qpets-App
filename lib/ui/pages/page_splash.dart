@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qpets_app/ui/pages/page_login.dart';
+import 'package:qpets_app/utils/ourPurple.dart';
+
+MaterialColor ourPurlple = Palette.ourPurple;
 
 class Pagesplash extends StatefulWidget {
   const Pagesplash({Key? key}) : super(key: key);
@@ -23,27 +26,45 @@ class _PagesplashState extends State<Pagesplash> {
     return Scaffold(
       body: SafeArea(
           child: Stack(
-        children: [_fontPage(), Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            _logo(),
-          ],
-        )],
+        children: [
+          _fontPage(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              _logo(),
+            ],
+          )
+        ],
       )),
     );
   }
 
   Widget _logo() {
     return Padding(
-      padding: const EdgeInsets.all(40),
+      padding: const EdgeInsets.all(30),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          _cardImagepet( 'https://media.discordapp.net/attachments/955549239801446473/955549292423172116/Corgi_logo_1.png'),
-          _cardImagelogo('https://media.discordapp.net/attachments/955549239801446473/960035755244269608/Vector.png'),
-          _cardImagelogo('https://media.discordapp.net/attachments/955549239801446473/960037973200625724/Vector_1.png'),
+          _cardImagepet(
+              'https://media.discordapp.net/attachments/955549239801446473/955549292423172116/Corgi_logo_1.png'),
+          _cardImagelogo(
+              'https://media.discordapp.net/attachments/955549239801446473/960035755244269608/Vector.png'),
+          Container(
+            width: 70,
+            height: 70,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(500),
+              child: CircularProgressIndicator(
+                backgroundColor: ourPurlple,
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                strokeWidth: 15,
+              ),
+            ),
+          ),
+          const SizedBox(height: 20),
+
         ],
       ),
     );
