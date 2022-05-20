@@ -29,6 +29,7 @@ class CalendarWidget extends StatelessWidget {
           view: CalendarView.month,
           monthViewSettings: const MonthViewSettings(
               showAgenda: true,
+              agendaViewHeight: 150,
               agendaItemHeight: 40,
               agendaStyle: AgendaStyle(
                 dayTextStyle: TextStyle(
