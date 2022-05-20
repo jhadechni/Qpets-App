@@ -52,7 +52,7 @@ dependencies:
   sqflite: ^2.0.0+4
   url_launcher: ^6.1.0
   loggy: ^2.0.1+1
-  skeleton_text: ^3.0.0
+  animated_floating_buttons: ^0.0.2
 
 dev_dependencies:
   flutter_test:

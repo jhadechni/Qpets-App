@@ -50,7 +50,7 @@ class Product {
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
         id: json['_id'],
-        image: json['image'],
+        image: (json['image'] == "") ? "https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty-300x240.jpg" : json["image"],
         name: json['name'],
         storeName: json['storeName'],
         price: json['price'],
