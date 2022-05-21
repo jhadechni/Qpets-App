@@ -11,7 +11,6 @@ class ProductDetail extends StatelessWidget {
   ProductDetail({Key? key, required this.product}) : super(key: key);
   final Product product;
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

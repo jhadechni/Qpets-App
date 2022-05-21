@@ -28,6 +28,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
   final titleController = TextEditingController();
   late DateTime fromDate;
   late DateTime toDate;
+  
   EventController controller = Get.find<EventController>();
 
   @override
