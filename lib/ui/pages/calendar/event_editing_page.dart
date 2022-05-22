@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qpets_app/controllers/calendar_event_controller.dart';
@@ -28,7 +27,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
   final titleController = TextEditingController();
   late DateTime fromDate;
   late DateTime toDate;
-  
+
   EventController controller = Get.find<EventController>();
 
   @override
@@ -274,7 +273,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
             'SAVE',
             style: const TextStyle(
                 fontWeight: FontWeight.w400,
-                fontFamily: "Roboto",
+                fontFamily: "Outfit",
                 fontSize: 20),
           ),
         ),
@@ -282,7 +281,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
 
   Widget buildTitle() => TextFormField(
         style: const TextStyle(
-            fontWeight: FontWeight.w300, fontFamily: "Roboto", fontSize: 20),
+            fontWeight: FontWeight.w300, fontFamily: "Outfit", fontSize: 20),
         decoration: InputDecoration(
             hintStyle: const TextStyle(color: const Color(0xff8C99B1)),
             border: UnderlineInputBorder(
@@ -380,7 +379,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
             style: const TextStyle(
                 color: Palette.ourPurple,
                 fontWeight: FontWeight.bold,
-                fontFamily: "Roboto",
+                fontFamily: "Outfit",
                 fontSize: 18),
           ),
           child,
