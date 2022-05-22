@@ -31,11 +31,11 @@ class MapPageState extends State<MapsPage> {
 
   void setMarkers() async {
     BitmapDescriptor mapMarkerV = await BitmapDescriptor.fromAssetImage(
-        const ImageConfiguration(), 'images/vetM.png');
+        const ImageConfiguration(), 'assets/images/vetM.png');
     BitmapDescriptor mapMarkerP = await BitmapDescriptor.fromAssetImage(
-        const ImageConfiguration(), 'images/parkM.png');
+        const ImageConfiguration(), 'assets/images/parkM.png');
     BitmapDescriptor mapMarkerS = await BitmapDescriptor.fromAssetImage(
-        const ImageConfiguration(), 'images/storeM.png');
+        const ImageConfiguration(), 'assets/images/storeM.png');
 
     PlaceController placeController = Get.find();
     List filterPlaces = [];
