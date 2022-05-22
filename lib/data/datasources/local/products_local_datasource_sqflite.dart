@@ -63,6 +63,7 @@ class ProductLocalDataSource {
         facebook: products[i]['facebook'],
         instagram: products[i]['instagram'],
         phoneNumber: products[i]['phoneNumber'],
+        ownerId: products[i]['ownerId']
       );
     });
   }

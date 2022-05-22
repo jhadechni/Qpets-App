@@ -53,6 +53,7 @@ dependencies:
   url_launcher: ^6.1.0
   loggy: ^2.0.1+1
   animated_floating_buttons: ^0.0.2
+  image_picker: ^0.8.5+3
 
 dev_dependencies:
   flutter_test:
