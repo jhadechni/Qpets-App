@@ -8,6 +8,7 @@ import 'package:qpets_app/ui/pages/produc_detail.dart';
 import '../../domain/entities/product.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../shared/search_bar.dart';
+import '../../utils/ourPurple.dart';
 
 class PageStore extends StatefulWidget {
   const PageStore({Key? key}) : super(key: key);
@@ -88,7 +89,7 @@ class PageStoreState extends State<PageStore> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(child: const Icon(Icons.add),backgroundColor:Palette.ourPurple ,onPressed:(){
+      floatingActionButton: FloatingActionButton(child: const Icon(Icons.add),backgroundColor: Palette.ourPurple ,onPressed:(){
         Get.to(const Productform());
       }),
     );

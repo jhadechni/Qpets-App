@@ -1,5 +1,3 @@
-import 'dart:js_util';
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -31,7 +29,7 @@ class _ProductformState extends State<Productform> {
     TextEditingController phone = TextEditingController();
     TextEditingController facebook = TextEditingController();
     TextEditingController instagram = TextEditingController();
-  
+
     XFile? image;
     return Scaffold(
       body: SingleChildScrollView(
@@ -51,7 +49,8 @@ class _ProductformState extends State<Productform> {
                   Row(
                     children: [
                       GestureDetector(
-                          onTap: () async =>  image = await _picker.pickImage(source: ImageSource.gallery),
+                          onTap: () async => image = await _picker.pickImage(
+                              source: ImageSource.gallery),
                           child: const Padding(
                             padding: EdgeInsets.only(bottom: 0),
                             child: Icon(Icons.add_a_photo, size: 40),
@@ -65,7 +64,6 @@ class _ProductformState extends State<Productform> {
                             fontSize: 45,
                             fontWeight: FontWeight.bold,
                           ),
-                            
                         ),
                       ),
                     ],
@@ -92,15 +90,13 @@ class _ProductformState extends State<Productform> {
                             ],
                           ),
                         ),
-                         
                         _formField("Nombre", "", 1, name),
                         _formField("Storename", "", 2, storename),
                         _formField("price", "12.000 ", 3, price),
                         _formField("Description", "", 4, description),
-                         _formField("Facebook", "", 5, facebook),
+                        _formField("Facebook", "", 5, facebook),
                         _formField("instagram", " ", 6, instagram),
                         _formField("phone", "123456", 3, phone)
-                      
                       ],
                     ),
                   ),
@@ -109,7 +105,17 @@ class _ProductformState extends State<Productform> {
                     child: MaterialButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          comprueba(name.text, price.text, storename.text, description.text, image, type.text,phone.text,facebook.text,instagram.text, context);
+                          comprueba(
+                              name.text,
+                              price.text,
+                              storename.text,
+                              description.text,
+                              image,
+                              type.text,
+                              phone.text,
+                              facebook.text,
+                              instagram.text,
+                              context);
                         }
                       },
                       color: const Color(0xFF7F77C6),
@@ -130,7 +136,6 @@ class _ProductformState extends State<Productform> {
           ),
         ),
       ),
-       
     );
   }
 
@@ -212,37 +217,48 @@ class _ProductformState extends State<Productform> {
           if (t!.isEmpty) {
             return "Debe ingresar ${placeholder.toLowerCase()}";
           }
-           
+
           return null;
         },
       ),
     );
   }
 
-
-  void comprueba(String name,String price,String storename,String description,XFile? imagen,String type, String phone,String facebook,String instagram,BuildContext context){
-     
-    if(type!=""){
-             if(imagen!=null){
-
-               Product p = new Product(id:'12' ,description: description ,name: name ,image: '' ,storeName: storename,phoneNumber:phone ,facebook: facebook,instagram: instagram ,price: price,type: type );
-               print(p);
-
-
-
-             
-
-      
-
-    }else{ ScaffoldMessenger.of(context)
+  void comprueba(
+      String name,
+      String price,
+      String storename,
+      String description,
+      XFile? imagen,
+      String type,
+      String phone,
+      String facebook,
+      String instagram,
+      BuildContext context) {
+    if (type != "") {
+      if (imagen != null) {
+        print(imagen);
+        Product p = new Product(
+          id: price + name,
+          description: description,
+          name: name,
+          image: '',
+          storeName: storename,
+          phoneNumber: phone,
+          facebook: facebook,
+          instagram: instagram,
+          price: price,
+          type: type,
+          ownerId: "ownerId",
+        );
+        print(p.image);
+      } else {
+        ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text('record the image')));
+      }
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('record the type')));
     }
-    }else{ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text('record the type')));}  
-   
-
   }
- 
-  
-
 }
