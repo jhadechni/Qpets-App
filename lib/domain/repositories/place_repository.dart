@@ -1,5 +1,4 @@
 import 'package:geolocator/geolocator.dart';
-import 'package:get/get.dart';
 import 'package:google_place/google_place.dart';
 import 'package:qpets_app/domain/entities/place.dart';
 

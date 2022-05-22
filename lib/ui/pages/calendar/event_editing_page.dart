@@ -1,8 +1,12 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qpets_app/controllers/calendar_event_controller.dart';
 import 'package:qpets_app/domain/calendar/event.dart';
 import 'package:qpets_app/utils/utils.dart';
+import 'package:qpets_app/utils/ourPurple.dart';
+
+Color ourPurple = Palette.ourPurple;
 
 class EventEditingPage extends StatefulWidget {
   final Event? event;
@@ -16,10 +20,14 @@ class EventEditingPage extends StatefulWidget {
 
 class _EventEditingPageState extends State<EventEditingPage> {
   Color bgColor = Colors.blue;
+  bool miniBool = true;
+  String editText = "Add Event";
+  bool isEditing = true;
   final _formKey = GlobalKey<FormState>();
   final titleController = TextEditingController();
   late DateTime fromDate;
   late DateTime toDate;
+
   EventController controller = Get.find<EventController>();
 
   @override
@@ -28,6 +36,13 @@ class _EventEditingPageState extends State<EventEditingPage> {
     if (widget.event == null) {
       fromDate = DateTime.now();
       toDate = DateTime.now().add(const Duration(hours: 2));
+    } else {
+      final event = widget.event!;
+      titleController.text = event.title;
+      fromDate = event.from;
+      toDate = event.to;
+      editText = "Edit Event";
+      isEditing = false;
     }
   }
 
@@ -38,31 +53,131 @@ class _EventEditingPageState extends State<EventEditingPage> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          leading: const CloseButton(),
-          actions: buildEditingActions(),
-          backgroundColor: bgColor,
+  Widget build(BuildContext context) => BackdropFilter(
+        filter: ImageFilter.blur(
+          sigmaX: 1.1,
+          sigmaY: 1.1,
         ),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.all(12),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                buildTitle(),
-                const SizedBox(height: 50),
-                buildDateTimePickers(),
-                const SizedBox(height: 50),
-                colorPicker(),
+        child: Container(
+          decoration: BoxDecoration(
+              color: const Color(0xffE2E2EC),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.2),
+                  blurRadius: 2,
+                  spreadRadius: 1,
+                  offset: const Offset(0, -3), // Shadow position
+                ),
               ],
-            ), // Column
-          ), // Form
-        ), // SingleChildScrollView
+              borderRadius: const BorderRadius.only(
+                  topLeft: const Radius.circular(30),
+                  topRight: Radius.circular(30))),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12),
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(12),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    const SizedBox(height: 12),
+                    buildTitle(),
+                    const SizedBox(height: 20),
+                    buildDateTimePickers(),
+                    const SizedBox(height: 15),
+                    colorPicker(),
+                    const SizedBox(height: 20),
+                    isEditing ? submitButton() : editingButtons(),
+                  ],
+                ), // Column
+              ), // Form
+            ),
+          ),
+        ),
+      );
+  Widget submitButton() => Container(
+        decoration: BoxDecoration(
+            color: const Color(0xff7F77C6),
+            borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+                bottomLeft: Radius.circular(10),
+                bottomRight: Radius.circular(10)),
+            boxShadow: [
+              BoxShadow(
+                color: const Color(0xff7F77C6).withOpacity(0.35),
+                spreadRadius: 3,
+                blurRadius: 10,
+                offset: const Offset(0, 0), // changes position of shadow
+              ),
+            ]),
+        child: TextButton(
+          onPressed: saveForm,
+          child: Text(editText,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 18)),
+        ),
+      );
+  Widget editingButtons() => Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          Container(
+            decoration: BoxDecoration(
+                color: Colors.red,
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.red.withOpacity(0.35),
+                    spreadRadius: 3,
+                    blurRadius: 10,
+                    offset: const Offset(0, 0), // changes position of shadow
+                  ),
+                ]),
+            child: TextButton(
+              onPressed: () => delete(widget.event!),
+              child: Text("Delete",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18)),
+            ),
+          ),
+          Container(
+            decoration: BoxDecoration(
+                color: const Color(0xff7F77C6),
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10)),
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color(0xff7F77C6).withOpacity(0.35),
+                    spreadRadius: 3,
+                    blurRadius: 10,
+                    offset: const Offset(0, 0), // changes position of shadow
+                  ),
+                ]),
+            child: TextButton(
+              onPressed: saveForm,
+              child: Text(editText,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18)),
+            ),
+          )
+        ],
       );
   Widget colorPicker() => buildHeader(
-      header: "Color",
+      header: "COLOR",
       child: Row(
         children: [
           Expanded(
@@ -72,10 +187,12 @@ class _EventEditingPageState extends State<EventEditingPage> {
                 children: [
                   FloatingActionButton(
                     heroTag: "btn2",
+                    mini: !miniBool,
                     backgroundColor: Colors.green,
                     onPressed: () {
                       setState(() {
                         bgColor = Colors.green;
+                        miniBool = !miniBool;
                       });
                     },
                     child: Icon(
@@ -86,10 +203,12 @@ class _EventEditingPageState extends State<EventEditingPage> {
                   ),
                   FloatingActionButton(
                     heroTag: "btn1",
+                    mini: miniBool,
                     backgroundColor: Colors.blue,
                     onPressed: () {
                       setState(() {
                         bgColor = Colors.blue;
+                        miniBool = !miniBool;
                       });
                     },
                     child: Icon(
@@ -103,7 +222,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
         ],
       ));
   Widget buildFrom() => buildHeader(
-        header: "Desde",
+        header: "FROM",
         child: Row(
           children: [
             Expanded(
@@ -123,7 +242,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
         ),
       );
   Widget buildTo() => buildHeader(
-        header: "Hasta",
+        header: "TO",
         child: Row(
           children: [
             Expanded(
@@ -150,20 +269,40 @@ class _EventEditingPageState extends State<EventEditingPage> {
           ),
           onPressed: saveForm,
           icon: const Icon(Icons.done),
-          label: const Text('GUARDAR'),
+          label: const Text(
+            'SAVE',
+            style: const TextStyle(
+                fontWeight: FontWeight.w400,
+                fontFamily: "Outfit",
+                fontSize: 20),
+          ),
         ),
       ];
 
   Widget buildTitle() => TextFormField(
-        style: const TextStyle(fontSize: 24),
-        decoration: const InputDecoration(
-          border: UnderlineInputBorder(),
-          hintText: "Añadir Título",
-        ),
+        style: const TextStyle(
+            fontWeight: FontWeight.w300, fontFamily: "Outfit", fontSize: 20),
+        decoration: InputDecoration(
+            hintStyle: const TextStyle(color: const Color(0xff8C99B1)),
+            border: UnderlineInputBorder(
+              borderSide: const BorderSide(color: Colors.white),
+              borderRadius: BorderRadius.circular(6),
+            ),
+            enabledBorder: UnderlineInputBorder(
+              borderSide: const BorderSide(color: Colors.white),
+              borderRadius: BorderRadius.circular(6),
+            ),
+            focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: const Color(0xff7F77C6))),
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+            filled: true,
+            fillColor: Colors.white,
+            hintText: "Add Title"),
         onFieldSubmitted: (_) => saveForm(),
-        validator: (title) => title != null && title.isEmpty
-            ? "El título no puede estar vacío"
-            : null,
+        validator: (title) =>
+            title != null && title.isEmpty ? "Tittle cannot be empty" : null,
         controller: titleController,
       );
   Widget buildDateTimePickers() => Column(
@@ -235,7 +374,14 @@ class _EventEditingPageState extends State<EventEditingPage> {
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(header, style: const TextStyle(fontWeight: FontWeight.bold)),
+          Text(
+            header,
+            style: const TextStyle(
+                color: Palette.ourPurple,
+                fontWeight: FontWeight.bold,
+                fontFamily: "Outfit",
+                fontSize: 18),
+          ),
           child,
         ],
       );
@@ -249,9 +395,18 @@ class _EventEditingPageState extends State<EventEditingPage> {
           to: toDate,
           isAllDay: false,
           backgroundColor: bgColor);
-
-      controller.addEvent(event);
+      final isEditing = widget.event != null;
+      if (isEditing) {
+        controller.editEvent(event, widget.event!);
+      } else {
+        controller.addEvent(event);
+      }
       Navigator.of(context).pop();
     }
+  }
+
+  Future delete(Event event) async {
+    controller.deleteEvent(event);
+    Navigator.of(context).pop();
   }
 }

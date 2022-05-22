@@ -1,4 +1,3 @@
-import 'package:loggy/loggy.dart';
 import 'package:qpets_app/data/datasources/remote/product_remote_datasource.dart';
 import '../../data/datasources/local/products_local_datasource_sqflite.dart';
 import '../entities/product.dart';

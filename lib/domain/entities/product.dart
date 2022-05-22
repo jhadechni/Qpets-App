@@ -9,6 +9,7 @@ class Product {
   String facebook;
   String instagram;
   String phoneNumber;
+  String ownerId;
 
   Product({
     required this.id,
@@ -21,6 +22,7 @@ class Product {
     required this.facebook,
     required this.instagram,
     required this.phoneNumber,
+    required this.ownerId
   });
 
   // Getters
@@ -44,13 +46,16 @@ class Product {
       'facebook': facebook,
       'instagram': instagram,
       'phoneNumber': phoneNumber,
+      'ownerId' : ownerId
     };
   }
 
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
         id: json['_id'],
-        image: json['image'],
+        image: (json['image'] == "")
+            ? "https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty-300x240.jpg"
+            : json["image"],
         name: json['name'],
         storeName: json['storeName'],
         price: json['price'],
@@ -58,7 +63,8 @@ class Product {
         description: json['description'],
         facebook: json['facebook'],
         instagram: json['instagram'],
-        phoneNumber: json['phoneNumber']);
+        phoneNumber: json['phoneNumber'],
+        ownerId : json['ownerId']);
   }
 
   Map<String, dynamic> toJson() {
@@ -73,6 +79,7 @@ class Product {
     data['facebook'] = facebook;
     data['instagram'] = instagram;
     data['phoneNumber'] = phoneNumber;
+    data['ownerId'] = ownerId;
     return data;
   }
 }
