@@ -73,7 +73,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
                   topLeft: const Radius.circular(30),
                   topRight: Radius.circular(30))),
           child: Padding(
-            padding: EdgeInsets.all(12.0),
+            padding: EdgeInsets.symmetric(horizontal: 12),
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(12),
               child: Form(

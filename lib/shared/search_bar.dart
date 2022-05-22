@@ -29,7 +29,8 @@ class SearchBar extends StatelessWidget {
           controller: _controller,
           textAlignVertical: TextAlignVertical.center,
           decoration: InputDecoration(
-              hintStyle: const TextStyle(color: Color.fromRGBO(109, 107, 124, 0.44)),
+              hintStyle:
+                  const TextStyle(color: Color.fromRGBO(109, 107, 124, 0.44)),
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.black.withOpacity(0.15)),
                 borderRadius: BorderRadius.circular(18),
