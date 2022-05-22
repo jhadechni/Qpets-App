@@ -20,20 +20,17 @@ class Pagehomestate extends State<PageHome> {
   EventController controller = Get.find<EventController>();
   List<agenda> entrie = <agenda>[];
   List<tipList> tips = <tipList>[];
-  int rndm = 0;
   @override
   void initState() {
     entrie.add(agenda('12:30', 'Vacinee 1'));
     entrie.add(agenda('16:30', 'Training section'));
     entrie.add(agenda('17:20', 'Spa day'));
     entrie.add(agenda('18:00', 'Walk with Antonella'));
-    Random random = new Random();
     tips.add(tipList('Pasea al perro', 'descripcion inutil 1', 'tip_1'));
     tips.add(tipList('Pasea al perro2', 'descripcion inutil 2', 'tip_2'));
     tips.add(tipList('Pasea al perro3', 'descripcion inutil 3', 'tip_3'));
     tips.add(tipList('Pasea al perro4', 'descripcion inutil 4', 'tip_4'));
     tips.add(tipList('Pasea al perro5', 'descripcion inutil 5', 'tip_5'));
-    rndm = random.nextInt(0) + tips.length;
     super.initState();
   }
 
@@ -42,6 +39,9 @@ class Pagehomestate extends State<PageHome> {
     UserController userController = Get.find();
     AuthenticationController authentication = Get.find();
     Authentication controller = Get.find();
+    Random random = Random();
+    int rndm = random.nextInt(5);
+    print(rndm);
     return FutureBuilder<User>(
         future: userController.fetchUserData(authentication.getUid()),
         builder: (context, snapshot) {
@@ -120,7 +120,7 @@ class Pagehomestate extends State<PageHome> {
                       ),
                       child: Column(
                         children: [
-                          _cardImage2(tips[rndm].img.toString()),
+                          _cardImage2(tips[rndm].img),
                           _titulo(tips[rndm].title),
                           _carddescripcion(tips[rndm].desc, false)
                         ],
@@ -205,13 +205,13 @@ Widget _cardImage() {
           borderRadius: BorderRadius.circular(10)));
 }
 
-Widget _cardImage2({String img = 'tip_1'}) {
+Widget _cardImage2(String img) {
   return Container(
       width: 400,
       height: 80,
       decoration: BoxDecoration(
-          image: const DecorationImage(
-            image: AssetImage('assets/images/' + img + '.png'),
+          image: DecorationImage(
+            image: AssetImage('assets/images/$img.png'),
           ),
           borderRadius: BorderRadius.circular(10)));
 }
