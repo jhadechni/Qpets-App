@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qpets_app/domain/authentication.dart';
-import 'package:qpets_app/shared/bottom_navbar.dart';
 import 'package:qpets_app/ui/pages/pages_signup.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../controllers/authentication_controller.dart';
 
@@ -22,7 +20,6 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   @override
-
   Widget build(BuildContext context) {
     Authentication controller = Get.find();
     AuthenticationController authentication = Get.find();
@@ -39,8 +36,7 @@ class _LoginPageState extends State<LoginPage> {
               padding: const EdgeInsets.only(top: 20),
               child: Column(
                 children: [
-                  _cardImagepet(
-                      "https://media.discordapp.net/attachments/955549239801446473/955549292423172116/Corgi_logo_1.png"),
+                  _cardImagepet("assets/images/Corgi_logo_1.png"),
                   const Padding(
                     padding: EdgeInsets.only(top: 20),
                     child: Text(
@@ -56,8 +52,8 @@ class _LoginPageState extends State<LoginPage> {
                     padding: const EdgeInsets.only(top: 30),
                     child: Column(
                       children: [
-                        _formField(
-                            "Correo electronico", "example@example.com", 1, email),
+                        _formField("Correo electronico", "example@example.com",
+                            1, email),
                         _formField("Contraseña", "", 2, password),
                       ],
                     ),
@@ -67,7 +63,8 @@ class _LoginPageState extends State<LoginPage> {
                     child: MaterialButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          login(controller, authentication, email.text, password.text);
+                          login(controller, authentication, email.text,
+                              password.text);
                         }
                       },
                       color: const Color(0xFF7F77C6),
@@ -117,7 +114,8 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _formField(String placeholder, String hint, int op, TextEditingController controller) {
+  Widget _formField(String placeholder, String hint, int op,
+      TextEditingController controller) {
     return Padding(
       padding: const EdgeInsets.only(left: 30, right: 30, top: 30, bottom: 10),
       child: TextFormField(
@@ -143,13 +141,13 @@ class _LoginPageState extends State<LoginPage> {
         height: 200,
         child: Center(
             child: Image(
-          image: NetworkImage(link),
+          image: AssetImage(link),
           fit: BoxFit.fill,
         )));
   }
 
-  void login(
-      Authentication controller, AuthenticationController authentication, String email, String password) {
+  void login(Authentication controller, AuthenticationController authentication,
+      String email, String password) {
     controller.login(email, password);
     authentication.login(email, password);
   }

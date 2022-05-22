@@ -17,7 +17,7 @@ class _PagesplashState extends State<Pagesplash> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 5)).then((value) {
-    Get.to(() => const LoginPage());
+      Get.to(() => const LoginPage());
     });
   }
 
@@ -47,10 +47,8 @@ class _PagesplashState extends State<Pagesplash> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          _cardImagepet(
-              'https://media.discordapp.net/attachments/955549239801446473/955549292423172116/Corgi_logo_1.png'),
-          _cardImagelogo(
-              'https://media.discordapp.net/attachments/955549239801446473/960035755244269608/Vector.png'),
+          _cardImagepet('assets/images/Corgi_logo_1.png'),
+          _cardImagelogo('assets/images/Vector.png'),
           Container(
             width: 70,
             height: 70,
@@ -64,7 +62,6 @@ class _PagesplashState extends State<Pagesplash> {
             ),
           ),
           const SizedBox(height: 20),
-
         ],
       ),
     );
@@ -75,8 +72,8 @@ class _PagesplashState extends State<Pagesplash> {
         width: 70,
         height: 80,
         decoration: BoxDecoration(
-            image: DecorationImage(
-                image: NetworkImage(link), fit: BoxFit.fitWidth),
+            image:
+                DecorationImage(image: AssetImage(link), fit: BoxFit.fitWidth),
             borderRadius: BorderRadius.circular(10)));
   }
 
@@ -85,8 +82,8 @@ class _PagesplashState extends State<Pagesplash> {
         width: 20,
         height: 30,
         decoration: BoxDecoration(
-            image: DecorationImage(
-                image: NetworkImage(link), fit: BoxFit.fitWidth),
+            image:
+                DecorationImage(image: AssetImage(link), fit: BoxFit.fitWidth),
             borderRadius: BorderRadius.circular(10)));
   }
 
@@ -96,7 +93,7 @@ class _PagesplashState extends State<Pagesplash> {
         height: 250,
         child: Center(
             child: Image(
-          image: NetworkImage(link),
+          image: AssetImage(link),
           fit: BoxFit.fill,
         )));
   }
@@ -107,7 +104,7 @@ class _PagesplashState extends State<Pagesplash> {
         height: 100,
         child: Center(
             child: Image(
-          image: NetworkImage(link),
+          image: AssetImage(link),
           fit: BoxFit.fill,
         )));
   }
@@ -122,56 +119,46 @@ class _PagesplashState extends State<Pagesplash> {
               children: [
                 Column(
                   children: [
-                    _cardImage(
-                        'https://media.discordapp.net/attachments/955549239801446473/960026024475770961/Group.png'),
-                    _cardImage2(
-                        'https://media.discordapp.net/attachments/955549239801446473/960039618248597534/Group_3.png'),
+                    _cardImage('assets/images/Group.png'),
+                    _cardImage2('assets/images/Group_3.png'),
                   ],
                 ),
                 Column(
                   children: [
-                    _cardImage(
-                        'https://media.discordapp.net/attachments/955549239801446473/960026024475770961/Group.png'),
+                    _cardImage('assets/images/Group.png'),
                     Container(
                         height: 250, width: 250, color: const Color(0xFF7F77C6))
                   ],
                 ),
-                _cardImage(
-                    'https://media.discordapp.net/attachments/955549239801446473/960026024475770961/Group.png'),
+                _cardImage('assets/images/Group.png'),
               ],
             ),
             Row(
               children: [
                 Column(
                   children: [
-                    _cardImage(
-                        'https://media.discordapp.net/attachments/955549239801446473/960026024475770961/Group.png'),
-                    _cardImage2(
-                        'https://media.discordapp.net/attachments/955549239801446473/960039618248597534/Group_3.png')
+                    _cardImage('assets/images/Group.png'),
+                    _cardImage2('assets/images/Group_3.png')
                   ],
                 ),
                 Column(
                   children: [
-                    _cardImage2(
-                        'https://media.discordapp.net/attachments/955549239801446473/960039618248597534/Group_3.png'),
+                    _cardImage2('assets/images/Group_3.png'),
                     Container(
                         height: 100,
                         width: 200,
                         color: const Color(0xFF7F77C6)),
                   ],
                 ),
-                _cardImage(
-                    'https://media.discordapp.net/attachments/955549239801446473/960026024475770961/Group.png'),
+                _cardImage('assets/images/Group.png'),
               ],
             ),
             Row(
               children: [
-                _cardImage(
-                    'https://media.discordapp.net/attachments/955549239801446473/960026024475770961/Group.png'),
+                _cardImage('assets/images/Group.png'),
                 Container(
                     height: 250, width: 250, color: const Color(0xFF7F77C6)),
-                _cardImage(
-                    'https://media.discordapp.net/attachments/955549239801446473/960026024475770961/Group.png')
+                _cardImage('assets/images/Group.png')
               ],
             )
           ],
