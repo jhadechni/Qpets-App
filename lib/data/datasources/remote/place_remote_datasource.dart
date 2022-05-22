@@ -18,12 +18,17 @@ class PlaceRemoteDatatasource {
         Location(lat: position.latitude, lng: position.longitude), 500,
         type: "park");
     var datap = resultPark?.results;
-    data?.addAll(datap!);
+    if (datap != null){
+      data?.addAll(datap);
+    }
     var resultStore = await googlePlace.search.getNearBySearch(
         Location(lat: position.latitude, lng: position.longitude), 2000,
         type: "pet_store", keyword: "pet");
     var datastr = resultStore?.results;
-    data?.addAll(datastr!);
+        if (datastr != null){
+      data?.addAll(datastr);
+    }
+  
     if (data != null) {
       for (var placeR in data) {
         double? lat = placeR.geometry!.location!.lat;
