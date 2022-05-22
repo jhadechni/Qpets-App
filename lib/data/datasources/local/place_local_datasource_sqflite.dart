@@ -56,7 +56,11 @@ class PlaceLocalDataSource {
         latLng: LatLng(double.parse(maps[i]['latitude']),
             double.parse(maps[i]['longitude'])),
         name: maps[i]['name'],
-        category: maps[i]['category'].contains('veterinaries') ? PlaceCategory.veterinaries : maps[i]['category'].contains('parks') ? PlaceCategory.parks : PlaceCategory.stores ,
+        category: maps[i]['category'].contains('veterinaries')
+            ? PlaceCategory.veterinaries
+            : maps[i]['category'].contains('parks')
+                ? PlaceCategory.parks
+                : PlaceCategory.stores,
         address: maps[i]['address'],
         img: maps[i]['img'],
         openNow: maps[i]['opennow'],

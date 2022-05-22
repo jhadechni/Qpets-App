@@ -2,7 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:qpets_app/controllers/pet_profile_controller.dart';
+import 'package:qpets_app/controllers/pet_controller.dart';
 import 'package:qpets_app/controllers/timeline_controller.dart';
 import 'package:qpets_app/domain/pet_profile.dart';
 import 'package:qpets_app/domain/timeline_event.dart';
@@ -19,7 +19,6 @@ class _ProfileField extends StatelessWidget {
       fontWeight: FontWeight.w300, fontSize: 12.0, color: Color(0xff717171));
   @override
   Widget build(BuildContext context) {
-
     return Container(
       padding: const EdgeInsets.only(bottom: 10.0),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -32,84 +31,81 @@ class _ProfileField extends StatelessWidget {
 }
 
 class _PetProfileWindow extends StatelessWidget {
-  final PetProfileController controller = Get.find<PetProfileController>();
+  PetProfileFields pet;
+  _PetProfileWindow(this.pet) {}
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<PetProfileFields>(
-      future: controller.fetchPetInfo("0"),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return Card(
-              color: Colors.transparent,
-              elevation: 0,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                          child: _ProfileField(
-                        field: "Current Age",
-                        value: DateTime.now()
-                            .difference(snapshot.data!.dob)
-                            .inDays
-                            .toString(),
-                      )),
-                      Expanded(
-                          child: _ProfileField(
-                        field: "Gender",
-                        value: snapshot.data!.gender,
-                      ))
-                    ],
-                  ),
-                  Row(children: [
-                    Expanded(
-                        child: _ProfileField(
-                      field: "Breed",
-                      value: snapshot.data!.breed,
-                    )),
-                    Expanded(
-                        child: _ProfileField(
-                            field: "Vaccine Check",
-                            value: snapshot.data!.vaccineCheck.toString()))
-                  ]),
-                  Row(children: [
-                    Expanded(
-                        child: _ProfileField(
-                      field: "Type",
-                      value: snapshot.data!.type,
-                    )),
-                    Expanded(
-                        child: _ProfileField(
-                      field: "Weight",
-                      value: snapshot.data!.weight.toString(),
-                    ))
-                  ]),
-                  Row(children: [
-                    Expanded(
-                        child: _ProfileField(
-                      field: "Chip Check",
-                      value: snapshot.data!.chipCheck.toString(),
-                    )),
-                    Expanded(
-                        child: _ProfileField(
-                      field: "Spayed and Neutered",
-                      value: snapshot.data!.neutered.toString(),
-                    ))
-                  ]),
-                ],
-              ));
-        } else if (snapshot.hasError) {
-          return Center(
-            child: Text("${snapshot.error}"),
-          );
-        } else {
-          return const Center(
-            child: const Text("Loading..."),
-          );
-        }
-      },
-    );
+    return Card(
+        color: Colors.transparent,
+        elevation: 0,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                    child: _ProfileField(
+                  field: "Current Age",
+                  value: getTimeDifferenceFromNow(pet.dob),
+                )),
+                Expanded(
+                    child: _ProfileField(
+                  field: "Gender",
+                  value: pet.gender,
+                ))
+              ],
+            ),
+            Row(children: [
+              Expanded(
+                  child: _ProfileField(
+                field: "Breed",
+                value: pet.breed,
+              )),
+              Expanded(
+                  child: _ProfileField(
+                      field: "Vaccine Check",
+                      value: pet.vaccineCheck.toString()))
+            ]),
+            Row(children: [
+              Expanded(
+                  child: _ProfileField(
+                field: "Type",
+                value: pet.type,
+              )),
+              Expanded(
+                  child: _ProfileField(
+                field: "Weight",
+                value: pet.weight.toString(),
+              ))
+            ]),
+            Row(children: [
+              Expanded(
+                  child: _ProfileField(
+                field: "Chip Check",
+                value: pet.chipCheck.toString(),
+              )),
+              Expanded(
+                  child: _ProfileField(
+                field: "Spayed and Neutered",
+                value: pet.neutered.toString(),
+              ))
+            ]),
+          ],
+        ));
+  }
+
+  String getTimeDifferenceFromNow(DateTime dateTime) {
+    Duration difference = DateTime.now().difference(dateTime);
+
+    if (difference.inDays > 365) {
+      double years = difference.inDays / 365;
+      return "${years.round()} years";
+    }
+    if (difference.inDays > 31) {
+      double months = difference.inDays / 31;
+      return "${months.round()} months";
+    }
+    return "${difference.inDays} days";
   }
 }
 
@@ -261,24 +257,25 @@ class _PetTimeLine extends StatelessWidget {
 }
 
 class PetProfile extends StatelessWidget {
-  const PetProfile({Key? key}) : super(key: key);
+  PetProfileFields pet;
+  final PetController controller = Get.find<PetController>();
+  PetProfile({required this.pet, Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: SafeArea(
           child: Column(
         children: <Widget>[
-          getProfile(),
+          getProfile(pet.imgUrl),
           Expanded(
               // use ListView to handle scroll
               child: ListView(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   children: <Widget>[
-                Row(children: const [
+                Row(children: [
                   Padding(
                     padding: EdgeInsets.all(5.0),
-                    child: Text("Polar",
+                    child: Text(pet.name,
                         style: TextStyle(
                             fontSize: 24.0,
                             fontWeight: FontWeight.bold,
@@ -293,7 +290,7 @@ class PetProfile extends StatelessWidget {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: const Color(0xffE2E2EC)),
-                    child: _Carousel([_PetProfileWindow()])),
+                    child: _Carousel([_PetProfileWindow(pet)])),
                 const Padding(
                     padding: EdgeInsets.symmetric(
                       vertical: 10.0,
@@ -319,16 +316,15 @@ class PetProfile extends StatelessWidget {
     );
   }
 
-  Widget getProfile() {
+  Widget getProfile(String img) {
     return Stack(
       alignment: Alignment.topLeft,
       children: [
         Container(
             height: 200,
-            decoration: const BoxDecoration(
-                image:  DecorationImage(
-                    image: NetworkImage("https://i.imgur.com/BpG6vSU.jpg"),
-                    fit: BoxFit.fitWidth))),
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: NetworkImage(img), fit: BoxFit.fitWidth))),
         Padding(
             padding: const EdgeInsets.only(top: 32.0),
             child: BackButton(onPressed: () {
