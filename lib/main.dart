@@ -57,7 +57,7 @@ void main() async {
         home: const Pagesplash(),
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-            textTheme: GoogleFonts.robotoTextTheme(),
+            textTheme: GoogleFonts.outfitTextTheme(),
             primarySwatch: Palette.ourPurple)));
   });
 }
