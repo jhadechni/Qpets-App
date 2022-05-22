@@ -180,7 +180,7 @@ class PageStoreState extends State<PageStore> {
             padding: const EdgeInsets.only(bottom: 20),
             child: Container(
               width: 328,
-              height: 132,
+              height: 145,
               padding: const EdgeInsets.only(
                   top: 20, left: 10, right: 10, bottom: 10),
               decoration: BoxDecoration(
