@@ -41,7 +41,6 @@ class Pagehomestate extends State<PageHome> {
     Authentication controller = Get.find();
     Random random = Random();
     int rndm = random.nextInt(5);
-    print(rndm);
     return FutureBuilder<User>(
         future: userController.fetchUserData(authentication.getUid()),
         builder: (context, snapshot) {
