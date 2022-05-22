@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, avoid_types_as_parameter_names
-
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -24,27 +22,22 @@ class MapPageState extends State<MapsPage> {
   bool _parksPlaces = false;
   bool _storesPlaces = false;
   late GoogleMapController googleMapController;
-  late BitmapDescriptor mapMarkerV;
-  late BitmapDescriptor mapMarkerP;
-  late BitmapDescriptor mapMarkerS;
 
   @override
   void initState() {
     super.initState();
+
     setMarkers();
-    setCustomMarker();
   }
 
-  void setCustomMarker() async {
-    mapMarkerV = await BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(), 'images/vetM.png');
-    mapMarkerP = await BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(), 'images/parkM.png');
-    mapMarkerS = await BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(), 'images/storeM.png');
-  }
+  void setMarkers() async {
+    BitmapDescriptor mapMarkerV = await BitmapDescriptor.fromAssetImage(
+        const ImageConfiguration(), 'images/vetM.png');
+    BitmapDescriptor mapMarkerP = await BitmapDescriptor.fromAssetImage(
+        const ImageConfiguration(), 'images/parkM.png');
+    BitmapDescriptor mapMarkerS = await BitmapDescriptor.fromAssetImage(
+        const ImageConfiguration(), 'images/storeM.png');
 
-  void setMarkers() {
     PlaceController placeController = Get.find();
     List filterPlaces = [];
     var places = placeController.getPlaces;
@@ -69,7 +62,7 @@ class MapPageState extends State<MapsPage> {
             infoWindow: InfoWindow(
               title: filterP.getName,
             ),
-            icon: filterP.placeCategory == PlaceCategory.veterinaries
+            icon:  filterP.placeCategory == PlaceCategory.veterinaries
                 ? mapMarkerV
                 : filterP.placeCategory == PlaceCategory.parks
                     ? mapMarkerP
@@ -88,7 +81,7 @@ class MapPageState extends State<MapsPage> {
   @override
   Widget build(BuildContext context) {
     // ignore: unnecessary_new
-    return new Scaffold(
+    return Scaffold(
       body: Stack(
         children: [
           // ignore: non_constant_identifier_names, avoid_print
