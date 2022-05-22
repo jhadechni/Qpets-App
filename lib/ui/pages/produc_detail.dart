@@ -7,6 +7,8 @@ import 'package:url_launcher/url_launcher_string.dart';
 import '../../domain/entities/product.dart';
 import 'package:animated_floating_buttons/animated_floating_buttons.dart';
 
+import '../../utils/ourPurple.dart';
+
 class ProductDetail extends StatelessWidget {
   ProductDetail({Key? key, required this.product}) : super(key: key);
   final Product product;
