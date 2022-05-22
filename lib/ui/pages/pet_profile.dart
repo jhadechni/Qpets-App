@@ -19,7 +19,6 @@ class _ProfileField extends StatelessWidget {
       fontWeight: FontWeight.w300, fontSize: 12.0, color: Color(0xff717171));
   @override
   Widget build(BuildContext context) {
-
     return Container(
       padding: const EdgeInsets.only(bottom: 10.0),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -263,7 +262,6 @@ class PetProfile extends StatelessWidget {
   PetProfile({required this.pet, Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: SafeArea(
           child: Column(
