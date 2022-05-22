@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qpets_app/controllers/calendar_event_controller.dart';
 import 'package:qpets_app/domain/calendar/event_data_source.dart';
+import 'package:qpets_app/utils/ourPurple.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
+
+Color ourPurple = Palette.ourPurple;
 
 // ignore: use_key_in_widget_constructors
 class TasksWidget extends StatefulWidget {
@@ -34,10 +37,15 @@ class _TasksWidgetState extends State<TasksWidget> {
           initialDisplayDate: controller.selectedDate,
           appointmentBuilder: appointmentBuilder,
           headerHeight: 0,
-          todayHighlightColor: Colors.black,
+          todayHighlightColor: ourPurple,
           selectionDecoration: BoxDecoration(
-            color: Colors.red.withOpacity(0.3),
+            color: Colors.transparent,
           ),
+          onTap: (details) {
+            if (details.appointments == null) return;
+            final event = details.appointments!.first;
+            // Navigator.of(context) => EventEditingPage(event:event),
+          },
         ));
   }
 

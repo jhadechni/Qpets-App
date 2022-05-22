@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qpets_app/main.dart';
+import 'package:qpets_app/utils/ourPurple.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import '../../domain/entities/product.dart';
@@ -11,7 +12,6 @@ import '../../utils/ourPurple.dart';
 class ProductDetail extends StatelessWidget {
   ProductDetail({Key? key, required this.product}) : super(key: key);
   final Product product;
-
 
   @override
   Widget build(BuildContext context) {

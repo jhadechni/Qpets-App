@@ -5,8 +5,9 @@ import 'package:get/get.dart';
 import 'package:qpets_app/controllers/calendar_event_controller.dart';
 import 'package:qpets_app/domain/calendar/event.dart';
 import 'package:qpets_app/utils/utils.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:qpets_app/utils/ourPurple.dart';
+
+Color ourPurple = Palette.ourPurple;
 
 class EventEditingPage extends StatefulWidget {
   final Event? event;
@@ -21,10 +22,13 @@ class EventEditingPage extends StatefulWidget {
 class _EventEditingPageState extends State<EventEditingPage> {
   Color bgColor = Colors.blue;
   bool miniBool = true;
+  String editText = "Add Event";
+  bool isEditing = true;
   final _formKey = GlobalKey<FormState>();
   final titleController = TextEditingController();
   late DateTime fromDate;
   late DateTime toDate;
+  
   EventController controller = Get.find<EventController>();
 
   @override
@@ -33,6 +37,13 @@ class _EventEditingPageState extends State<EventEditingPage> {
     if (widget.event == null) {
       fromDate = DateTime.now();
       toDate = DateTime.now().add(const Duration(hours: 2));
+    } else {
+      final event = widget.event!;
+      titleController.text = event.title;
+      fromDate = event.from;
+      toDate = event.to;
+      editText = "Edit Event";
+      isEditing = false;
     }
   }
 
@@ -62,24 +73,27 @@ class _EventEditingPageState extends State<EventEditingPage> {
               borderRadius: const BorderRadius.only(
                   topLeft: const Radius.circular(30),
                   topRight: Radius.circular(30))),
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(12),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  const SizedBox(height: 12),
-                  buildTitle(),
-                  const SizedBox(height: 20),
-                  buildDateTimePickers(),
-                  const SizedBox(height: 15),
-                  colorPicker(),
-                  const SizedBox(height: 20),
-                  submitButton(),
-                ],
-              ), // Column
-            ), // Form
+          child: Padding(
+            padding: EdgeInsets.all(12.0),
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(12),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    const SizedBox(height: 12),
+                    buildTitle(),
+                    const SizedBox(height: 20),
+                    buildDateTimePickers(),
+                    const SizedBox(height: 15),
+                    colorPicker(),
+                    const SizedBox(height: 20),
+                    isEditing ? submitButton() : editingButtons(),
+                  ],
+                ), // Column
+              ), // Form
+            ),
           ),
         ),
       );
@@ -101,12 +115,67 @@ class _EventEditingPageState extends State<EventEditingPage> {
             ]),
         child: TextButton(
           onPressed: saveForm,
-          child: const Text("Add Event",
+          child: Text(editText,
               style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w600,
                   fontSize: 18)),
         ),
+      );
+  Widget editingButtons() => Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          Container(
+            decoration: BoxDecoration(
+                color: Colors.red,
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.red.withOpacity(0.35),
+                    spreadRadius: 3,
+                    blurRadius: 10,
+                    offset: const Offset(0, 0), // changes position of shadow
+                  ),
+                ]),
+            child: TextButton(
+              onPressed: () => delete(widget.event!),
+              child: Text("Delete",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18)),
+            ),
+          ),
+          Container(
+            decoration: BoxDecoration(
+                color: const Color(0xff7F77C6),
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10)),
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color(0xff7F77C6).withOpacity(0.35),
+                    spreadRadius: 3,
+                    blurRadius: 10,
+                    offset: const Offset(0, 0), // changes position of shadow
+                  ),
+                ]),
+            child: TextButton(
+              onPressed: saveForm,
+              child: Text(editText,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18)),
+            ),
+          )
+        ],
       );
   Widget colorPicker() => buildHeader(
       header: "COLOR",
@@ -119,7 +188,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
                 children: [
                   FloatingActionButton(
                     heroTag: "btn2",
-                    mini: miniBool,
+                    mini: !miniBool,
                     backgroundColor: Colors.green,
                     onPressed: () {
                       setState(() {
@@ -135,7 +204,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
                   ),
                   FloatingActionButton(
                     heroTag: "btn1",
-                    mini: !miniBool,
+                    mini: miniBool,
                     backgroundColor: Colors.blue,
                     onPressed: () {
                       setState(() {
@@ -309,6 +378,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
           Text(
             header,
             style: const TextStyle(
+                color: Palette.ourPurple,
                 fontWeight: FontWeight.bold,
                 fontFamily: "Roboto",
                 fontSize: 18),
@@ -326,9 +396,18 @@ class _EventEditingPageState extends State<EventEditingPage> {
           to: toDate,
           isAllDay: false,
           backgroundColor: bgColor);
-
-      controller.addEvent(event);
+      final isEditing = widget.event != null;
+      if (isEditing) {
+        controller.editEvent(event, widget.event!);
+      } else {
+        controller.addEvent(event);
+      }
       Navigator.of(context).pop();
     }
+  }
+
+  Future delete(Event event) async {
+    controller.deleteEvent(event);
+    Navigator.of(context).pop();
   }
 }
