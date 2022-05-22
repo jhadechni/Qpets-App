@@ -4,6 +4,7 @@ import 'package:qpets_app/domain/use_case/products.dart';
 
 class ProductController extends GetxController {
   final products = <Product>[].obs;
+  bool sucess = false;
   ProductsUseCase productsUseCase = Get.find();
 
   ProductController() {
@@ -12,12 +13,13 @@ class ProductController extends GetxController {
     print(products);
   }
   List get getProducts => products;
-
+  bool get getStatus => sucess;
+  
   RxList<Product> filteredList = <Product>[].obs;
   final filter = "".obs;
 
   Future<void> getProductFromRepository() async {
-    bool success = await productsUseCase.getProductsRemote();
+    sucess = await productsUseCase.getProductsRemote();
     await getAllProducts();
   }
 
@@ -48,6 +50,19 @@ class ProductController extends GetxController {
     } else {
       filteredList.value =
           copyOfProducts.where((p0) => p0.type == newFilter).toList();
+    }
+    filteredList.refresh();
+  }
+
+  void runFilter(String enteredKeyword) {
+    List<Product> copyOfProducts = List<Product>.from(products);
+    if (enteredKeyword.isEmpty) {
+      filteredList.value = copyOfProducts;
+    } else {
+      filteredList.value = copyOfProducts
+          .where((product) =>
+              product.name.toLowerCase().contains(enteredKeyword.toLowerCase()))
+          .toList();
     }
     filteredList.refresh();
   }

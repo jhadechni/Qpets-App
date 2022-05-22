@@ -13,13 +13,13 @@ class ProductLocalDataSource {
   }
 
   _initDatabase() async {
-    String path = join(await getDatabasesPath(), 'product_database.db');
+    String path = join(await getDatabasesPath(), 'products_database.db');
     return await openDatabase(path, version: 1, onCreate: _onCreate);
   }
 
   Future _onCreate(Database db, int version) async {
     await db.execute(
-        'CREATE TABLE product (id TEXT PRIMARY KEY, image TEXT, name TEXT,storeName TEXT, price TEXT, type TEXT, description TEXT, facebook TEXT, instagram TEXT, phoneNumber TEXT)');
+        'CREATE TABLE product (id TEXT PRIMARY KEY, image TEXT, name TEXT,storeName TEXT, price TEXT, type TEXT, description TEXT, facebook TEXT, instagram TEXT, phoneNumber TEXT, ownerId TEXT)');
   }
 
   Future<void> addAllProducts(List<Product> products) async {
@@ -63,6 +63,7 @@ class ProductLocalDataSource {
         facebook: products[i]['facebook'],
         instagram: products[i]['instagram'],
         phoneNumber: products[i]['phoneNumber'],
+        ownerId: products[i]['ownerId']
       );
     });
   }

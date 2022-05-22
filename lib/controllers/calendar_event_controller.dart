@@ -10,4 +10,17 @@ class EventController extends GetxController {
     events.refresh();
     update();
   }
+
+  void editEvent(Event newEvent, Event oldEvent) {
+    final index = events.indexOf(oldEvent);
+    events[index] = newEvent;
+    events.refresh();
+    update();
+  }
+
+  void deleteEvent(Event event) {
+    events.remove(event);
+    events.refresh();
+    update();
+  }
 }

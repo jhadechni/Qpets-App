@@ -1,0 +1,1 @@
+-keep class com.example.qpets_app.BuildConfig { *; }
