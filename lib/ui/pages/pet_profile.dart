@@ -131,7 +131,7 @@ class _CarouselState extends State<_Carousel> {
           child: CarouselSlider(
               items: children,
               options: CarouselOptions(
-                  height: 200,
+                  height: 208,
                   viewportFraction: 1,
                   enableInfiniteScroll: false,
                   onPageChanged: (index, reason) {
@@ -284,7 +284,7 @@ class PetProfile extends StatelessWidget {
                   //IconButton(icon: Icon(Icons.edit), onPressed: null)
                 ]),
                 Container(
-                    height: 250,
+                    height: 270,
                     padding: const EdgeInsets.only(
                         top: 16.0, left: 16.0, right: 16.0, bottom: 10.0),
                     decoration: BoxDecoration(
@@ -301,7 +301,7 @@ class PetProfile extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                             color: Colors.black))),
                 Container(
-                    height: 120,
+                    height: 130,
                     constraints: const BoxConstraints(maxHeight: 120),
                     padding: const EdgeInsets.only(
                         top: 16.0, left: 16.0, right: 16.0, bottom: 10.0),

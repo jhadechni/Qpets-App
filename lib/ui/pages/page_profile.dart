@@ -5,6 +5,7 @@ import 'package:qpets_app/domain/authentication.dart';
 import 'package:qpets_app/domain/pet_profile.dart';
 import 'package:qpets_app/domain/user.dart';
 import 'package:qpets_app/ui/pages/page_login.dart';
+import 'package:qpets_app/ui/pages/pet_form.dart';
 import 'package:qpets_app/ui/pages/pet_profile.dart';
 import 'package:qpets_app/ui/pages/produc_detail.dart';
 
@@ -130,20 +131,23 @@ class PageProfileState extends State<PageProfile> {
                               children: [
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
-                                  children: const [
-                                    Padding(
+                                  children: [
+                                    const Padding(
                                       padding: EdgeInsets.all(8.0),
                                       child: Text('Your Pets',
                                           style: TextStyle(
                                               fontWeight: FontWeight.w700,
                                               fontSize: 30)),
                                     ),
-                                    Icon(
-                                      Icons.add_circle_outline_outlined,
-                                      color: Color(
-                                        0xFF8E6FD8,
+                                    GestureDetector(
+                                      onTap: () => Get.to(() => PetForm()),
+                                      child: const Icon(
+                                        Icons.add_circle_outline_outlined,
+                                        color: Color(
+                                          0xFF8E6FD8,
+                                        ),
+                                        size: 25.0,
                                       ),
-                                      size: 25.0,
                                     )
                                   ],
                                 ),
