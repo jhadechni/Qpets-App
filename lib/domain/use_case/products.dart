@@ -12,4 +12,10 @@ class ProductsUseCase {
   Future<void> addProduct(product) async =>
       await repository.addProduct(product);
   Future<void> deleteAll() async => await repository.deleteAll();
+
+  Future<List<Product>> getProductsUser(id) async =>
+      await repository.getProductsUser(id);
+
+  Future<bool> deleteProductsUser(id) async =>
+      await repository.deleteProduct(id);
 }

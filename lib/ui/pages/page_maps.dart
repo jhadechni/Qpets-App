@@ -17,7 +17,7 @@ class MapsPage extends StatefulWidget {
 
 class MapPageState extends State<MapsPage> {
   final Set<Marker> _markers = {};
-  bool _veterinariesPlaces = true;
+  bool _veterinariesPlaces = false;
   bool _parksPlaces = false;
   bool _storesPlaces = false;
   late GoogleMapController googleMapController;
@@ -31,11 +31,11 @@ class MapPageState extends State<MapsPage> {
 
   void setMarkers() async {
     BitmapDescriptor mapMarkerV = await BitmapDescriptor.fromAssetImage(
-        const ImageConfiguration(), 'images/vetM.png');
+        const ImageConfiguration(), 'assets/images/vetM.png');
     BitmapDescriptor mapMarkerP = await BitmapDescriptor.fromAssetImage(
-        const ImageConfiguration(), 'images/parkM.png');
+        const ImageConfiguration(), 'assets/images/parkM.png');
     BitmapDescriptor mapMarkerS = await BitmapDescriptor.fromAssetImage(
-        const ImageConfiguration(), 'images/storeM.png');
+        const ImageConfiguration(), 'assets/images/storeM.png');
 
     PlaceController placeController = Get.find();
     List filterPlaces = [];
@@ -104,7 +104,7 @@ class MapPageState extends State<MapsPage> {
             },
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 20),
+            padding: const EdgeInsets.only(top: 2),
             child: Stack(
               children: <Widget>[
                 Column(

@@ -5,10 +5,16 @@ import 'package:qpets_app/domain/pet_profile.dart';
 import 'package:qpets_app/domain/user.dart';
 
 import '../domain/entities/product.dart';
+import '../domain/use_case/products.dart';
 
 class UserController extends GetxController {
   AuthenticationController _authController =
       Get.find<AuthenticationController>();
+  ProductsUseCase productsUseCase = Get.find();
+
+  final _userproducts = <Product>[].obs;
+  List get getProductsList => _userproducts;
+
   final userProfile = User(
     'Jaime Sierra',
     'https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80',
@@ -67,16 +73,35 @@ class UserController extends GetxController {
   Future<User> fetchUserData(String uid) async {
     CollectionReference collection =
         FirebaseFirestore.instance.collection('users');
-    print("UID $uid");
+
     DocumentSnapshot snap = await collection.doc("$uid").get();
     Map<String, dynamic> data = snap.data() as Map<String, dynamic>;
     data["Pic"] =
-        "https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80";
-
+        "https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png";
     data["Age"] = "19";
     data["Gender"] = "male";
     data["Address"] = "Cra 67 #69-13";
-    print(data);
     return User.fromJson(data);
+  }
+
+  Future<void> getProducts(String id) async {
+    var list = await productsUseCase.getProductsUser('10023');
+    _userproducts.value = list;
+  }
+
+  Future<void> deleteProducts(String productId) async {
+    var res = await productsUseCase.deleteProductsUser(productId);
+    if (res == true) {
+      //delete local data
+      print('$productId remove remote');
+      var deleteproduct =
+          _userproducts.firstWhere((element) => element.id == productId);
+      if(deleteproduct != null){
+        _userproducts.remove(deleteproduct);
+        print('$productId remove local');
+      }
+
+    } else {}
+    _userproducts.refresh();
   }
 }
