@@ -9,7 +9,7 @@ class PetController extends GetxController {
   AuthenticationController _auth = Get.find<AuthenticationController>();
   final pets = <PetProfileFields>[].obs;
   PetController() {
-    getAll(_auth.getUid());
+    fetchAll(_auth.getUid());
   }
   /*  final profileFields = PetProfileFields(
           id: "0",
@@ -21,8 +21,8 @@ class PetController extends GetxController {
           dob: DateTime.utc(2021, 10, 20),
           imgUrl: "https://i.imgur.com/BpG6vSU.jpg")
       .obs; */
-  Future<void> getAll(String uid) async {
-    final result = await _useCase.getAllPets(uid);
+  Future<void> fetchAll(String uid) async {
+    final result = await _useCase.fetchAllPets(uid);
     pets.value = result;
     pets.refresh();
   }

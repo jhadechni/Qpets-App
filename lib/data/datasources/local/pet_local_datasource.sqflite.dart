@@ -43,9 +43,10 @@ class PetLocalDatabase {
     );
   }
 
-  Future<List<PetProfileFields>> getAll() async {
+  Future<List<PetProfileFields>> getAll(String uid) async {
     final db = await database;
-    final List<Map<String, dynamic>> pets = await db.query('pets');
+    final List<Map<String, dynamic>> pets =
+        await db.query('pets', where: "ownerId = ?", whereArgs: [uid]);
     return List.generate(pets.length, (i) {
       //keep in mind the index
       return PetProfileFields.fromJson(pets[i]);

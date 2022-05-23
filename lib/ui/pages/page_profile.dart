@@ -150,17 +150,20 @@ class PageProfileState extends State<PageProfile> {
                                     )
                                   ],
                                 ),
-                                GridView.count(
-                                  crossAxisCount: 2,
-                                  shrinkWrap: true,
-                                  childAspectRatio: (290 / 180),
-                                  children: userController.pets
-                                      .map((pet) => Padding(
-                                            padding: const EdgeInsets.all(4.0),
-                                            child: _petProfileCard(pet),
-                                          ))
-                                      .toList(),
-                                )
+                                userController.pets.isEmpty
+                                    ? Center(child: Text("Come on, add a new pet!"))
+                                    : GridView.count(
+                                        crossAxisCount: 2,
+                                        shrinkWrap: true,
+                                        childAspectRatio: (290 / 180),
+                                        children: userController.pets
+                                            .map((pet) => Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(4.0),
+                                                  child: _petProfileCard(pet),
+                                                ))
+                                            .toList(),
+                                      )
                               ],
                             )),
                         Padding(
