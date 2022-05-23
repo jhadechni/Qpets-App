@@ -88,10 +88,7 @@ class PageStoreState extends State<PageStore> {
             })),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(child: const Icon(Icons.add),backgroundColor: Palette.ourPurple ,onPressed:(){
-        Get.to(const Productform());
-      }),
+      )
     );
   }
 

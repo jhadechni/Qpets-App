@@ -13,6 +13,8 @@ class CalendarPage extends StatelessWidget {
           floatingActionButton: FloatingActionButton(
             child: Icon(Icons.add, color: Colors.white),
             backgroundColor: const Color(0xFF8E6FD8),
+            shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(15.0))),
             onPressed: () {
               showModalBottomSheet(
                   barrierColor: Colors.black.withOpacity(0.1),
