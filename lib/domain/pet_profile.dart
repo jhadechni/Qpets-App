@@ -1,7 +1,10 @@
+import 'package:intl/intl.dart';
+
 /// CurrentAge: auto-generated
 class PetProfileFields {
-  static const baseUrl = "https://qpets.herokuapp.com/products/getPetInfo";
+  static const baseUrl = "https://qpets.herokuapp.com/pets";
   String id;
+  String ownerUid;
   String gender;
   String name;
   String type;
@@ -14,6 +17,7 @@ class PetProfileFields {
   DateTime dob;
   PetProfileFields(
       {required this.id,
+      required this.ownerUid,
       required this.gender,
       required this.name,
       required this.type,
@@ -25,18 +29,24 @@ class PetProfileFields {
       required this.dob,
       required this.imgUrl});
   factory PetProfileFields.fromJson(Map<String, dynamic> json) {
+    String dobStr = json["dob"];
+    dobStr = dobStr.replaceAll("/", "-"); //handle these cases
     return PetProfileFields(
         id: json["_id"],
+        ownerUid: json["ownerId"],
         gender: json["gender"],
         name: json["name"],
         type: json["type"],
         breed: json["breed"],
         weight: json["weight"],
-        dob: DateTime.parse(json["dob"]),
-        imgUrl: json["image"]);
+        dob: DateTime.parse(dobStr),
+        imgUrl: json["image"] == ""
+            ? "https://i.imgur.com/BpG6vSU.jpg"
+            : json["image"]);
   }
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data["_id"] = id;
     data['name'] = name;
     data['image'] = imgUrl;
     data['dob'] = dob.toString();
@@ -44,6 +54,7 @@ class PetProfileFields {
     data['breed'] = breed;
     data['gender'] = gender;
     data['weight'] = weight;
+    data['ownerId'] = ownerUid;
     return data;
   }
 }

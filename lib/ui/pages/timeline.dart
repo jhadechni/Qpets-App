@@ -213,8 +213,11 @@ class TimeLine extends StatelessWidget {
                       ),
                     ]),
                 child: TextButton(
-                  onPressed: () => _addEvent(_eventNameController.text,
-                      _eventDescController.text, pickedDate),
+                  onPressed: () {
+                    _addEvent(_eventNameController.text,
+                        _eventDescController.text, pickedDate);
+                    Navigator.of(context).pop();
+                  },
                   child: const Text("Add Event",
                       style: TextStyle(
                           color: Colors.white,

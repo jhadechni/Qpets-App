@@ -33,4 +33,10 @@ class ProductRepository {
 
   Future<void> addProduct(Product product) async =>
       await localDataSource.addProduct(product);
+
+  Future<List<Product>> getProductsUser(id) async =>
+      await remoteDataSource.getProductsUser(id);
+
+  Future<bool> deleteProduct(String productid) async =>
+      await remoteDataSource.deleteProductsUser(productid);
 }
