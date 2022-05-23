@@ -4,6 +4,11 @@ import 'package:qpets_app/domain/use_case/products.dart';
 
 class ProductController extends GetxController {
   final products = <Product>[].obs;
+  bool sucess = false;
+
+  final _userproducts = <Product>[].obs;
+  List get getProductsList => _userproducts;
+
   ProductsUseCase productsUseCase = Get.find();
 
   ProductController() {
@@ -12,12 +17,13 @@ class ProductController extends GetxController {
     print(products);
   }
   List get getProducts => products;
+  bool get getStatus => sucess;
 
   RxList<Product> filteredList = <Product>[].obs;
   final filter = "".obs;
 
   Future<void> getProductFromRepository() async {
-    bool success = await productsUseCase.getProductsRemote();
+    sucess = await productsUseCase.getProductsRemote();
     await getAllProducts();
   }
 
@@ -53,7 +59,7 @@ class ProductController extends GetxController {
   }
 
   void runFilter(String enteredKeyword) {
-     List<Product> copyOfProducts = List<Product>.from(products);
+    List<Product> copyOfProducts = List<Product>.from(products);
     if (enteredKeyword.isEmpty) {
       filteredList.value = copyOfProducts;
     } else {
@@ -63,5 +69,25 @@ class ProductController extends GetxController {
           .toList();
     }
     filteredList.refresh();
+  }
+
+  Future<void> getProductsUser(String id) async {
+    var list = await productsUseCase.getProductsUser('10023');
+    _userproducts.value = list;
+  }
+
+  Future<void> deleteProducts(String productId) async {
+    var res = await productsUseCase.deleteProductsUser(productId);
+    if (res == true) {
+      //delete local data
+      print('$productId remove remote');
+      var deleteproduct =
+          _userproducts.firstWhere((element) => element.id == productId);
+      if (deleteproduct != null) {
+        _userproducts.remove(deleteproduct);
+        print('$productId remove local');
+      }
+    } else {}
+    _userproducts.refresh();
   }
 }

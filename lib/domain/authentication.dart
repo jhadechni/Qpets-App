@@ -1,8 +1,5 @@
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:qpets_app/controllers/authentication_controller.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
  
 import '../data/reposito/local_preferences.dart';
 

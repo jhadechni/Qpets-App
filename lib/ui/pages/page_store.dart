@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qpets_app/controllers/products_controller.dart';
+import 'package:qpets_app/main.dart';
+import 'package:qpets_app/ui/pages/Product_form.dart';
+import 'package:qpets_app/ui/pages/page_login.dart';
 import 'package:qpets_app/ui/pages/produc_detail.dart';
 import '../../domain/entities/product.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../../shared/list_view_loader.dart';
 import '../../shared/search_bar.dart';
+import '../../utils/ourPurple.dart';
 
 class PageStore extends StatefulWidget {
   const PageStore({Key? key}) : super(key: key);
@@ -31,8 +34,7 @@ class PageStoreState extends State<PageStore> {
               padding: const EdgeInsets.all(20),
               child: SearchBar(
                   placeholder: "Search for a Product",
-                  onTextChangeCallback: (s) =>
-                      _productController.runFilter(s)),
+                  onTextChangeCallback: (s) => _productController.runFilter(s)),
             ),
             Align(
               alignment: Alignment.topLeft,
@@ -67,21 +69,26 @@ class PageStoreState extends State<PageStore> {
             ),
             Expanded(child: Obx(() {
               if (_productController.filteredList.isNotEmpty) {
-                return ListView(
-                  children: _productController.filteredList
-                      .map((product) => Padding(
-                            padding: const EdgeInsets.only(left: 25, right: 25),
-                            child: _cardProduct(product),
-                          ))
-                      .toList(),
-                );
+                if (_productController.sucess) {
+                  return ListView(
+                    children: _productController.filteredList
+                        .map((product) => Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 25, right: 25),
+                              child: _cardProduct(product),
+                            ))
+                        .toList(),
+                  );
+                } else {
+                  return Text("Products couldnt be loaded!");
+                }
               } else {
-                return ListLoader(numberOfFields: 3);
+                return Text("No products found!");
               }
             })),
           ],
         ),
-      ),
+      )
     );
   }
 
@@ -170,7 +177,7 @@ class PageStoreState extends State<PageStore> {
             padding: const EdgeInsets.only(bottom: 20),
             child: Container(
               width: 328,
-              height: 132,
+              height: 145,
               padding: const EdgeInsets.only(
                   top: 20, left: 10, right: 10, bottom: 10),
               decoration: BoxDecoration(

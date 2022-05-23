@@ -1,4 +1,3 @@
-import 'package:loggy/loggy.dart';
 import 'package:qpets_app/data/datasources/remote/product_remote_datasource.dart';
 import '../../data/datasources/local/products_local_datasource_sqflite.dart';
 import '../entities/product.dart';
@@ -34,4 +33,10 @@ class ProductRepository {
 
   Future<void> addProduct(Product product) async =>
       await localDataSource.addProduct(product);
+
+  Future<List<Product>> getProductsUser(id) async =>
+      await remoteDataSource.getProductsUser(id);
+
+  Future<bool> deleteProduct(String productid) async =>
+      await remoteDataSource.deleteProductsUser(productid);
 }
