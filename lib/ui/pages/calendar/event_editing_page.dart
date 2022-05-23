@@ -280,6 +280,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
       ];
 
   Widget buildTitle() => TextFormField(
+        autofocus: false,
         style: const TextStyle(
             fontWeight: FontWeight.w300, fontFamily: "Outfit", fontSize: 20),
         decoration: InputDecoration(
@@ -300,7 +301,6 @@ class _EventEditingPageState extends State<EventEditingPage> {
             filled: true,
             fillColor: Colors.white,
             hintText: "Add Title"),
-        onFieldSubmitted: (_) => saveForm(),
         validator: (title) =>
             title != null && title.isEmpty ? "Tittle cannot be empty" : null,
         controller: titleController,
