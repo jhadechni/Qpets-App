@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:qpets_app/controllers/products_controller.dart';
 import 'package:qpets_app/ui/pages/produc_detail.dart';
 
 import '../../controllers/authentication_controller.dart';
 import '../../controllers/user_controller.dart';
 import '../../domain/entities/product.dart';
+import '../../utils/ourPurple.dart';
+import 'Product_form.dart';
 
 class UserProducts extends StatefulWidget {
   const UserProducts({Key? key}) : super(key: key);
@@ -15,12 +18,12 @@ class UserProducts extends StatefulWidget {
 
 class _UserProductsState extends State<UserProducts> {
   final AuthenticationController authentication = Get.find();
-  final UserController userController = Get.find();
+  final ProductController productController = Get.find();
 
   @override
   void initState() {
     super.initState();
-    userController.getProducts(authentication.getUid());
+    productController.getProductsUser(authentication.getUid());
   }
 
   @override
@@ -44,9 +47,9 @@ class _UserProductsState extends State<UserProducts> {
                         "Touch the card to see the final product page.")),
               ),
               Expanded(child: Obx(() {
-                if (userController.getProductsList.isNotEmpty) {
+                if (productController.getProductsList.isNotEmpty) {
                   return ListView(
-                    children: userController.getProductsList
+                    children: productController.getProductsList
                         .map((product) => Padding(
                               padding:
                                   const EdgeInsets.only(left: 25, right: 25),
@@ -60,7 +63,13 @@ class _UserProductsState extends State<UserProducts> {
               })),
             ],
           ),
-        ));
+          
+        ),
+         floatingActionButton: FloatingActionButton(child: const Icon(Icons.add),backgroundColor: Palette.ourPurple,shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(15.0))) ,onPressed:(){
+        Get.to(const Productform());
+      }),
+        );
   }
 
   Widget _tittleText(text) {
@@ -150,7 +159,7 @@ class _UserProductsState extends State<UserProducts> {
                     child: const Text('Cancel'),
                   ),
                   TextButton(
-                    onPressed: () => {Navigator.pop(context, 'OK'), userController.deleteProducts(productid)},
+                    onPressed: () => {Navigator.pop(context, 'OK'), productController.deleteProducts(productid)},
                     child: const Text('OK'),
                   ),
                 ],

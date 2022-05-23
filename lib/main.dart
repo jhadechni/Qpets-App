@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:qpets_app/controllers/calendar_event_controller.dart';
-import 'package:qpets_app/controllers/pet_profile_controller.dart';
+import 'package:qpets_app/controllers/pet_controller.dart';
 import 'package:qpets_app/controllers/place_controller.dart';
 import 'package:qpets_app/controllers/products_controller.dart';
 import 'package:qpets_app/controllers/timeline_controller.dart';
 import 'package:qpets_app/controllers/user_controller.dart';
 import 'package:qpets_app/domain/repositories/pet_repository.dart';
 import 'package:qpets_app/domain/repositories/product_repository.dart';
+import 'package:qpets_app/domain/use_case/pets.dart';
 import 'package:qpets_app/domain/use_case/products.dart';
 import 'package:qpets_app/ui/pages/page_splash.dart';
 import 'package:get/get.dart';
@@ -33,11 +34,12 @@ class InitialBinding implements Bindings {
     Get.lazyPut(() => PlaceController(), fenix: true);
     //User
     Get.lazyPut(() => UserController(), fenix: true);
-    Get.lazyPut(() => PetRepository(), fenix: true);
     //Timeline
     Get.lazyPut(() => TimelineController(), fenix: true);
     //Pets
-    Get.lazyPut(() => PetProfileController(), fenix: true);
+    Get.lazyPut(() => PetRepository(), fenix: true);
+    Get.lazyPut(() => PetsUseCase(), fenix: true);
+    Get.lazyPut(() => PetController(), fenix: true);
 
     //Auth
     Get.lazyPut(() => AuthenticationController(), fenix: true);

@@ -80,7 +80,7 @@ class PageStoreState extends State<PageStore> {
                         .toList(),
                   );
                 } else {
-                  return Text("Check your network connection!");
+                  return Text("Products couldnt be loaded!");
                 }
               } else {
                 return Text("No products found!");
@@ -88,10 +88,7 @@ class PageStoreState extends State<PageStore> {
             })),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(child: const Icon(Icons.add),backgroundColor: Palette.ourPurple ,onPressed:(){
-        Get.to(const Productform());
-      }),
+      )
     );
   }
 
