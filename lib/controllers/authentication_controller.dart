@@ -2,7 +2,9 @@ import 'dart:collection';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:qpets_app/utils/ourPurple.dart';
 import '../shared/bottom_navbar.dart';
 import '../ui/pages/page_login.dart';
 
@@ -16,9 +18,16 @@ class AuthenticationController extends GetxController {
       return Future.value();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
+        Get.snackbar("Information", "User not found!",
+            icon: Icon(FontAwesomeIcons.paw), backgroundColor: Palette.ourPurple);
         return Future.error("User not found");
       } else if (e.code == 'wrong-password') {
+        Get.snackbar("Information", "Wrong password!",
+            icon: Icon(FontAwesomeIcons.paw), backgroundColor: Palette.ourPurple);
         return Future.error("Wrong password");
+      } else {
+        Get.snackbar("Information", "Not valid email!",
+            icon: Icon(FontAwesomeIcons.paw), backgroundColor: Palette.ourPurple);
       }
     }
   }
@@ -47,13 +56,12 @@ class AuthenticationController extends GetxController {
       await agregarUsuario(nombre, numero, email, password);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Contraseña demasiado debil')));
+        Get.snackbar("Information", "The password provided is too weak.",
+            icon: Icon(FontAwesomeIcons.paw), backgroundColor: Palette.ourPurple);
         return Future.error('The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text('User already exist.')));
-
+        Get.snackbar("Information", "User already exist!",
+            icon: Icon(FontAwesomeIcons.paw), backgroundColor: Palette.ourPurple);
         return Future.error('The account already exists for that email.');
       }
     }
