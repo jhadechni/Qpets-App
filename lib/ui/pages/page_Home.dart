@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:qpets_app/controllers/calendar_event_controller.dart';
 import 'package:qpets_app/domain/agenda.dart';
 import 'package:qpets_app/utils/tips.dart';
@@ -9,6 +10,8 @@ import 'package:qpets_app/controllers/user_controller.dart';
 import 'package:qpets_app/domain/authentication.dart';
 import 'package:qpets_app/domain/user.dart';
 import 'dart:math';
+
+import '../../utils/ourPurple.dart';
 
 class PageHome extends StatefulWidget {
   const PageHome({Key? key}) : super(key: key);
@@ -85,10 +88,10 @@ class Pagehomestate extends State<PageHome> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 80),
+                    padding: EdgeInsets.symmetric(horizontal: 30),
                     child: Container(
-                      width: 320,
-                      height: 308,
+                      width: double.infinity,
+                      height: 350,
                       decoration: const BoxDecoration(
                         color: const Color(0xffE2E2EC),
                         borderRadius:
@@ -139,7 +142,12 @@ class Pagehomestate extends State<PageHome> {
           } else if (snapshot.hasError) {
             return const Center(child: const Text("Error"));
           } else {
-            return const Center(child: Text("Loading..."));
+            return Center(
+                child: LoadingAnimationWidget.flickr(
+              leftDotColor: Palette.ourPurple,
+              rightDotColor:  Color(0xFFF6A641),
+              size: 100,
+            ));
           }
         });
   }
@@ -148,7 +156,7 @@ class Pagehomestate extends State<PageHome> {
     return Row(
       children: [
         _cardhora(entrie[i].hora),
-        _carddescripcion(entrie[i].descripcion, true)
+        _carddescripcion(entrie[i].descripcion, false)
       ],
     );
   }
@@ -171,7 +179,7 @@ class Pagehomestate extends State<PageHome> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   _cardhora(agenda.hora),
-                  _carddescripcion(agenda.descripcion, true)
+                  _carddescripcion(agenda.descripcion, false)
                 ],
               )
             ],
@@ -202,8 +210,8 @@ class Pagehomestate extends State<PageHome> {
           descripcion,
           style: TextStyle(
             color: const Color.fromRGBO(0, 0, 0, 1),
-            fontSize: big ? 18 : 15,
-            fontWeight: FontWeight.normal,
+            fontSize: big ? 25 : 20,
+            fontWeight:big ? FontWeight.bold : FontWeight.normal,
           ),
         ),
       ),
@@ -253,7 +261,7 @@ class Pagehomestate extends State<PageHome> {
       style: const TextStyle(
         color: Color.fromRGBO(0, 0, 0, 1),
         fontSize: 34,
-        fontWeight: FontWeight.normal,
+        fontWeight: FontWeight.bold,
       ),
       textAlign: TextAlign.center,
     );
