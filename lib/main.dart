@@ -5,6 +5,7 @@ import 'package:qpets_app/controllers/place_controller.dart';
 import 'package:qpets_app/controllers/products_controller.dart';
 import 'package:qpets_app/controllers/timeline_controller.dart';
 import 'package:qpets_app/controllers/user_controller.dart';
+import 'package:qpets_app/domain/repositories/event_repository.dart';
 import 'package:qpets_app/domain/repositories/pet_repository.dart';
 import 'package:qpets_app/domain/repositories/product_repository.dart';
 import 'package:qpets_app/domain/use_case/pets.dart';
@@ -19,6 +20,7 @@ import 'controllers/authentication_controller.dart';
 import 'domain/authentication.dart';
 import 'domain/repositories/place_repository.dart';
 import 'domain/use_case/places.dart';
+
 MaterialColor ourPurlple = Palette.ourPurple;
 
 class InitialBinding implements Bindings {
@@ -46,6 +48,7 @@ class InitialBinding implements Bindings {
     Get.lazyPut(() => Authentication(), fenix: true);
 
     //Events
+    Get.lazyPut(() => EventRepository(), fenix: true);
     Get.lazyPut(() => EventController(), fenix: true);
   }
 }

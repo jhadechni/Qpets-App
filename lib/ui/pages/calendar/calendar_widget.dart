@@ -52,6 +52,8 @@ class CalendarWidget extends StatelessWidget {
               if (details.appointments != null &&
                   details.appointments!.isNotEmpty) {
                 showModalBottomSheet(
+                  barrierColor: Colors.black.withOpacity(0.1),
+                  backgroundColor: Colors.transparent,
                   context: context,
                   builder: (context) =>
                       EventEditingPage(event: details.appointments!.first),
