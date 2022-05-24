@@ -81,6 +81,8 @@ class _SingupPageState extends State<SingupPage> {
                               name.text,
                               phoneNumber.text,
                               email.text,
+                              address.text,
+                              sexo.text,
                               password.text,
                               confirmPassword.text,
                               authentication,
@@ -134,16 +136,19 @@ class _SingupPageState extends State<SingupPage> {
       String nombre,
       String numero,
       String correo,
+      String address,
+      String sexo,
       String password,
       String confirmPassword,
       AuthenticationController authetication,
       Authentication controller) {
     if (password == confirmPassword) {
       controller.signup(nombre, password, numero, correo);
-      authetication.signUp(correo, password, numero, nombre, context);
+      authetication.signUp(
+          correo, password, numero, nombre, address, sexo, context);
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Passwords dont match')));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Passwords dont match')));
     }
   }
 }
