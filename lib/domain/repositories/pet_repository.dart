@@ -54,7 +54,8 @@ class PetRepository {
       if (res.statusCode != 200) {
         return Future.error("Pet Post response failed");
       }
-      return PetProfileFields.fromJson(json.decode(utf8.decode(res.bodyBytes)));
+      final jsonResponse = json.decode(utf8.decode(res.bodyBytes));
+      return PetProfileFields.fromJson(jsonResponse);
     } catch (e) {
       print(e);
       return Future.error("Pet Post failed");

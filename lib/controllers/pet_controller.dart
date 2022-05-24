@@ -23,6 +23,7 @@ class PetController extends GetxController {
   }
 
   Future<void> addPet(Map<String, dynamic> data) async {
-    await _useCase.addPet(data);
+    final pet = await _useCase.addPet(data);
+    pets.add(pet);
   }
 }

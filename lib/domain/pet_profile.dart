@@ -33,6 +33,9 @@ class PetProfileFields {
     dobStr = dobStr.replaceAll("/", "-"); //handle these cases
     return PetProfileFields(
         id: json["_id"],
+        vaccineCheck: json["vaccineCheck"] ?? false,
+        chipCheck: json["chipCheck"] ?? false,
+        neutered: json["spayedAndNeutered"] ?? false,
         ownerUid: json["ownerId"],
         gender: json["gender"],
         name: json["name"],
@@ -55,6 +58,9 @@ class PetProfileFields {
     data['gender'] = gender;
     data['weight'] = weight;
     data['ownerId'] = ownerUid;
+    data["chipCheck"] = chipCheck;
+    data["vaccineCheck"] = vaccineCheck;
+    data["spayedAndNeutered"] = neutered;
     return data;
   }
 }
