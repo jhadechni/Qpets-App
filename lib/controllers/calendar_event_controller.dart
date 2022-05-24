@@ -44,9 +44,13 @@ class EventController extends GetxController {
   }
 
   Future<void> getAllEvents(String uid) async {
-    final evts = await _eventRepository.getRemoteEvents(uid);
-    events.value = evts;
-    events.refresh();
-    update();
+    try {
+      final evts = await _eventRepository.getRemoteEvents(uid);
+      events.value = evts;
+      events.refresh();
+      update();
+    } catch (e) {
+      print("Error $e");
+    }
   }
 }

@@ -87,7 +87,6 @@ class PageProfileState extends State<PageProfile> {
                                     Align(
                                       alignment: Alignment.center,
                                       child: Column(
-                                        
                                         children: [
                                           Row(
                                             children: [
@@ -151,7 +150,8 @@ class PageProfileState extends State<PageProfile> {
                                   ],
                                 ),
                                 userController.pets.isEmpty
-                                    ? Center(child: Text("Come on, add a new pet!"))
+                                    ? Center(
+                                        child: Text("Come on, add a new pet!"))
                                     : GridView.count(
                                         crossAxisCount: 2,
                                         shrinkWrap: true,
@@ -183,16 +183,15 @@ class PageProfileState extends State<PageProfile> {
                                               fontSize: 30)),
                                     ),
                                     GestureDetector(
-                                        onTap: () =>
-                                            Get.to(const UserProducts()),
-                                        child: const Icon(
-                                            Icons.arrow_circle_right_outlined,
-                                            color: Color(
-                                              0xFF8E6FD8,
-                                            ),
-                                            size: 25.0,
-                                          ),
+                                      onTap: () => Get.to(const UserProducts()),
+                                      child: const Icon(
+                                        Icons.arrow_circle_right_outlined,
+                                        color: Color(
+                                          0xFF8E6FD8,
                                         ),
+                                        size: 25.0,
+                                      ),
+                                    ),
                                   ],
                                 ),
                                 //_cardProduct(userController.productsSale.first)
@@ -250,7 +249,7 @@ class PageProfileState extends State<PageProfile> {
                       ),
                       textAlign: TextAlign.left,
                     ),
-                    Text(DateTime.now().difference(pet.dob).inDays.toString(),
+                    Text(getTimeDifferenceFromNow(pet.dob),
                         style: const TextStyle(
                           color: Color.fromRGBO(127, 119, 198, 1),
                           fontSize: 14,
@@ -357,10 +356,25 @@ class PageProfileState extends State<PageProfile> {
         textAlign: TextAlign.left);
   }
 
+  String getTimeDifferenceFromNow(DateTime dateTime) {
+    Duration difference = DateTime.now().difference(dateTime);
+
+    if (difference.inDays > 365) {
+      double years = difference.inDays / 365;
+      return "${years.round()} years";
+    }
+    if (difference.inDays > 31) {
+      double months = difference.inDays / 31;
+      return "${months.round()} months";
+    }
+    return "${difference.inDays} days";
+  }
+
   void logout(
       AuthenticationController authentication, Authentication controller) {
     controller.logout();
     authentication.logout();
+    Get.deleteAll();
     Get.to(LoginPage());
   }
 }

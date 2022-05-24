@@ -40,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
                   const Padding(
                     padding: EdgeInsets.only(top: 20),
                     child: Text(
-                      "Inicia Sesión",
+                      "Qpets App",
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 45,
@@ -52,9 +52,9 @@ class _LoginPageState extends State<LoginPage> {
                     padding: const EdgeInsets.only(top: 30),
                     child: Column(
                       children: [
-                        _formField("Correo electronico", "example@example.com",
+                        _formField("Email", "example@example.com",
                             1, email),
-                        _formField("Contraseña", "", 2, password),
+                        _formField("Password", "", 2, password),
                       ],
                     ),
                   ),
@@ -71,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
                       minWidth: 280,
                       height: 60,
                       child: const Text(
-                        "Inicia Sesión",
+                        "Sign in",
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -83,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text(
-                        "¿No tienes cuenta?",
+                        "Don't you have an account?",
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.normal,
@@ -95,7 +95,7 @@ class _LoginPageState extends State<LoginPage> {
                       GestureDetector(
                         onTap: () => Get.to(const SingupPage()),
                         child: const Text(
-                          "Regístrate",
+                          "Sign Up",
                           style: TextStyle(
                             color: Color(0xFF7F77C6),
                             fontSize: 20,

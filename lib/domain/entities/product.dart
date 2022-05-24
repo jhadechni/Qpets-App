@@ -54,7 +54,7 @@ class Product {
     return Product(
         id: json['_id'],
         image: (json['image'] == "")
-            ? "https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty-300x240.jpg"
+            ? "https://cdn.discordapp.com/attachments/803757598599151706/978519440343846932/not_found.png"
             : json["image"],
         name: json['name'],
         storeName: json['storeName'],
