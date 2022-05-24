@@ -55,6 +55,7 @@ dependencies:
   animated_floating_buttons: ^0.0.2
   image_picker: ^0.8.5+3
   loading_animation_widget: ^1.2.0+1
+  flutter_launcher_icons: ^0.9.2
 
 dev_dependencies:
   flutter_test:
@@ -76,6 +77,11 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter.
+
+flutter_icons:
+  android: true
+  image_path: "assets/images/icon.png"
+
 flutter:
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
