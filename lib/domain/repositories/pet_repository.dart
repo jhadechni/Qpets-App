@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:qpets_app/data/datasources/local/pet_local_datasource.sqflite.dart';
 import 'package:qpets_app/domain/pet_profile.dart';
 import 'package:http/http.dart' as http;
+import 'package:qpets_app/domain/timeline_event.dart';
 
 class PetRepository {
   PetLocalDatabase _localDatabase = PetLocalDatabase();
@@ -53,7 +54,8 @@ class PetRepository {
       if (res.statusCode != 200) {
         return Future.error("Pet Post response failed");
       }
-      return PetProfileFields.fromJson(json.decode(utf8.decode(res.bodyBytes)));
+      final jsonResponse = json.decode(utf8.decode(res.bodyBytes));
+      return PetProfileFields.fromJson(jsonResponse);
     } catch (e) {
       print(e);
       return Future.error("Pet Post failed");
