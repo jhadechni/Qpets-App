@@ -72,7 +72,7 @@ class ProductController extends GetxController {
   }
 
   Future<void> getProductsUser(String id) async {
-    var list = await productsUseCase.getProductsUser('10023');
+    var list = await productsUseCase.getProductsUser(id);
     _userproducts.value = list;
   }
 
