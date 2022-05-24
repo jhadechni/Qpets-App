@@ -33,6 +33,7 @@ class _SingupPageState extends State<SingupPage> {
     TextEditingController phoneNumber = TextEditingController();
     TextEditingController name = TextEditingController();
     TextEditingController address = TextEditingController();
+    TextEditingController gender = TextEditingController();
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
@@ -67,6 +68,9 @@ class _SingupPageState extends State<SingupPage> {
                         _formField("Contraseña", "", 2, password),
                         _formField(
                             "Confirmar contraseña", "", 5, confirmPassword),
+                             _formField(
+                            "dirección", "", 6, address),
+                              _formField('Sexo','male or female',7,gender),
                       ],
                     ),
                   ),
@@ -81,6 +85,8 @@ class _SingupPageState extends State<SingupPage> {
                               email.text,
                               password.text,
                               confirmPassword.text,
+                              address.text,
+                              gender.text,
                               authentication,
                               controller);
                         }
@@ -121,6 +127,13 @@ class _SingupPageState extends State<SingupPage> {
         validator: (t) {
           if (t!.isEmpty) {
             return "Debe ingresar ${placeholder.toLowerCase()}";
+            
+          }
+           if(op==7){
+            if(t!='male' && t!='female'){
+              return "Gender not valid";
+
+            }
           }
           return null;
         },
@@ -134,11 +147,13 @@ class _SingupPageState extends State<SingupPage> {
       String correo,
       String password,
       String confirmPassword,
+      String address,
+      String gender,
       AuthenticationController authetication,
       Authentication controller) {
     if (password == confirmPassword) {
       controller.signup(nombre, password, numero, correo);
-      authetication.signUp(correo, password, numero, nombre, context);
+      authetication.signUp(correo, password, numero, nombre, address,gender,context);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Contraseñas no coinciden')));

@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:qpets_app/ui/pages/page_login.dart';
 import 'package:qpets_app/utils/ourPurple.dart';
 
+import '../../firebasecentral.dart';
+
 MaterialColor ourPurlple = Palette.ourPurple;
 
 class Pagesplash extends StatefulWidget {
@@ -17,7 +19,7 @@ class _PagesplashState extends State<Pagesplash> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 5)).then((value) {
-    Get.to(() => const LoginPage());
+    Get.to(() => FirebaseCentral());
     });
   }
 

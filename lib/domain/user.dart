@@ -17,7 +17,7 @@ class User {
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(json["Nombre"], json["Pic"], json["Age"], json["Correo"],
-        json["Gender"], json["Numero"], json["Address"]);
+       json["Sexo"], json["Numero"], json["Dirreción"]);
   }
 
   setPets(List<PetProfileFields> petsProfiles) {

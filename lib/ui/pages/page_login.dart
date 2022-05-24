@@ -151,6 +151,6 @@ class _LoginPageState extends State<LoginPage> {
   void login(
       Authentication controller, AuthenticationController authentication, String email, String password) {
     controller.login(email, password);
-    authentication.login(email, password);
+    authentication.login(email, password,context);
   }
 }

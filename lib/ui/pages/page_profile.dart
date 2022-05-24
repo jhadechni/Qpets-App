@@ -4,6 +4,7 @@ import 'package:qpets_app/controllers/user_controller.dart';
 import 'package:qpets_app/domain/authentication.dart';
 import 'package:qpets_app/domain/user.dart';
 import 'package:qpets_app/ui/pages/page_login.dart';
+import 'package:qpets_app/ui/pages/page_userform.dart';
 import 'package:qpets_app/ui/pages/pet_profile.dart';
 import 'package:qpets_app/ui/pages/produc_detail.dart';
 
@@ -54,13 +55,19 @@ class PageProfileState extends State<PageProfile> {
                             Text(snapshot.data!.name,
                                 style: const TextStyle(
                                     fontWeight: FontWeight.w700, fontSize: 30)),
-                            const Icon(
+                            GestureDetector(
+                        onTap: () => Get.to(const Pageuserform()),
+                        // ignore: prefer_const_constructors
+                        child:  Padding(
+                          padding: const EdgeInsets.only(bottom: 20),
+                          child: const Icon(
                               Icons.create_outlined,
                               color: Color(
                                 0xFF8E6FD8,
                               ),
                               size: 25.0,
                             )
+                        )),
                           ],
                         ),
                         Text('${snapshot.data!.age} years',
