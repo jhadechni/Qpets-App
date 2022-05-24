@@ -43,18 +43,18 @@ class PetRepository {
     }
   }
 
-  Future<dynamic> addRemotePet(Map<String, dynamic> data) async {
+  Future<PetProfileFields> addRemotePet(Map<String, dynamic> data) async {
     try {
-      final res =
-          await http.post(Uri.parse("${PetProfileFields.baseUrl}/createPet"),
-              headers: <String, String>{
-                'Content-Type': 'application/json; charset=UTF-8',
-              },
-              body: jsonEncode(data));
+      final res = await http.post(
+          Uri.parse("${PetProfileFields.baseUrl}/createPet"),
+          body: jsonEncode(data),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8'
+          });
       if (res.statusCode != 200) {
         return Future.error("Pet Post response failed");
       }
-      return json.decode(utf8.decode(res.bodyBytes));
+      return PetProfileFields.fromJson(json.decode(utf8.decode(res.bodyBytes)));
     } catch (e) {
       print(e);
       return Future.error("Pet Post failed");
