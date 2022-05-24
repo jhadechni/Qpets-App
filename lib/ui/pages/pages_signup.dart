@@ -143,7 +143,7 @@ class _SingupPageState extends State<SingupPage> {
       AuthenticationController authetication,
       Authentication controller) {
     if (password == confirmPassword) {
-      controller.signup(nombre, password, numero, correo);
+      controller.signup(nombre, password, numero, correo,address,sexo);
       authetication.signUp(
           correo, password, numero, nombre, address, sexo, context);
     } else {

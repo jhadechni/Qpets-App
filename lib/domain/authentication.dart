@@ -23,13 +23,14 @@ class Authentication {
  
   }
 
-  Future<void> signup(user, password,numero,correo) async {
+  Future<void> signup(user, password,numero,correo,address,gender) async {
  
     await _sharedPreferences.storeData<String>('user', user);
     await _sharedPreferences.storeData<String>('password', password);
      await _sharedPreferences.storeData<String>('numero', numero);
       await _sharedPreferences.storeData<String>('correo', correo);
-     
+     await _sharedPreferences.storeData<String>('address', address);
+     await _sharedPreferences.storeData<String>('gender', gender);
   }
 
   void logout() async {
