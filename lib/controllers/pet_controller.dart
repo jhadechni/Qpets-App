@@ -11,16 +11,6 @@ class PetController extends GetxController {
   PetController() {
     fetchAll(_auth.getUid());
   }
-  /*  final profileFields = PetProfileFields(
-          id: "0",
-          gender: "Male",
-          name: 'polar',
-          type: "Dog",
-          breed: "Siberian Husky",
-          weight: 20,
-          dob: DateTime.utc(2021, 10, 20),
-          imgUrl: "https://i.imgur.com/BpG6vSU.jpg")
-      .obs; */
   Future<void> fetchAll(String uid) async {
     final result = await _useCase.fetchAllPets(uid);
     pets.value = result;
@@ -30,5 +20,9 @@ class PetController extends GetxController {
   Future<PetProfileFields> getPet(String id) async {
     final pet = await _useCase.getPet(id);
     return pet;
+  }
+
+  Future<void> addPet(Map<String,dynamic> data) async {
+    await _useCase.addPet(data);
   }
 }

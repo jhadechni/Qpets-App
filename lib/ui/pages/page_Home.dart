@@ -26,12 +26,27 @@ class Pagehomestate extends State<PageHome> {
     entrie.add(agenda('16:30', 'Training section'));
     entrie.add(agenda('17:20', 'Spa day'));
     entrie.add(agenda('18:00', 'Walk with Antonella'));
-    tips.add(tipList('Pasea al perro', 'descripcion inutil 1', 'tip_1'));
-    tips.add(tipList('Pasea al perro2', 'descripcion inutil 2', 'tip_2'));
-    tips.add(tipList('Pasea al perro3', 'descripcion inutil 3', 'tip_3'));
-    tips.add(tipList('Pasea al perro4', 'descripcion inutil 4', 'tip_4'));
-    tips.add(tipList('Pasea al perro5', 'descripcion inutil 5', 'tip_5'));
+    addList();
     super.initState();
+  }
+
+  addList() {
+    tips.add(tipList(
+        'Walk your dog',
+        'A regular walk is vitally important for your pet´s health too. Obesity in pets is associated with a number of medical complaints including osteoarthritis, cardiovascular disease, liver disease and insulin resistance.',
+        'tip_1'));
+    tips.add(tipList(
+        'Give your dog fresh food',
+        'Feeding your pet a fresh food diet gives them the maximum dose of nutrient and vitamins. Fresh fruit, vegetables, and animal proteins in your pet’s diet provide them with antioxidants, amino acids, vitamins, minerals, phytonutrients, and fiber. This balanced and nutritious diet converts into more sustainable energy for your pet.',
+        'tip_2'));
+    tips.add(tipList(
+        'Sleep with your dog',
+        'If simply interacting with a dog can treat depression, imagine what sleeping next to one can do! Their presence helps us relax and increases our flow of oxytocin, the love chemical. This essentially makes your dog a living antidepressant!',
+        'tip_3'));
+    tips.add(tipList(
+        'Give Medication to your dog',
+        'Sometimes you can opt for a flavored compounded medication or a chewable “treat” tablet. This works well for dogs that don’t like to swallow their pills.',
+        'tip_4'));
   }
 
   @override
@@ -40,7 +55,7 @@ class Pagehomestate extends State<PageHome> {
     AuthenticationController authentication = Get.find();
     Authentication controller = Get.find();
     Random random = Random();
-    int rndm = random.nextInt(5);
+    int rndm = random.nextInt(4);
     return FutureBuilder<User>(
         future: userController.fetchUserData(authentication.getUid()),
         builder: (context, snapshot) {
@@ -210,6 +225,7 @@ Widget _cardImage2(String img) {
       height: 80,
       decoration: BoxDecoration(
           image: DecorationImage(
+            fit: BoxFit.cover,
             image: AssetImage('assets/images/$img.png'),
           ),
           borderRadius: BorderRadius.circular(10)));

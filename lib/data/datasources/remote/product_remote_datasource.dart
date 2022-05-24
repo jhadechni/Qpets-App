@@ -82,4 +82,23 @@ class ProductsClient {
       return false;
     }
   }
+
+  Future<bool> addProductRemote(Product product) async {
+    try {
+      final res = await http.post(
+          Uri.parse("https://qpets.herokuapp.com/products/createProduct"),
+          body: jsonEncode(product.toJson()),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8'
+          });
+      print(res.statusCode);
+      if (res.statusCode != 200) {
+        return Future.error("Pet Post response failed");
+      }
+      return json.decode(utf8.decode(res.bodyBytes));
+    } catch (e) {
+      print(e);
+      return Future.error("Pet Post failed");
+    }
+  }
 }

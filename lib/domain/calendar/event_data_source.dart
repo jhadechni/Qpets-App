@@ -10,17 +10,16 @@ class EventDataSource extends CalendarDataSource {
   EventDataSource() {
     appointments = controller.events;
   }
-  Event getEvent(int index) => appointments![index] ;
+  Event getEvent(int index) => appointments![index];
   @override
   DateTime getStartTime(int index) => getEvent(index).from;
   @override
   DateTime getEndTime(int index) => getEvent(index).to;
   @override
   String getSubject(int index) => getEvent(index).title;
-  
-  Color getColor(int index) => getEvent(index).backgroundColor;
+
+  Color getBgColor(int index) => getEvent(index).backgroundColor;
   Color setColor(int index) => getEvent(index).backgroundColor;
   @override
   bool isAllDay(int index) => getEvent(index).isAllDay;
 }
-

@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:qpets_app/controllers/authentication_controller.dart';
 import 'package:qpets_app/controllers/calendar_event_controller.dart';
 import 'package:qpets_app/domain/calendar/event.dart';
 import 'package:qpets_app/utils/utils.dart';
@@ -29,6 +30,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
   late DateTime toDate;
 
   EventController controller = Get.find<EventController>();
+  AuthenticationController auth = Get.find<AuthenticationController>();
 
   @override
   void initState() {
@@ -280,6 +282,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
       ];
 
   Widget buildTitle() => TextFormField(
+        autofocus: false,
         style: const TextStyle(
             fontWeight: FontWeight.w300, fontFamily: "Outfit", fontSize: 20),
         decoration: InputDecoration(
@@ -300,7 +303,6 @@ class _EventEditingPageState extends State<EventEditingPage> {
             filled: true,
             fillColor: Colors.white,
             hintText: "Add Title"),
-        onFieldSubmitted: (_) => saveForm(),
         validator: (title) =>
             title != null && title.isEmpty ? "Tittle cannot be empty" : null,
         controller: titleController,
@@ -386,26 +388,38 @@ class _EventEditingPageState extends State<EventEditingPage> {
         ],
       );
   Future saveForm() async {
-    final isValid = _formKey.currentState!.validate();
-    if (isValid) {
-      final event = Event(
-          title: titleController.text,
-          description: 'Descripción',
-          from: fromDate,
-          to: toDate,
-          isAllDay: false,
-          backgroundColor: bgColor);
-      final isEditing = widget.event != null;
-      if (isEditing) {
-        controller.editEvent(event, widget.event!);
-      } else {
+    final isEditing = widget.event != null;
+    if (!isEditing) {
+      final isValid = _formKey.currentState!.validate();
+      if (isValid) {
+        Map<String, dynamic> eventData = Map<String, dynamic>();
+        eventData["title"] = titleController.text;
+        eventData["description"] = 'Descripción';
+        eventData["from"] = fromDate.toString();
+        eventData["to"] = toDate.toString();
+        eventData["isAllDay"] = false;
+        eventData["bgColor"] = bgColor.value.toString();
+        eventData["userId"] = auth.getUid();
+        final event = await controller.addRemote(eventData);
         controller.addEvent(event);
+      } else {
+        final event = Event(
+            id: widget.event!.id,
+            title: titleController.text,
+            description: 'Descripción',
+            from: fromDate,
+            to: toDate,
+            isAllDay: false,
+            backgroundColor: bgColor);
+        controller.editEvent(event, widget.event!);
       }
       Navigator.of(context).pop();
     }
   }
 
   Future delete(Event event) async {
+    await controller.deleteRemote(event.id);
+    print("Deleted event ${event.id} successfully");
     controller.deleteEvent(event);
     Navigator.of(context).pop();
   }
