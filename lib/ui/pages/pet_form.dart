@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:qpets_app/controllers/pet_controller.dart';
 
 class PetForm extends StatefulWidget {
+  PetController petController = Get.find<PetController>();
   PetForm({Key? key}) : super(key: key);
-
   @override
   State<PetForm> createState() => _PetFormState();
 }
@@ -61,8 +62,9 @@ class _PetFormState extends State<PetForm> {
                     child: MaterialButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          print("valid");
-                      }},
+                          submitForm();
+                        }
+                      },
                       color: const Color(0xFF7F77C6),
                       minWidth: 280,
                       height: 60,
@@ -83,7 +85,8 @@ class _PetFormState extends State<PetForm> {
       ),
     );
   }
-   Widget _formField(String placeholder, String hint, int op,
+
+  Widget _formField(String placeholder, String hint, int op,
       TextEditingController controller) {
     return Padding(
       padding: const EdgeInsets.only(left: 30, right: 30, top: 30),
@@ -103,5 +106,11 @@ class _PetFormState extends State<PetForm> {
         },
       ),
     );
+  }
+
+  Future<bool> submitForm() async {
+    final map = <String, dynamic>{"image": "", "name": "Jaime"};
+    await widget.petController.addPet(map);
+    return true;
   }
 }

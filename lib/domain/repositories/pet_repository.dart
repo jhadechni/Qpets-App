@@ -42,19 +42,19 @@ class PetRepository {
     }
   }
 
-  Future<bool> addRemotePet(PetProfileFields pet) async {
+  Future<dynamic> addRemotePet(Map<String, dynamic> data) async {
     try {
       final res = await http.post(
           Uri.parse("${PetProfileFields.baseUrl}/pets/createPet"),
-          body: jsonEncode(pet.toJson()));
+          body: jsonEncode(data));
       if (res.statusCode != 200) {
         return Future.error("Pet Post response failed");
       }
+      return json.decode(utf8.decode(res.bodyBytes));
     } catch (e) {
       print(e);
       return Future.error("Pet Post failed");
     }
-    return true;
   }
 
   Future<PetProfileFields> getPetInfo(String id) {

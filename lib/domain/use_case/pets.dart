@@ -18,13 +18,10 @@ class PetsUseCase {
     return pets;
   }
 
-  Future<bool> addPet(PetProfileFields pet) async {
-    final success = await repository.addRemotePet(pet);
-    if (success) {
-      await repository.addPet(pet);
-      return true;
-    }
-    return false;
+  Future<bool> addPet(Map<String, dynamic> data) async {
+    final finalPet = await repository.addRemotePet(data);
+    await repository.addPet(finalPet);
+    return true;
   }
 
   Future<PetProfileFields> getPet(String id) {
