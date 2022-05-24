@@ -1,8 +1,4 @@
 import 'dart:convert';
-<<<<<<< HEAD
-
-=======
->>>>>>> aad4339d0e1a4bcdccfc3876a93972054395023d
 import 'package:qpets_app/data/datasources/local/pet_local_datasource.sqflite.dart';
 import 'package:qpets_app/domain/pet_profile.dart';
 import 'package:http/http.dart' as http;
