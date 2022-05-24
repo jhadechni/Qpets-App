@@ -33,6 +33,7 @@ class _SingupPageState extends State<SingupPage> {
     TextEditingController phoneNumber = TextEditingController();
     TextEditingController name = TextEditingController();
     TextEditingController address = TextEditingController();
+    TextEditingController sexo = TextEditingController();
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
@@ -49,7 +50,7 @@ class _SingupPageState extends State<SingupPage> {
                         child: Icon(Icons.arrow_back, size: 40),
                       )),
                   const Text(
-                    "Regístrate",
+                    "Sign Up",
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 45,
@@ -60,13 +61,14 @@ class _SingupPageState extends State<SingupPage> {
                     padding: const EdgeInsets.only(top: 30),
                     child: Column(
                       children: [
-                        _formField("Nombre", "", 3, name),
-                        _formField("Correo", "", 1, email),
+                        _formField("Name", "", 3, name),
+                        _formField("email", "", 1, email),
                         _formField(
-                            "Número teléfonico", "1234567890", 4, phoneNumber),
-                        _formField("Contraseña", "", 2, password),
-                        _formField(
-                            "Confirmar contraseña", "", 5, confirmPassword),
+                            "Phone number", "1234567890", 4, phoneNumber),
+                        _formField("Password", "", 2, password),
+                        _formField("Confirm password", "", 5, confirmPassword),
+                        _formField("Address", "", 3, address),
+                        _formField("Gender", "", 3, sexo),
                       ],
                     ),
                   ),
@@ -89,7 +91,7 @@ class _SingupPageState extends State<SingupPage> {
                       minWidth: 280,
                       height: 60,
                       child: const Text(
-                        "Regístrate",
+                        "Sign Up",
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -109,7 +111,7 @@ class _SingupPageState extends State<SingupPage> {
   Widget _formField(String placeholder, String hint, int op,
       TextEditingController controller) {
     return Padding(
-      padding: const EdgeInsets.only(left: 30, right: 30, top: 30),
+      padding: const EdgeInsets.only(left: 30, right: 30, top: 10),
       child: TextFormField(
         obscureText: (op == 2 || op == 5) ? true : false,
         controller: controller,
@@ -120,7 +122,7 @@ class _SingupPageState extends State<SingupPage> {
         ),
         validator: (t) {
           if (t!.isEmpty) {
-            return "Debe ingresar ${placeholder.toLowerCase()}";
+            return "${placeholder.toLowerCase()} couldnt be empty";
           }
           return null;
         },
@@ -141,7 +143,7 @@ class _SingupPageState extends State<SingupPage> {
       authetication.signUp(correo, password, numero, nombre, context);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Contraseñas no coinciden')));
+          const SnackBar(content: Text('Passwords dont match')));
     }
   }
 }
