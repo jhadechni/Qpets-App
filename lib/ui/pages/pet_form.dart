@@ -190,9 +190,8 @@ class _PetFormState extends State<PetForm> {
             //do something
             pickedDate = await showDatePicker(
                 context: context,
-                initialDate: DateTime.now(),
-                firstDate: DateTime
-                    .now(), //DateTime.now() - not to allow to choose before today.
+                initialDate: DateTime(2000),
+                firstDate: DateTime(2000), //DateTime.now() - not to allow to choose before today.
                 lastDate: DateTime(2101));
             controller.text = DateFormat("d/M/y").format(pickedDate!);
           },
@@ -224,7 +223,7 @@ class _PetFormState extends State<PetForm> {
     final map = <String, dynamic>{
       "name": name.text,
       "image": image.text,
-      "dob": pickedDate,
+      "dob": pickedDate.toString(),
       "breed": breed.text,
       "type": type.text,
       "chipCheck": chipCheck,
