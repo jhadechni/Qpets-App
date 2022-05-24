@@ -25,7 +25,11 @@ class Pagehomestate extends State<PageHome> {
   void initState() {
     for (var i = 0; i < controller.events.length; i++) {
       if (i < 4) {
-        entrie.add(agenda('12:30', controller.events[i].title));
+        entrie.add(agenda(
+            controller.events[i].from.hour.toString() +
+                ":" +
+                controller.events[i].to.minute.toString(),
+            controller.events[i].title));
       }
     }
     addList();
@@ -75,38 +79,42 @@ class Pagehomestate extends State<PageHome> {
                       textAlign: TextAlign.left,
                       style: const TextStyle(
                         color: Color.fromRGBO(30, 23, 33, 1),
-                        fontSize: 48,
+                        fontSize: 52,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                  Container(
-                    width: 339,
-                    height: 308,
-                    decoration: const BoxDecoration(
-                      color: const Color(0xffE2E2EC),
-                      borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            _cardImage(),
-                            Column(
-                              children: [
-                                _carddescripcion('Agenda', true),
-                                _carddescripcioneventos(
-                                    entrie.length.toString())
-                              ],
-                            )
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 80),
+                    child: Container(
+                      width: 320,
+                      height: 308,
+                      decoration: const BoxDecoration(
+                        color: const Color(0xffE2E2EC),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10)),
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              _cardImage(),
+                              Column(
+                                children: [
+                                  _carddescripcion('Agenda', true),
+                                  _carddescripcioneventos(
+                                      entrie.length.toString())
+                                ],
+                              )
+                            ],
+                          ),
+                          if (entrie.length < 4) ...[
+                            for (var i = 0; i < entrie.length; i++) ...[
+                              rowAgenda(i)
+                            ]
                           ],
-                        ),
-                        if (entrie.length < 4) ...[
-                          for (var i = 0; i < entrie.length; i++) ...[
-                            rowAgenda(i)
-                          ]
                         ],
-                      ],
+                      ),
                     ),
                   ),
                   Padding(
@@ -188,13 +196,15 @@ class Pagehomestate extends State<PageHome> {
 
   Widget _carddescripcion(String descripcion, bool big) {
     return Padding(
-      padding: big ? const EdgeInsets.only(left: 30) : const EdgeInsets.all(30),
-      child: Text(
-        descripcion,
-        style: TextStyle(
-          color: const Color.fromRGBO(0, 0, 0, 1),
-          fontSize: big ? 18 : 15,
-          fontWeight: FontWeight.normal,
+      padding: big ? const EdgeInsets.only(left: 50) : const EdgeInsets.all(30),
+      child: Center(
+        child: Text(
+          descripcion,
+          style: TextStyle(
+            color: const Color.fromRGBO(0, 0, 0, 1),
+            fontSize: big ? 18 : 15,
+            fontWeight: FontWeight.normal,
+          ),
         ),
       ),
     );
@@ -206,7 +216,7 @@ class Pagehomestate extends State<PageHome> {
         height: 100,
         decoration: BoxDecoration(
             image: const DecorationImage(
-              image: AssetImage('assets/images/tip_1.png'),
+              image: AssetImage('assets/images/Corgi_logo_1.png'),
             ),
             borderRadius: BorderRadius.circular(10)));
   }
@@ -224,14 +234,16 @@ class Pagehomestate extends State<PageHome> {
   }
 
   Widget _carddescripcioneventos(String descripcion) {
-    return Text(
-      '$descripcion events',
-      style: const TextStyle(
-        color: Color.fromRGBO(0, 0, 0, 1),
-        fontSize: 24,
-        fontWeight: FontWeight.normal,
+    return Center(
+      child: Text(
+        '$descripcion events',
+        style: const TextStyle(
+          color: Color.fromRGBO(0, 0, 0, 1),
+          fontSize: 24,
+          fontWeight: FontWeight.normal,
+        ),
+        textAlign: TextAlign.right,
       ),
-      textAlign: TextAlign.right,
     );
   }
 
