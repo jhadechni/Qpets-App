@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:qpets_app/controllers/user_controller.dart';
 import 'package:qpets_app/domain/authentication.dart';
 import 'package:qpets_app/domain/pet_profile.dart';
@@ -9,6 +10,7 @@ import 'package:qpets_app/ui/pages/page_userproducts.dart';
 import 'package:qpets_app/ui/pages/pet_form.dart';
 import 'package:qpets_app/ui/pages/pet_profile.dart';
 import 'package:qpets_app/ui/pages/produc_detail.dart';
+import 'package:qpets_app/utils/ourPurple.dart';
 import '../../controllers/authentication_controller.dart';
 import '../../domain/entities/product.dart';
 
@@ -150,8 +152,8 @@ class PageProfileState extends State<PageProfile> {
                                   ],
                                 ),
                                 userController.pets.isEmpty
-                                    ? Center(
-                                        child: Text("Come on, add a new pet!"))
+                                    ? const Center(
+                                        child: Text("Live with pets is happier, add a new one!"))
                                     : GridView.count(
                                         crossAxisCount: 2,
                                         shrinkWrap: true,
@@ -204,7 +206,12 @@ class PageProfileState extends State<PageProfile> {
           } else if (snapshot.hasError) {
             return Center(child: Text("Error"));
           } else {
-            return Center(child: Text("Loading..."));
+            return Center(
+                child: LoadingAnimationWidget.flickr(
+              leftDotColor: Palette.ourPurple,
+              rightDotColor: Color(0xFFF6A641),
+              size: 100,
+            ));
           }
         });
   }

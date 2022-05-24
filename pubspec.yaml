@@ -54,6 +54,7 @@ dependencies:
   loggy: ^2.0.1+1
   animated_floating_buttons: ^0.0.2
   image_picker: ^0.8.5+3
+  loading_animation_widget: ^1.2.0+1
 
 dev_dependencies:
   flutter_test:
