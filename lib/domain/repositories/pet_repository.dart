@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:qpets_app/data/datasources/local/pet_local_datasource.sqflite.dart';
 import 'package:qpets_app/domain/pet_profile.dart';
 import 'package:http/http.dart' as http;
+import 'package:qpets_app/domain/timeline_event.dart';
 
 class PetRepository {
   PetLocalDatabase _localDatabase = PetLocalDatabase();
@@ -44,9 +45,12 @@ class PetRepository {
 
   Future<bool> addRemotePet(PetProfileFields pet) async {
     try {
-      final res = await http.post(
-          Uri.parse("${PetProfileFields.baseUrl}/pets/createPet"),
-          body: jsonEncode(pet.toJson()));
+      final res =
+          await http.post(Uri.parse("${PetProfileFields.baseUrl}/createPet"),
+              headers: <String, String>{
+                'Content-Type': 'application/json; charset=UTF-8',
+              },
+              body: jsonEncode(pet.toJson()));
       if (res.statusCode != 200) {
         return Future.error("Pet Post response failed");
       }

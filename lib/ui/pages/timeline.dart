@@ -2,14 +2,17 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qpets_app/controllers/timeline_controller.dart';
+import 'package:qpets_app/domain/pet_profile.dart';
 import 'package:qpets_app/domain/timeline_event.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 import 'package:intl/intl.dart';
+import 'package:collection/collection.dart';
 
 class TimeLine extends StatelessWidget {
+  PetProfileFields pet;
   final LineStyle _lineStyle =
       const LineStyle(thickness: 8, color: Color(0xff7F77C6));
-  TimeLine({Key? key}) : super(key: key);
+  TimeLine({required this.pet, Key? key}) : super(key: key);
   final TimelineController controller = Get.find<TimelineController>();
   final TextEditingController _eventNameController = TextEditingController();
   final TextEditingController _eventDescController = TextEditingController();
@@ -37,7 +40,7 @@ class TimeLine extends StatelessWidget {
               constraints: const BoxConstraints(),
               padding: const EdgeInsets.symmetric(vertical: 8),
             ),
-            const Text("Polar's Timeline",
+            Text("${pet.name}'s Timeline",
                 style: TextStyle(
                     fontSize: 24.0,
                     fontWeight: FontWeight.bold,
@@ -53,7 +56,7 @@ class TimeLine extends StatelessWidget {
                   child: Obx(() => ListView(
                       itemExtent: 60,
                       children: controller.events
-                          .map((element) => element.id % 2 == 0
+                          .mapIndexed((i, element) => i % 2 == 0
                               ? getRightTile(element)
                               : getLeftTile(element))
                           .toList()))),
@@ -236,7 +239,7 @@ class TimeLine extends StatelessWidget {
     if (name.isEmpty || desc.isEmpty || date == null) {
       return;
     }
-    controller.addEvent(name, desc, date);
+    controller.addEvent(name, desc, date, pet.id);
   }
 
   Widget _textField(String hintText, TextEditingController controller) {

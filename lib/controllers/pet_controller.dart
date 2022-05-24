@@ -11,16 +11,6 @@ class PetController extends GetxController {
   PetController() {
     getAll(_auth.getUid());
   }
-  /*  final profileFields = PetProfileFields(
-          id: "0",
-          gender: "Male",
-          name: 'polar',
-          type: "Dog",
-          breed: "Siberian Husky",
-          weight: 20,
-          dob: DateTime.utc(2021, 10, 20),
-          imgUrl: "https://i.imgur.com/BpG6vSU.jpg")
-      .obs; */
   Future<void> getAll(String uid) async {
     final result = await _useCase.getAllPets(uid);
     pets.value = result;

@@ -19,6 +19,7 @@ import 'controllers/authentication_controller.dart';
 import 'domain/authentication.dart';
 import 'domain/repositories/place_repository.dart';
 import 'domain/use_case/places.dart';
+
 MaterialColor ourPurlple = Palette.ourPurple;
 
 class InitialBinding implements Bindings {
