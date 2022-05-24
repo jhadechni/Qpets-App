@@ -13,8 +13,6 @@ class UserController extends GetxController {
       Get.find<AuthenticationController>();
   ProductsUseCase productsUseCase = Get.find();
 
-
-
   final userProfile = User(
     'Jaime Sierra',
     'https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80',
@@ -25,7 +23,7 @@ class UserController extends GetxController {
     'Cra 67 #69-08',
   ).obs;
   // ignore: prefer_final_fields
-  
+
   PetController _petController = Get.find<PetController>();
 
   List<PetProfileFields> get pets => _petController.pets;
@@ -40,9 +38,8 @@ class UserController extends GetxController {
     data["Pic"] =
         "https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png";
     data["Age"] = "19";
-    data["Gender"] = "male";
-    data["Address"] = "Cra 67 #69-13";
+    data["Gender"] = data["Sexo"];
+    data["Address"] = data["Direccion"];
     return User.fromJson(data);
   }
-
 }
