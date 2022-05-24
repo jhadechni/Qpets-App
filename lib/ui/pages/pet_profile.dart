@@ -8,6 +8,7 @@ import 'package:qpets_app/domain/pet_profile.dart';
 import 'package:qpets_app/domain/timeline_event.dart';
 import 'package:qpets_app/ui/pages/timeline.dart';
 import 'package:timeline_tile/timeline_tile.dart';
+import 'package:collection/collection.dart';
 
 class _ProfileField extends StatelessWidget {
   final String field;
@@ -165,6 +166,8 @@ class _CarouselState extends State<_Carousel> {
 
 class _PetTimeLine extends StatelessWidget {
   final TimelineController controller = Get.find<TimelineController>();
+  PetProfileFields pet;
+  _PetTimeLine(this.pet);
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -175,12 +178,16 @@ class _PetTimeLine extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             children: controller
                 .getLastEvents()
-                .map((e) => e.id % 2 == 0 ? getBottomTile(e) : getUpperTile(e))
+                .mapIndexed(
+                    (i, e) => i % 2 == 0 ? getBottomTile(e) : getUpperTile(e))
                 .toList())),
         IconButton(
             constraints: const BoxConstraints(maxHeight: 24, maxWidth: 24),
             onPressed: () {
-              Get.to(() => TimeLine(),
+              Get.to(
+                  () => TimeLine(
+                        pet: pet,
+                      ),
                   duration: const Duration(milliseconds: 250),
                   transition: Transition.cupertino);
             },
@@ -259,7 +266,10 @@ class _PetTimeLine extends StatelessWidget {
 class PetProfile extends StatelessWidget {
   PetProfileFields pet;
   final PetController controller = Get.find<PetController>();
-  PetProfile({required this.pet, Key? key}) : super(key: key);
+  final TimelineController _timelineController = Get.find<TimelineController>();
+  PetProfile({required this.pet, Key? key}) : super(key: key) {
+    _timelineController.getAllEvents(pet.id);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -308,7 +318,7 @@ class PetProfile extends StatelessWidget {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: const Color(0xffE2E2EC)),
-                    child: _PetTimeLine()),
+                    child: _PetTimeLine(pet)),
                 const Padding(padding: EdgeInsets.only(bottom: 16.0))
               ])),
         ],
