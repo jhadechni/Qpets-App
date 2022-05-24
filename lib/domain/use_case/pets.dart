@@ -6,23 +6,22 @@ import 'package:qpets_app/ui/pages/pet_profile.dart';
 class PetsUseCase {
   PetRepository repository = Get.find<PetRepository>();
 
-  //fetch all pets and save them
-  Future<List<PetProfileFields>> getAllPets(String uid) async {
-    List<PetProfileFields> pets = await repository.getAllPets();
-    if (pets.isEmpty) {
-      pets = await repository.fetchAllPets(uid);
-      await repository.storePets(pets);
-    }
+  //fetch all pets and save themx
+  Future<List<PetProfileFields>> fetchAllPets(String uid) async {
+    List<PetProfileFields> pets = await repository.fetchAllPets(uid);
+    await repository.storePets(pets);
     return pets;
   }
 
-  Future<bool> addPet(PetProfileFields pet) async {
-    final success = await repository.addRemotePet(pet);
-    if (success) {
-      await repository.addPet(pet);
-      return true;
-    }
-    return false;
+  Future<List<PetProfileFields>> getAllPets(String uid) async {
+    List<PetProfileFields> pets = await repository.getAllPets(uid);
+    return pets;
+  }
+
+  Future<bool> addPet(Map<String, dynamic> data) async {
+    final finalPet = await repository.addRemotePet(data);
+    await repository.addPet(finalPet);
+    return true;
   }
 
   Future<PetProfileFields> getPet(String id) {

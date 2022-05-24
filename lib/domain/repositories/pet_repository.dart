@@ -26,7 +26,7 @@ class PetRepository {
     final uri = Uri.parse("${PetProfileFields.baseUrl}/getAllPets/$uid");
     print(uri.toString());
     try {
-      final response = await http.get(uri).timeout(const Duration(seconds: 5));
+      final response = await http.get(uri).timeout(const Duration(seconds: 15));
       if (response.statusCode == 200) {
         final jsonResponse = json.decode(utf8.decode(response.bodyBytes));
         final List<dynamic> rawList = jsonResponse["pets"];
@@ -43,30 +43,30 @@ class PetRepository {
     }
   }
 
-  Future<bool> addRemotePet(PetProfileFields pet) async {
+  Future<dynamic> addRemotePet(Map<String, dynamic> data) async {
     try {
       final res =
           await http.post(Uri.parse("${PetProfileFields.baseUrl}/createPet"),
               headers: <String, String>{
                 'Content-Type': 'application/json; charset=UTF-8',
               },
-              body: jsonEncode(pet.toJson()));
+              body: jsonEncode(data));
       if (res.statusCode != 200) {
         return Future.error("Pet Post response failed");
       }
+      return json.decode(utf8.decode(res.bodyBytes));
     } catch (e) {
       print(e);
       return Future.error("Pet Post failed");
     }
-    return true;
   }
 
   Future<PetProfileFields> getPetInfo(String id) {
     return _localDatabase.getPet(id);
   }
 
-  Future<List<PetProfileFields>> getAllPets() {
-    return _localDatabase.getAll();
+  Future<List<PetProfileFields>> getAllPets(String uid) {
+    return _localDatabase.getAll(uid);
   }
 
   Future<void> storePets(List<PetProfileFields> pets) async {

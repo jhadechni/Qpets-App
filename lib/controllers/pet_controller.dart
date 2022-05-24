@@ -9,10 +9,10 @@ class PetController extends GetxController {
   AuthenticationController _auth = Get.find<AuthenticationController>();
   final pets = <PetProfileFields>[].obs;
   PetController() {
-    getAll(_auth.getUid());
+    fetchAll(_auth.getUid());
   }
-  Future<void> getAll(String uid) async {
-    final result = await _useCase.getAllPets(uid);
+  Future<void> fetchAll(String uid) async {
+    final result = await _useCase.fetchAllPets(uid);
     pets.value = result;
     pets.refresh();
   }
@@ -20,5 +20,9 @@ class PetController extends GetxController {
   Future<PetProfileFields> getPet(String id) async {
     final pet = await _useCase.getPet(id);
     return pet;
+  }
+
+  Future<void> addPet(Map<String, dynamic> data) async {
+    await _useCase.addPet(data);
   }
 }

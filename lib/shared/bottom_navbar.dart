@@ -40,7 +40,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
       case 1:
         return store;
       case 2:
-        return maps;
+        return  SafeArea(child: maps);
       case 3:
         return calendar;
       case 4:

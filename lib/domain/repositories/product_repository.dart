@@ -19,7 +19,7 @@ class ProductRepository {
       print("Local");
       print(products);
     } catch (e) {
-      print("Error no se $e");
+      print("Error $e");
       return false;
     }
     //insert items in the database foreach
@@ -31,6 +31,18 @@ class ProductRepository {
 
   Future<void> deleteAll() async => await localDataSource.deleteAll();
 
-  Future<void> addProduct(Product product) async =>
+  Future<void> addProduct(Product product) async {
+    try {
       await localDataSource.addProduct(product);
+      await remoteDataSource.addProductRemote(product);
+    } catch (e) {
+      print("Error $e");
+    }
+  }
+
+  Future<List<Product>> getProductsUser(id) async =>
+      await remoteDataSource.getProductsUser(id);
+
+  Future<bool> deleteProduct(String productid) async =>
+      await remoteDataSource.deleteProductsUser(productid);
 }

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:qpets_app/controllers/authentication_controller.dart';
 import 'package:qpets_app/domain/entities/product.dart';
+import 'package:qpets_app/domain/use_case/products.dart';
 
 class Productform extends StatefulWidget {
   const Productform({Key? key}) : super(key: key);
@@ -20,7 +22,6 @@ class _ProductformState extends State<Productform> {
   @override
   Widget build(BuildContext context) {
     final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-    final ImagePicker _picker = ImagePicker();
     TextEditingController type = TextEditingController();
     TextEditingController price = TextEditingController();
     TextEditingController description = TextEditingController();
@@ -29,8 +30,10 @@ class _ProductformState extends State<Productform> {
     TextEditingController phone = TextEditingController();
     TextEditingController facebook = TextEditingController();
     TextEditingController instagram = TextEditingController();
+     TextEditingController image = TextEditingController();
+    ProductsUseCase useCase = Get.find();
+    AuthenticationController authController = Get.find();
 
-    XFile? image;
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
@@ -46,27 +49,13 @@ class _ProductformState extends State<Productform> {
                         padding: EdgeInsets.only(bottom: 20),
                         child: Icon(Icons.arrow_back, size: 40),
                       )),
-                  Row(
-                    children: [
-                      GestureDetector(
-                          onTap: () async => image = await _picker.pickImage(
-                              source: ImageSource.gallery),
-                          child: const Padding(
-                            padding: EdgeInsets.only(bottom: 0),
-                            child: Icon(Icons.add_a_photo, size: 40),
-                          )),
-                      const Padding(
-                        padding: EdgeInsets.only(right: 50),
-                        child: Text(
-                          "   Add product",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 45,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ],
+                  const Text(
+                    "Add a product",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 45,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 30),
@@ -90,13 +79,14 @@ class _ProductformState extends State<Productform> {
                             ],
                           ),
                         ),
-                        _formField("Nombre", "", 1, name),
+                        _formField("Name", "", 1, name),
                         _formField("Storename", "", 2, storename),
-                        _formField("price", "12.000 ", 3, price),
+                        _formField("Image", "https://linkimage.jpg", 3, image),
+                        _formField("Price", "12.000", 3, price),
                         _formField("Description", "", 4, description),
                         _formField("Facebook", "", 5, facebook),
-                        _formField("instagram", " ", 6, instagram),
-                        _formField("phone", "123456", 3, phone)
+                        _formField("Instagram", " ", 6, instagram),
+                        _formField("Phone", "123456", 3, phone)
                       ],
                     ),
                   ),
@@ -105,17 +95,21 @@ class _ProductformState extends State<Productform> {
                     child: MaterialButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          comprueba(
-                              name.text,
-                              price.text,
-                              storename.text,
-                              description.text,
-                              image,
-                              type.text,
-                              phone.text,
-                              facebook.text,
-                              instagram.text,
-                              context);
+                          Product p = Product(
+                            id: price.text + name.text,
+                            description: description.text,
+                            name: name.text,
+                            image: image.text,
+                            storeName: storename.text,
+                            phoneNumber: phone.text,
+                            facebook: facebook.text,
+                            instagram: instagram.text,
+                            price: price.text,
+                            type: type.text,
+                            ownerId: authController.getUid(),
+                          );
+                          useCase.addProduct(p);
+                          Get.back();
                         }
                       },
                       color: const Color(0xFF7F77C6),
@@ -222,43 +216,5 @@ class _ProductformState extends State<Productform> {
         },
       ),
     );
-  }
-
-  void comprueba(
-      String name,
-      String price,
-      String storename,
-      String description,
-      XFile? imagen,
-      String type,
-      String phone,
-      String facebook,
-      String instagram,
-      BuildContext context) {
-    if (type != "") {
-      if (imagen != null) {
-        print(imagen);
-        Product p = new Product(
-          id: price + name,
-          description: description,
-          name: name,
-          image: '',
-          storeName: storename,
-          phoneNumber: phone,
-          facebook: facebook,
-          instagram: instagram,
-          price: price,
-          type: type,
-          ownerId: "ownerId",
-        );
-        print(p.image);
-      } else {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text('record the image')));
-      }
-    } else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text('record the type')));
-    }
   }
 }

@@ -5,9 +5,10 @@ import 'package:qpets_app/domain/authentication.dart';
 import 'package:qpets_app/domain/pet_profile.dart';
 import 'package:qpets_app/domain/user.dart';
 import 'package:qpets_app/ui/pages/page_login.dart';
+import 'package:qpets_app/ui/pages/page_userproducts.dart';
+import 'package:qpets_app/ui/pages/pet_form.dart';
 import 'package:qpets_app/ui/pages/pet_profile.dart';
 import 'package:qpets_app/ui/pages/produc_detail.dart';
-
 import '../../controllers/authentication_controller.dart';
 import '../../domain/entities/product.dart';
 
@@ -37,12 +38,17 @@ class PageProfileState extends State<PageProfile> {
                     child: SingleChildScrollView(
                         child: Stack(
                   children: [
-                    GestureDetector(
-                        onTap: () => logout(authentication, controller),
-                        child: const Padding(
-                          padding: EdgeInsets.only(bottom: 20),
-                          child: Icon(Icons.logout, size: 50),
-                        )),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        GestureDetector(
+                            onTap: () => logout(authentication, controller),
+                            child: const Padding(
+                              padding: EdgeInsets.all(10.0),
+                              child: Icon(Icons.logout, size: 25),
+                            )),
+                      ],
+                    ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -55,14 +61,7 @@ class PageProfileState extends State<PageProfile> {
                           children: [
                             Text(snapshot.data!.name,
                                 style: const TextStyle(
-                                    fontWeight: FontWeight.w700, fontSize: 30)),
-                            const Icon(
-                              Icons.create_outlined,
-                              color: Color(
-                                0xFF8E6FD8,
-                              ),
-                              size: 25.0,
-                            )
+                                    fontWeight: FontWeight.w700, fontSize: 30))
                           ],
                         ),
                         Text('${snapshot.data!.age} years',
@@ -88,6 +87,7 @@ class PageProfileState extends State<PageProfile> {
                                     Align(
                                       alignment: Alignment.center,
                                       child: Column(
+                                        
                                         children: [
                                           Row(
                                             children: [
@@ -130,34 +130,40 @@ class PageProfileState extends State<PageProfile> {
                               children: [
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
-                                  children: const [
-                                    Padding(
+                                  children: [
+                                    const Padding(
                                       padding: EdgeInsets.all(8.0),
                                       child: Text('Your Pets',
                                           style: TextStyle(
                                               fontWeight: FontWeight.w700,
                                               fontSize: 30)),
                                     ),
-                                    Icon(
-                                      Icons.add_circle_outline_outlined,
-                                      color: Color(
-                                        0xFF8E6FD8,
+                                    GestureDetector(
+                                      onTap: () => Get.to(() => PetForm()),
+                                      child: const Icon(
+                                        Icons.add_circle_outline_outlined,
+                                        color: Color(
+                                          0xFF8E6FD8,
+                                        ),
+                                        size: 25.0,
                                       ),
-                                      size: 25.0,
                                     )
                                   ],
                                 ),
-                                GridView.count(
-                                  crossAxisCount: 2,
-                                  shrinkWrap: true,
-                                  childAspectRatio: (290 / 180),
-                                  children: userController.pets
-                                      .map((pet) => Padding(
-                                            padding: const EdgeInsets.all(4.0),
-                                            child: _petProfileCard(pet),
-                                          ))
-                                      .toList(),
-                                )
+                                userController.pets.isEmpty
+                                    ? Center(child: Text("Come on, add a new pet!"))
+                                    : GridView.count(
+                                        crossAxisCount: 2,
+                                        shrinkWrap: true,
+                                        childAspectRatio: (290 / 180),
+                                        children: userController.pets
+                                            .map((pet) => Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(4.0),
+                                                  child: _petProfileCard(pet),
+                                                ))
+                                            .toList(),
+                                      )
                               ],
                             )),
                         Padding(
@@ -167,21 +173,26 @@ class PageProfileState extends State<PageProfile> {
                               children: [
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
-                                  children: const [
+                                  children: [
+                                    // ignore: prefer_const_constructors
                                     Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: Text('My Products',
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: const Text('My Products',
                                           style: TextStyle(
                                               fontWeight: FontWeight.w700,
                                               fontSize: 30)),
                                     ),
-                                    Icon(
-                                      Icons.arrow_circle_right_outlined,
-                                      color: Color(
-                                        0xFF8E6FD8,
-                                      ),
-                                      size: 25.0,
-                                    )
+                                    GestureDetector(
+                                        onTap: () =>
+                                            Get.to(const UserProducts()),
+                                        child: const Icon(
+                                            Icons.arrow_circle_right_outlined,
+                                            color: Color(
+                                              0xFF8E6FD8,
+                                            ),
+                                            size: 25.0,
+                                          ),
+                                        ),
                                   ],
                                 ),
                                 //_cardProduct(userController.productsSale.first)
