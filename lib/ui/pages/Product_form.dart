@@ -30,7 +30,7 @@ class _ProductformState extends State<Productform> {
     TextEditingController phone = TextEditingController();
     TextEditingController facebook = TextEditingController();
     TextEditingController instagram = TextEditingController();
-     TextEditingController image = TextEditingController();
+    TextEditingController image = TextEditingController();
     ProductsUseCase useCase = Get.find();
     AuthenticationController authController = Get.find();
 
@@ -81,7 +81,7 @@ class _ProductformState extends State<Productform> {
                         ),
                         _formField("Name", "", 1, name),
                         _formField("Storename", "", 2, storename),
-                        _formField("Image", "https://linkimage.jpg", 3, image),
+                        _formField("Image", "https://linkimage.jpg", 9, image),
                         _formField("Price", "12.000", 3, price),
                         _formField("Description", "", 4, description),
                         _formField("Facebook", "", 5, facebook),
@@ -209,6 +209,7 @@ class _ProductformState extends State<Productform> {
         ),
         validator: (t) {
           if (t!.isEmpty) {
+            if (op == 9) return null;
             return "Debe ingresar ${placeholder.toLowerCase()}";
           }
 
